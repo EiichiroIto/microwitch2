@@ -1,0 +1,733 @@
+(Microwitch
+ (proxy:blocks:
+  "Microbit"
+  (
+
+   (category: "control")
+   (separator)
+   (commandBlock:args:code:imports:selector:
+    "break"
+    ("")
+    "break"
+    ()
+    break)
+   (commandBlock:args:code:imports:selector:
+    "continue"
+    ("")
+    "continue"
+    ()
+    continue)
+   (separator)
+   (commandBlock:args:code:imports:selector:
+    "call %S"
+    ("")
+    "_r=%S()"
+    ()
+    callSubroutine:)
+   (commandBlock:args:code:imports:selector:
+    "return %n"
+    (0)
+    "return %n"
+    ()
+    return:)
+   (reporterBlock:args:return:code:imports:selector:
+    "return value"
+    ()
+    r
+    "_r"
+    ()
+    returnValue)
+   (separator)
+   (timedCommandBlock:args:code:imports:selector:
+    "wait %n msecs"
+    (1000)
+    "utime.sleep_ms(%n)"
+    (utime)
+    mwait:elapsed:from:)
+   (commandBlock:args:code:imports:selector:
+    "panic %n"
+    (0)
+    "microbit.panic(%n)"
+    (microbit)
+    panic:)
+
+   (category: "sensing")
+   (separator)
+   (reporterBlock:args:return:code:imports:selector:
+    "running time"
+    ()
+    r
+    "microbit.running_time()"
+    (microbit)
+    runningTime)
+   (reporterBlock:args:return:code:imports:selector:
+    "light"
+    ()
+    r
+    "microbit.display.read_light_level()"
+    (microbit)
+    light)
+   (reporterBlock:args:return:code:imports:selector:
+    "temperature"
+    ()
+    r
+    "microbit.temperature()"
+    (microbit)
+    temperature)
+   (separator)
+   (reporterBlock:args:return:code:imports:selector:
+    "current event"
+    ()
+    r
+    "microphone.current_event()"
+    ((microbit microphone))
+    currentEvent)
+   (reporterBlock:args:return:code:imports:selector:
+    "is event %U ?"
+    ()
+    b
+    "microphone.is_event(microbit.SoundEvent.%U)"
+    ((microbit microphone))
+    isEvent:)
+   (reporterBlock:args:return:code:imports:selector:
+    "get events"
+    ()
+    r
+    "microphone.get_events()"
+    ((microbit microphone))
+    getEvents)
+   (commandBlock:args:code:imports:selector:
+    "set threshold event %U value %n"
+    ()
+    "microphone.set_threshold(microbit.SoundEvent.%U,%n)"
+    ((microbit microphone))
+    setThresholdEvent:value:)
+   (reporterBlock:args:return:code:imports:selector:
+    "sound level"
+    ()
+    r
+    "microphone.sound_level()"
+    ((microbit microphone))
+    soundLevel)
+
+   (category: "compass")
+   (separator)
+   (commandBlock:args:code:imports:selector:
+    "calibrate compass"
+    ()
+    "compass.calibrate()"
+    ((microbit compass))
+    calibrateCompass)
+   (reporterBlock:args:return:code:imports:selector:
+    "is calibrated"
+    ()
+    b
+    "compass.is_calibrated()"
+    ((microbit compass))
+    isCalibrated)
+   (reporterBlock:args:return:code:imports:selector:
+    "heading"
+    ()
+    r
+    "compass.heading()"
+    ((microbit compass))
+    headingCompass)
+   (commandBlock:args:code:imports:selector:
+    "clear calibration"
+    ()
+    "compass.clear_calibration()"
+    ((microbit compass))
+    clearCalibration)
+   (reporterBlock:args:return:code:imports:selector:
+    "compass x"
+    ()
+    r
+    "compass.get_x()"
+    ((microbit compass))
+    compassX)
+   (reporterBlock:args:return:code:imports:selector:
+    "compass y"
+    ()
+    r
+    "compass.get_y()"
+    ((microbit compass))
+    compassY)
+   (reporterBlock:args:return:code:imports:selector:
+    "compass z"
+    ()
+    r
+    "compass.get_z()"
+    ((microbit compass))
+    compassZ)
+    (separator)
+   (reporterBlock:args:return:code:imports:selector:
+    "field strength"
+    ()
+    r
+    "compass.get_field_strength()"
+    ((microbit compass))
+    fieldStrength)
+
+   (category: "accelerometer")
+   (separator)
+   (reporterBlock:args:return:code:imports:selector:
+    "current gesture"
+    ()
+    r
+    "accelerometer.current_gesture()"
+    ((microbit accelerometer))
+    currentGesture)
+   (reporterBlock:args:return:code:imports:selector:
+    "is gesture %g ?"
+    ("up")
+    b
+    "accelerometer.is_gesture('%g')"
+    ((microbit accelerometer))
+    isGesture:)
+   (reporterBlock:args:return:code:imports:selector:
+    "was gesture %g ?"
+    ("up")
+    b
+    "accelerometer.was_gesture('%g')"
+    ((microbit accelerometer))
+    wasGesture:)
+   (reporterBlock:args:return:code:imports:selector:
+    "gestures"
+    ()
+    r
+    "' '.join(accelerometer.get_gestures())"
+    ((microbit accelerometer))
+    gestures)
+   (separator)
+   (reporterBlock:args:return:code:imports:selector:
+    "accelerometer x"
+    ()
+    r
+    "accelerometer.get_x()"
+    ((microbit accelerometer))
+    accelerometerX)
+   (reporterBlock:args:return:code:imports:selector:
+    "accelerometer y"
+    ()
+    r
+    "accelerometer.get_y()"
+    ((microbit accelerometer))
+    accelerometerY)
+   (reporterBlock:args:return:code:imports:selector:
+    "accelerometer z"
+    ()
+    r
+    "accelerometer.get_z()"
+    ((microbit accelerometer))
+    accelerometerZ)
+
+   (category: "radio")
+   (commandBlock:args:code:imports:selector:
+    "radio on"
+    ()
+    "radio.on()"
+    (radio)
+    radioOn)
+   (commandBlock:args:code:imports:selector:
+    "radio off"
+    ()
+    "radio.off()"
+    (radio)
+    radioOff)
+   (commandBlock:args:code:imports:selector:
+    "config radio group %n"
+    (0)
+    "radio.config(group=%n)"
+    (radio)
+    radioGroup:)
+   (commandBlock:args:code:imports:selector:
+    "send a radio message %s"
+    ("Hello!")
+    "radio.send(%s)"
+    (radio)
+    radioSend:)
+   (reporterBlock:args:return:code:imports:selector:
+    "received radio message"
+    ()
+    r
+    "radio.receive()"
+    (radio)
+    radioReceive)
+   (commandBlock:args:code:imports:selector:
+    "radio reset"
+    ()
+    "radio.reset()"
+    (radio)
+    radioReset)
+
+   (category: "music")
+   (commandBlock:args:code:imports:selector:
+    "play music %s"
+    ("c1:4 e:2 g c2:4")
+    "music.play(%s.split(' '))"
+    (music)
+    musicPlay:)
+   (commandBlock:args:code:imports:selector:
+    "play music %s loop %b wait %b"
+    ("c1:4 e:2 g c2:4")
+    "music.play(%s.split(' '),loop=%b1,wait=%b2)"
+    (music)
+    musicPlay:loop:wait:)
+   (commandBlock:args:code:imports:selector:
+    "stop music"
+    ()
+    "music.stop()"
+    (music)
+    musicStop)
+   (separator)
+   (commandBlock:args:code:imports:selector:
+    "set tempo to %n ticks"
+    (4)
+    "music.set_tempo(ticks=%n)"
+    (music)
+    musicSetTempoTicks:)
+   (commandBlock:args:code:imports:selector:
+    "set tempo to %n bpm"
+    (120)
+    "music.set_tempo(bpm=%n)"
+    (music)
+    musicSetTempoBpm:)
+   (reporterBlock:args:return:code:imports:selector:
+    "tempo"
+    ()
+    r
+    "music.get_tempo()"
+    (music)
+    musicTempo)
+   (commandBlock:args:code:imports:selector:
+    "play pitch %n Hz for %n msec"
+    (440 1000)
+    "music.pitch(%n1,duration=%n2)"
+    (music)
+    musicPitch:duration:)
+   (commandBlock:args:code:imports:selector:
+    "reset music settings"
+    ()
+    "music.reset()"
+    (music)
+    musicReset)
+   (separator)
+   (commandBlock:args:code:imports:selector:
+    "speaker on"
+    ()
+    "microbit.speaker.on()"
+    (microbit)
+    speakerOn)
+   (commandBlock:args:code:imports:selector:
+    "speaker off"
+    (microbit)
+    "microbit.speaker.off()"
+    ()
+    speakerOff)
+
+   (category: "misc")
+   (separator)
+   (commandBlock:args:code:imports:selector:
+    "print %s"
+    ("hello")
+    "print(%s)"
+    ()
+    print:)
+   (commandBlock:args:code:imports:selector:
+    "set random seed to %n"
+    (1234)
+    "random.seed(%n)"
+    (random)
+    randomSeed:)
+   (reporterBlock:args:return:code:imports:selector:
+    "file names"
+    ()
+    r
+    "os.listdir()"
+    (os)
+    fileNames)
+   (separator)
+   (reporterBlock:args:return:code:imports:selector:
+    "count of %s"
+    ("")
+    r
+    "%s.count()"
+    ()
+    countOf:)
+   (reporterBlock:args:return:code:imports:selector:
+    "copy of %s"
+    ("")
+    r
+    "%s.copy()"
+    ()
+    copyOf:)
+
+   (category: "io")
+   (separator)
+   (reporterBlock:args:return:code:imports:selector:
+    "digital read pin %G"
+    (0)
+    r
+    "microbit.pin%G.read_digital()"
+    (microbit)
+    readDigital:)
+   (commandBlock:args:code:imports:selector:
+    "digital write pin %G to %n"
+    (0 0)
+    "microbit.pin%G.write_digital(%n)"
+    (microbit)
+    writeDigital:to:)
+   (reporterBlock:args:return:code:imports:selector:
+    "analog read pin %F"
+    (0)
+    r
+    "microbit.pin%F.read_analog()"
+    (microbit)
+    readAnalog:)
+   (commandBlock:args:code:imports:selector:
+    "analog write pin %G to %n"
+    (0 0)
+    "microbit.pin%G.write_analog(%n)"
+    (microbit)
+    writeAnalog:to:)
+   (commandBlock:args:code:imports:selector:
+    "analog set period pin %G to %n msec"
+    (0 500)
+    "microbit.pin%G.set_analog_period_microseconds(%n)"
+    (microbit)
+    setAnalogPeriod:msec:)
+
+   (category: "display")
+   (separator)
+   (specialCommandBlock:args:code:imports:selector:
+    "scroll %s"
+    ("Hello")
+    "display.scroll(str(%s))"
+    ((microbit display))
+    scrollAndWait)
+   (commandBlock:args:code:imports:selector:
+    "scroll %s no wait"
+    ("World!")
+    "display.scroll(str(%s),wait=False)"
+    ((microbit display))
+    scroll:)
+   (specialCommandBlock:args:code:imports:selector:
+    "show %s"
+    ("A")
+    "display.show(%s)"
+    ((microbit display))
+    animateAndWait)
+   (reporterBlock:args:return:code:imports:selector:
+    "point x %n y %n"
+    (0 0)
+    r
+    "display.get_pixel(%n,%n)"
+    ((microbit display))
+    atX:y:)
+   (commandBlock:args:code:imports:selector:
+    "set x %n y %n to %n"
+    (0 0 0)
+    "display.set_pixel(%n,%n,%n)"
+    ((microbit display))
+    atX:y:put:)
+   (commandBlock:args:code:imports:selector:
+    "clear"
+    ()
+    "display.clear()"
+    ((microbit display))
+    ledClear)
+   (separator)
+   (reporterBlock:args:return:code:imports:selector:
+    "symbol image at %M"
+    (HEART)
+    r
+    "Image.%M"
+    ((microbit Image))
+    symbolImageOf:)
+   (reporterBlock:args:return:code:imports:selector:
+    "clock image of %c"
+    (CLOCK12)
+    r
+    "Image.%c"
+    ((microbit Image))
+    clockImageOf:)
+   (reporterBlock:args:return:code:imports:selector:
+    "arrow image of %A"
+    ("ARROW_N")
+    r
+    "Image.%A"
+    ((microbit Image))
+    arrowImageOf:)
+   (reporterBlock:args:return:code:imports:selector:
+    "shape image of %H"
+    (TRIANGLE)
+    r
+    "Image.%H"
+    ((microbit Image))
+    shapeImageOf:)
+   (reporterBlock:args:return:code:imports:selector:
+    "character image of %I"
+    (RABBIT)
+    r
+    "Image.%I"
+    ((microbit Image))
+    characterImageOf:)
+   (reporterBlock:args:return:code:imports:selector:
+    "clock image at %n"
+    (0)
+    r
+    "Image.ALL_CLOCKS[%n]"
+    ((microbit Image))
+    clockImageAt:)
+   (reporterBlock:args:return:code:imports:selector:
+    "arrow image at %n"
+    (0)
+    r
+    "Image.ALL_ARROWS[%n]"
+    ((microbit Image))
+    arrowImageAt:)
+   (reporterBlock:args:return:code:imports:selector:
+    "image of %C"
+    ()
+    r
+    "Image(%C)"
+    ((microbit Image))
+    imageOf:)
+   (separator)
+   (commandBlock:args:code:imports:selector:
+    "led on"
+    ()
+    "display.on()"
+    ((microbit display))
+    ledOn)
+   (commandBlock:args:code:imports:selector:
+    "led off"
+    ()
+    "display.off()"
+    ((microbit display))
+    ledOff)
+   (reporterBlock:args:return:code:imports:selector:
+    "led is on"
+    ()
+    b
+    "display.is_on()"
+    ((microbit display))
+    isLedOn)
+
+   (category: "neopixel")
+   (commandBlock:args:code:imports:selector:
+    "neopixel set pin %G num %n"
+    (0 5)
+    "_np%G=neopixel.NeoPixel(microbit.pin%G,%n)"
+    (neopixel microbit)
+    neoPixelPin:size:)
+   (commandBlock:args:code:imports:selector:
+    "pin %G no %n r %n g %n b %n"
+    (0 0 255 255 255)
+    "_np%G[%n]=(%n,%n,%n)"
+    ()
+    neopixelPin:no:r:g:b:)
+   (commandBlock:args:code:imports:selector:
+    "show neopixel pin %G"
+    (0)
+    "_np%G.show()"
+    ()
+    neopixelShowPin:)
+   (commandBlock:args:code:imports:selector:
+    "clear neopixel pin %G"
+    (0)
+    "_np%G.clear()"
+    ()
+    neopixelClearPin:)
+
+   (category: "i2c")
+   (reporterBlock:args:return:code:imports:selector:
+    "i2c scan"
+    ()
+    r
+    "i2c.scan()"
+    ((microbit i2c))
+    i2cScan)
+   (reporterBlock:args:return:code:imports:selector:
+    "i2c read %n bytes from %n"
+    (4 0)
+    r
+    "i2c.read(%n2,%n1)"
+    ((microbit i2c))
+    i2cRead:from:)
+   (commandBlock:args:code:imports:selector:
+    "i2c write %n to %n"
+    (1 0)
+    "i2c.write(%n2,bytes([%n1]))"
+    ((microbit i2c))
+    i2cWrite:to:)
+   (commandBlock:args:code:imports:selector:
+    "i2c write %n %n to %n"
+    (1 2 0)
+    "i2c.write(%n3,bytes([%n1,%n2]))"
+    ((microbit i2c))
+    i2cWrite:and:to:)
+   (commandBlock:args:code:imports:selector:
+    "i2c write %n %n %n to %n"
+    (1 2 3 0)
+    "i2c.write(%n4,bytes([%n1,%n2,%n3]))"
+    ((microbit i2c))
+    i2cWrite:and:and:to:)
+   (commandBlock:args:code:imports:selector:
+    "i2c write %v to %n"
+    ("var" 0)
+    "i2c.write(%n,bytes(%v))"
+    ((microbit i2c))
+    i2cWriteList:to:)
+
+   (category: "uart")
+   (separator)
+   (commandBlock:args:code:imports:selector:
+    "uart init baudrate %n"
+    (115200)
+    "uart.init(baudrate=%n)"
+    ((microbit uart))
+    uartInitBaud:)
+   (reporterBlock:args:return:code:imports:selector:
+    "uart read"
+    ()
+    r
+    "uart.read()"
+    ((microbit uart))
+    uartRead)
+   (reporterBlock:args:return:code:imports:selector:
+    "uart read line"
+    ()
+    r
+    "uart.readline()"
+    ((microbit uart))
+    uartReadLine)
+   (commandBlock:args:code:imports:selector:
+    "uart write %s"
+    (hello)
+    "uart.write(%s)"
+    ((microbit uart))
+    uartWrite:)
+
+   (category: "lists")
+   (reporterBlock:args:return:code:imports:selector:
+    "range %n to %n step %n"
+    (0 10 1)
+    r
+    "list(range(%n1,%n2,%n3))"
+    ()
+    range:to:by:)
+   (reporterBlock:args:return:code:imports:selector:
+    "empty list"
+    ()
+    r
+    "[]"
+    ()
+    emptyList)
+   (reporterBlock:args:return:code:imports:selector:
+    "list each %n size %n"
+    (1 5)
+    r
+    "[%n1]*%n2"
+    ()
+    listEach:size:)
+   (reporterBlock:args:return:code:imports:selector:
+    "split %s by space"
+    ("a b c")
+    r
+    "%s.split()"
+    ()
+    splitBySpace:)
+   (reporterBlock:args:return:code:imports:selector:
+    "split %s by %s limit %n"
+    ("a,b,c" ",")
+    r
+    "%s1.split(%s2,%n)"
+    ()
+    split:by:limit:)
+   (separator)
+   (reporterBlock:args:return:code:imports:selector:
+    "item %n of %v"
+    (0 "list")
+    r
+    "%v[%n]"
+    ()
+    getLine:ofList:)
+   (reporterBlock:args:return:code:imports:selector:
+    "%v contains %s"
+    ("list" "thing")
+    b
+    "%s in %v"
+    ()
+    list:contains:)
+   (reporterBlock:args:return:code:imports:selector:
+    "bytes of %v"
+    ("list")
+    r
+    "bytes(%v)"
+    ()
+    bytesOfList:)
+   (separator)
+   (commandBlock:args:code:imports:selector:
+    "add %s to %v"
+    ("thing" "list")
+    "%v.append(%s)"
+    ()
+    append:toList:)
+   (commandBlock:args:code:imports:selector:
+    "delete %y of %v"
+    (0 "list")
+    "del %v[%y]"
+    ()
+    deleteLine:ofList:)
+   (commandBlock:args:code:imports:selector:
+    "insert %s at %n of %v"
+    ("thing" 0 "list")
+    "%v.insert(%n,%s)"
+    ()
+    insert:at:ofList:)
+   (commandBlock:args:code:imports:selector:
+    "replace item %n of %v with %s"
+    (0 "list" "thing")
+    "%v[%n]=%s"
+    ()
+    setLine:ofList:to:)
+   (commandBlock:args:code:imports:selector:
+    "clear list %v"
+    ("list")
+    "%v.clear()"
+    ()
+    clearList:)
+
+   (category: "operators")
+   (separator)
+   (reporterBlock:args:return:code:imports:selector:
+    "%s starts with %s"
+    (hello hell)
+    b
+    "%s1.startswith(%s2)"
+    ()
+    starts:with:)
+   (reporterBlock:args:return:code:imports:selector:
+    "%s ends with %s"
+    (hello lo)
+    b
+    "%s1.endswith(%s2)"
+    ()
+    ends:with:)
+   (reporterBlock:args:return:code:imports:selector:
+    "%s with cr"
+    (hello)
+    r
+    "(%s)+'\r'"
+    ()
+    withCr:)
+   (reporterBlock:args:return:code:imports:selector:
+    "%n in %n and %n"
+    (20 10 30)
+    r
+    "max(min(%n3,%n1),%n2)"
+    ()
+    value:betweenFrom:to:)
+
+   )))

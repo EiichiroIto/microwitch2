@@ -1,0 +1,19 @@
+(Microwitch
+ (module:var:headers:blocks:
+  "mpu6050"
+  "_mpu"
+  ("import mpu6050")
+  ((category: "mpu6050")
+   (commandBlock:args:code:imports:
+    "init mpu"
+    ()
+    "_mpu=mpu6050.accel(_i2c)"
+    ())
+   (reporterBlock:args:return:code:imports:
+    "mpu values"
+    ()
+    r
+    "_mpu.get_values()"
+    ())
+
+)))

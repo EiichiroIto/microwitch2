@@ -1,0 +1,32 @@
+(Microwitch
+ (module:var:headers:blocks:
+  "text32lcd"
+  "_deb"
+  ("import text32lcd")
+  ((category: "text32lcd")
+   (commandBlock:args:code:imports:selector:
+    "init display"
+    ()
+    "_lcd=text32lcd.KitronikText32()"
+    ()
+    text32Init:)
+   (commandBlock:args:code:imports:selector:
+    "clear"
+    ()
+    "_lcd.clear()"
+    ()
+    text32Clear)
+   (commandBlock:args:code:imports:selector:
+    "display %s at top"
+    ("hello")
+    "_lcd.displayString1(%s)"
+    ()
+    text32DisplayString1:)
+   (commandBlock:args:code:imports:selector:
+    "display %s at bottom"
+    ("world")
+    "_lcd.displayString2(%s)"
+    ()
+    text32DisplayString2:)
+
+)))
