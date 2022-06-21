@@ -45,7 +45,7 @@ SpScratchApp class >> clipboard: anObject [
 { #category : #utilities }
 SpScratchApp class >> confirm: aString [
 
-	SpConfirmDialog new
+	^ SpConfirmDialog new
 		  title: 'Important confirmation' localized;
 		  label: aString;
 		  openModal
@@ -403,7 +403,7 @@ SpScratchApp >> closeMediaEditorsAndDialogs [
 { #category : #utilities }
 SpScratchApp >> confirm: aString [
 
-	self class confirm: aString
+	^ self class confirm: aString
 ]
 
 { #category : #'menu actions' }

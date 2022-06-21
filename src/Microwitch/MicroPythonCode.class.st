@@ -171,7 +171,7 @@ MicroPythonCode >> header [
 
 { #category : #private }
 MicroPythonCode >> indentLevelFor: aString [ 
-	^ aString = 'startup' "'Scratch-StartClicked'"
+	^ aString = 'start' "'Scratch-StartClicked'"
 		ifTrue: [0]
 		ifFalse: [1]
 ]

@@ -54,7 +54,7 @@ MicroPythonBlockSpecs >> blocks [
 MicroPythonBlockSpecs >> controlBlocks [
 	^ #(
 		'control'
-			('when %m clicked'		T	-)
+			('when %m clicked'		G	-)
 			-
 			('forever'					c	doForever)
 			('repeat %n each %l'	c	doRepeat 10 'i')
