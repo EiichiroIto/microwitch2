@@ -16,10 +16,6 @@ MicrobitBlockSpecs >> addArgBuilderTo: anArgBuilder [
 			selector: #buttonNames
 			target: self
 			initialChoice: 'a';
-		addChoiceArg: $E
-			selector: #sensorNames
-			target: self
-			initialChoice: '';
 		addChoiceArg: $c
 			selector: #ledClockNames
 			target: self
@@ -52,6 +48,10 @@ MicrobitBlockSpecs >> addArgBuilderTo: anArgBuilder [
 			initialChoice: '';
 		addChoiceArg: $U
 			selector: #microphoneNames
+			target: self
+			initialChoice: '';
+		addChoiceArg: $P
+			selector: #musicNames
 			target: self
 			initialChoice: ''
 ]
@@ -157,12 +157,10 @@ MicrobitBlockSpecs >> microphoneNames [
 
 { #category : #'argument menus' }
 MicrobitBlockSpecs >> musicNames [
-	^ #(dadadadum entertainer prelude ode nyan ringtone funk blues birthday wedding funeral punchline python baddy chase baDing wawawawaa jumpUp jumpDown powerUp powerDown)
-]
 
-{ #category : #'argument menus' }
-MicrobitBlockSpecs >> sensorNames [
-	^ #(accelX accelY accelZ - compassX compassY compassZ)
+	^ #( DADADADUM ENTERTAINER PRELUDE ODE NYAN RINGTONE FUNK BLUES BIRTHDAY
+	     WEDDING FUNERAL PUNCHLINE PYTHON BADDY CHASE BA_DING WAWAWAWAA
+	     JUMP_UP JUMP_DOWN POWER_UP POWER_DOWN )
 ]
 
 { #category : #private }

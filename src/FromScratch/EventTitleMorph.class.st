@@ -109,14 +109,14 @@ EventTitleMorph >> presentMenu [
 
 	"Pop up a menu of choices."
 
-	| eventNames list ret choice |
+	| eventNames list choice |
 	eventNames := { ('new' localized , ScratchTranslator ellipsesSuffix) }.
 	self project ifNotNil: [ :project | 
 		eventNames := eventNames , project allEventNames ].
 	list := eventNames withIndexCollect: [ :each :i | 
 		        Array with: each with: i ].
 	choice := SpSelectDialog new
-		          label: 'Select one' localized;
+		          label: 'Select Message name' localized;
 		          items: list;
 		          display: [ :each | each first ];
 		          openModal.
