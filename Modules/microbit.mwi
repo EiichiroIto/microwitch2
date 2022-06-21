@@ -262,6 +262,12 @@
 
    (category: "music")
    (commandBlock:args:code:imports:selector:
+    "play music %P"
+    ("NYAN")
+    "music.play(music.%P)"
+    (music)
+    musicPlayMelody:)
+   (commandBlock:args:code:imports:selector:
     "play music %s"
     ("c1:4 e:2 g c2:4")
     "music.play(%s.split(' '))"
