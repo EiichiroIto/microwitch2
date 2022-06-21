@@ -47,13 +47,9 @@ Microwitch class >> initialize [
 	ScratchTheme
 		themesURL: self themesURL;
 		setupThemeNamed: self appFolderName.
+	self setupOptions.
 	"workaround for travis test errors"
-	ObjStream setupVariables.
-	self useErrorCatcher: false.
-	self dontClose: false.
-	self inputFlowControlType: 0.
-	self outputFlowControlType: 0.
-	self defaultModules: ''
+	ObjStream setupVariables
 ]
 
 { #category : #settings }
@@ -106,6 +102,15 @@ Microwitch class >> presentationClass [
 { #category : #settings }
 Microwitch class >> projectClass [
 	^ MicroPythonProject
+]
+
+{ #category : #settings }
+Microwitch class >> setupOptions [
+
+	super setupOptions.
+	self inputFlowControlType: 0.
+	self outputFlowControlType: 0.
+	self defaultModules: ''
 ]
 
 { #category : #private }

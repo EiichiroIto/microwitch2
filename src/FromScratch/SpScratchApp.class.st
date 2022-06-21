@@ -289,6 +289,16 @@ SpScratchApp class >> settingsFilename [
 ]
 
 { #category : #settings }
+SpScratchApp class >> setupOptions [
+
+	self dontClose: false.
+	self keepMaximize: false.
+	self projectDir: ''.
+	self stickyWindow: false.
+	self useErrorCatcher: false
+]
+
+{ #category : #settings }
 SpScratchApp class >> stickyWindow [
 	^ self settings at: #stickyWindow ifAbsent: [ false ]
 ]
