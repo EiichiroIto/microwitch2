@@ -1,0 +1,19 @@
+(Microwitch (main) (usonic)
+ ((for main ( )
+   (
+   (when start
+    ((doForever
+      ((writeDigital:to: 8 0)
+       (writeDigital:to: 12 0)
+       (mwait:elapsed:from: 1000)
+       (writeDigital:to: 8 1)
+       (mwait:elapsed:from: 1000)
+       (writeDigital:to: 8 0)
+       (mwait:elapsed:from: 1000)
+       (writeDigital:to: 12 1)
+       (mwait:elapsed:from: 1000)
+       (writeDigital:to: 12 0)
+       (mwait:elapsed:from: 1000)
+       (writeDigital:to: 8 1)
+       (writeDigital:to: 12 1)
+       (mwait:elapsed:from: 1000)))))))))

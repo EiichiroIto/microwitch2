@@ -1,20 +1,20 @@
 (Microwitch
  (module:var:headers:blocks:
   "usonic"
-  "_us"
+  ""
   ("import usonic")
   ((category: "usonic")
    (commandBlock:args:code:imports:selector:
     "init usonic trigger %n echo %n"
     (1 2)
-    "_us=usonic.HCSR04(trigger=pin%n1,echo=pin%n2)"
+    "usonic.init(trigger=pin%n1,echo=pin%n2)"
     ((microbit "*"))
     usonicInitTrigger:echo:)
    (reporterBlock:args:return:code:imports:selector:
     "usonic distance"
     ()
     r
-    "_us.distance()"
+    "usonic.distance()"
     ()
     usonicDistance)
 )))

@@ -1,0 +1,11 @@
+(Microwitch (main) (usonic)
+ ((for main ( )
+   (
+   (when start
+    ((usonicInitTrigger:echo: 1 2)
+     (doForever
+      ((doIfElse (less:than: (usonicDistance) "10")
+        ((writeDigital:to: 8 1)
+         (writeDigital:to: 12 1))
+        ((writeDigital:to: 8 0)
+         (writeDigital:to: 12 0)))))))))))

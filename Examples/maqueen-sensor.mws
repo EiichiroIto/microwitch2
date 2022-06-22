@@ -1,0 +1,12 @@
+(Microwitch (main) (exboard)
+ ((for main ( )
+   (
+   (when start
+    ((doForever
+      ((doIfElse (and:with: (equal:to: (readDigital: 14) "1") (equal:to: (readDigital: 13) 1))
+        ((animateAndWait (imageOf: "00000:00000:90009:90009:99099")))
+        ((doIfElse (and:with: (equal:to: (readDigital: 14) 1) (equal:to: (readDigital: 13) 0))
+          ((animateAndWait (imageOf: "00000:00000:90000:90000:99000")))
+          ((doIfElse (and:with: (equal:to: (readDigital: 14) 0) (equal:to: (readDigital: 13) 1))
+            ((animateAndWait (imageOf: "00000:00000:00009:00009:00099")))
+            ((ledClear)))))))))))))))
