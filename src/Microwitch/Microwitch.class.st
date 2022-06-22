@@ -393,8 +393,6 @@ Microwitch >> startProcessFor: aTopBlock [
 Microwitch >> startProgram [
 	self checkValidScripts
 		ifFalse: [ ^ self ].
-	(self confirm: 'send and start program?' localized)
-		ifFalse: [ ^ self ].
 	presenter autoConnect ifFalse: [ ^ self ].
 	self uploadModuleFiles.
 	self uploadProgram.
