@@ -13,16 +13,6 @@ Class {
 }
 
 { #category : #accessing }
-MicroPythonProject class >> appVersion [
-	^ 2
-]
-
-{ #category : #accessing }
-MicroPythonProject class >> appVersionTag [
-	^ 'MicroWizV'
-]
-
-{ #category : #accessing }
 MicroPythonProject class >> availableModuleNames [
 	^ self availableModules keys
 ]
@@ -37,9 +27,19 @@ MicroPythonProject class >> availableModules: aDictionary [
 	AvailableModules := aDictionary
 ]
 
-{ #category : #accessing }
+{ #category : #constants }
 MicroPythonProject class >> extModExtension [
 	^ 'mwm'
+]
+
+{ #category : #constants }
+MicroPythonProject class >> fileVersion [
+	^ 1
+]
+
+{ #category : #constants }
+MicroPythonProject class >> fileVersionTag [
+	^ 'MicrowitchV'
 ]
 
 { #category : #initialization }
@@ -51,7 +51,7 @@ MicroPythonProject class >> initialize [
 	self loadAvailableModules
 ]
 
-{ #category : #private }
+{ #category : #constants }
 MicroPythonProject class >> intModExtension [
 	^ 'mwi'
 ]
@@ -113,7 +113,7 @@ MicroPythonProject class >> moduleDirectory [
 	^ dir
 ]
 
-{ #category : #accessing }
+{ #category : #constants }
 MicroPythonProject class >> objStreamClass [
 	^ STONObjStream
 ]

@@ -3,15 +3,16 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'proxy',
-		'pasteLines',
-		'selector'
+		'selector',
+		'sendLines',
+		'mode'
 	],
 	#category : #'Microwitch-MPython'
 }
 
 { #category : #api }
 MicroPythonAutoPilot >> clear [
-	pasteLines := nil.
+	sendLines := nil.
 	selector := nil
 ]
 
@@ -26,27 +27,27 @@ MicroPythonAutoPilot >> execute: aCollection [
 	| lines |
 	lines := aCollection collect: #asByteArray.
 	lines := lines asOrderedCollection.
-	pasteLines
-		ifNil: [ pasteLines := lines ]
-		ifNotNil: [ pasteLines addAll: lines ]
+	sendLines
+		ifNil: [ sendLines := lines ]
+		ifNotNil: [ sendLines addAll: lines ]
 ]
 
 { #category : #testing }
 MicroPythonAutoPilot >> isEmpty [
-	pasteLines ifNil: [ ^ true ].
-	^ pasteLines isEmpty
+	sendLines ifNil: [ ^ true ].
+	^ sendLines isEmpty
 ]
 
 { #category : #accessing }
-MicroPythonAutoPilot >> pasteLines [
+MicroPythonAutoPilot >> mode [
 
-	^ pasteLines
+	^ mode
 ]
 
 { #category : #accessing }
-MicroPythonAutoPilot >> pasteLines: anObject [
+MicroPythonAutoPilot >> mode: anObject [
 
-	pasteLines := anObject asOrderedCollection
+	mode := anObject
 ]
 
 { #category : #accessing }
@@ -73,8 +74,52 @@ MicroPythonAutoPilot >> selector: anObject [
 	selector := anObject
 ]
 
+{ #category : #accessing }
+MicroPythonAutoPilot >> sendLines [
+
+	^ sendLines
+]
+
+{ #category : #accessing }
+MicroPythonAutoPilot >> sendLines: anObject [
+
+	sendLines := anObject asOrderedCollection
+]
+
+{ #category : #api }
+MicroPythonAutoPilot >> sendNormal [
+
+	mode := #stepNormal
+]
+
+{ #category : #api }
+MicroPythonAutoPilot >> sendPaste [
+
+	mode := #stepPaste
+]
+
 { #category : #api }
 MicroPythonAutoPilot >> step [
+
+	mode ifNil: [ ^ self ].
+	self perform: mode
+]
+
+{ #category : #private }
+MicroPythonAutoPilot >> stepNormal [
+
+	proxy isReady ifTrue: [ 
+		self isEmpty
+			ifTrue: [ 
+				sendLines := nil.
+				selector ifNotNil: [ 
+					self perform: selector.
+					selector := nil ] ]
+			ifFalse: [ proxy sendLine: sendLines removeFirst ] ]
+]
+
+{ #category : #private }
+MicroPythonAutoPilot >> stepPaste [
 
 	proxy isReady ifTrue: [ 
 		self isEmpty ifTrue: [ 
@@ -86,9 +131,9 @@ MicroPythonAutoPilot >> step [
 	proxy isPasteReady ifFalse: [ ^ self ].
 	self isEmpty
 		ifTrue: [ 
-			pasteLines := nil.
+			sendLines := nil.
 			proxy exitPasteMode ]
-		ifFalse: [ proxy sendPasteLine: pasteLines removeFirst ]
+		ifFalse: [ proxy sendPasteLine: sendLines removeFirst ]
 ]
 
 { #category : #api }

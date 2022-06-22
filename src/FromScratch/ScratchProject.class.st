@@ -10,18 +10,18 @@ Class {
 	#category : #'FromScratch-Project'
 }
 
-{ #category : #accessing }
-ScratchProject class >> appVersion [
+{ #category : #constants }
+ScratchProject class >> fileVersion [
 	self subclassResponsibility
 ]
 
 { #category : #accessing }
-ScratchProject class >> appVersionString [
-	^ self appVersionTag , self appVersion asTwoCharacterString
+ScratchProject class >> fileVersionString [
+	^ self fileVersionTag , self fileVersion asTwoCharacterString
 ]
 
-{ #category : #accessing }
-ScratchProject class >> appVersionTag [
+{ #category : #constants }
+ScratchProject class >> fileVersionTag [
 	self subclassResponsibility
 ]
 
@@ -29,7 +29,7 @@ ScratchProject class >> appVersionTag [
 ScratchProject class >> formFromStream: aStream [
 	| version info |
 	version := self objStreamClass fileVersion: self from: aStream.
-	version = self appVersion
+	version = self fileVersion
 		ifFalse: [ ^ nil ].
 	aStream skip: 4.
 	info := self objStreamClass new
@@ -38,7 +38,7 @@ ScratchProject class >> formFromStream: aStream [
 	^ info at: 'thumbnail'
 ]
 
-{ #category : #accessing }
+{ #category : #constants }
 ScratchProject class >> objStreamClass [
 	self subclassResponsibility
 ]
@@ -70,11 +70,6 @@ ScratchProject >> allSubNames [
 	result := Set new.
 	self scripts do: [ :each | result addAll: each subNames ].
 	^ result asArray sort
-]
-
-{ #category : #accessing }
-ScratchProject >> appVersion [
-	^ self class appVersion
 ]
 
 { #category : #accessing }
@@ -141,8 +136,8 @@ ScratchProject >> extractInfoFrom: aByteArray [
 	obj := self newObjStream.
 	s := ReadStream on: aByteArray.
 	version := obj class fileVersion: self class from: s.
-	version = self class appVersion
-		ifFalse: [ ^ self inform: 'Invalid app version!' localized ].
+	version = self class fileVersion
+		ifFalse: [ ^ self inform: 'Invalid file version!' localized ].
 	s skip: 4.
 	info := obj readObjFrom: s showProgress: false
 ]
@@ -153,8 +148,8 @@ ScratchProject >> extractProjectFrom: aByteArray [
 	obj := self newObjStream.
 	s := ReadStream on: aByteArray.
 	version := obj class fileVersion: self class from: s.
-	version = self class appVersion
-		ifFalse: [ ^ self inform: 'Invalid app version!' localized ].
+	version = self class fileVersion
+		ifFalse: [ ^ self inform: 'Invalid file version!' localized ].
 	s skip: s uint32.
 	proj := obj readObjFrom: s showProgress: true.
 	self handOverTo: proj.
@@ -176,6 +171,11 @@ ScratchProject >> fieldsVersion [
 ]
 
 { #category : #accessing }
+ScratchProject >> fileVersion [
+	^ self class fileVersion
+]
+
+{ #category : #accessing }
 ScratchProject >> findObjName: aString [
 	^ self scripts detect: [ :each | each objName = aString ] ifNone: [ nil ]
 ]
@@ -193,8 +193,8 @@ ScratchProject >> getScratchInfoFrom: aFileReference [
 	SpScratchApp
 		try: [ f := aFileReference binaryReadStream.
 			version := obj class fileVersion: self class from: f.
-			version = self class appVersion
-				ifFalse: [ self inform: 'Invalid app version!' localized.
+			version = self class fileVersion
+				ifFalse: [ self inform: 'Invalid file version!' localized.
 					^ nil ].
 			buf := f next: f uint32.
 			result := obj readObjFrom: (ReadStream on: buf).
@@ -340,7 +340,7 @@ ScratchProject >> writeProjectAs: aFileReference [
 				ifNil: [ 
 				saveError := 'Folder may be locked or read-only' localized ]
 				ifNotNil: [ 
-					out nextPutAll: self class appVersionString asByteArray.
+					out nextPutAll: self class fileVersionString asByteArray.
 					self storeProjectInfoOn: out.
 					self newObjStream storeObj: self on: out.
 					out close ] ]

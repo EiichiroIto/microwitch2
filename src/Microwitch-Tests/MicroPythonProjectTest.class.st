@@ -46,6 +46,12 @@ MicroPythonProjectTest >> testDeleteModule [
 ]
 
 { #category : #test }
+MicroPythonProjectTest >> testFileVersionString [
+
+	self assert: self newProject class fileVersionString equals: 'MicrowitchV01'
+]
+
+{ #category : #test }
 MicroPythonProjectTest >> testModules [
 	| p |
 	p := self newProject.

@@ -145,6 +145,31 @@ SpScratchFrame >> formFrom: aMorph extent: size [
 	^ thumbForm
 ]
 
+{ #category : #'menu building' }
+SpScratchFrame >> helpMenu [
+
+	^ self newMenu
+		  addItem: [ :item | 
+			  item
+				  name: 'About ' , application appName;
+				  action: [ owner window showAbout ] ];
+		  addItem: [ :item | 
+			  item
+				  name: 'Restart';
+				  action: [ stageFrame startStepping ] ];
+		  addItem: [ :item | 
+			  item
+				  name: 'Inspect';
+				  enabled: [ application class hideDebugMenu not ];
+				  action: [ application inspect ] ];
+		  addItem: [ :item | 
+			  item
+				  name: 'Settings';
+				  enabled: [ application class hideDebugMenu not ];
+				  subMenu: self settingsMenu ];
+		  yourself
+]
+
 { #category : #accessing }
 SpScratchFrame >> info: aString [
 	self display info: aString
@@ -154,7 +179,7 @@ SpScratchFrame >> info: aString [
 SpScratchFrame >> initializeWindow: aWindow [
 	aWindow
 		initialExtent: self defaultExtent;
-		aboutText: application aboutAppString;
+		aboutText: application class aboutAppString;
 		whenClosedDo: [ application windowClosing ]
 ]
 

@@ -13,6 +13,11 @@ Class {
 	#category : #'FromScratch-Spec2'
 }
 
+{ #category : #constants }
+SpScratchApp class >> aboutAppString [
+	self subclassResponsibility
+]
+
 { #category : #utilities }
 SpScratchApp class >> alert: aString [
 
@@ -22,14 +27,19 @@ SpScratchApp class >> alert: aString [
 		openModal
 ]
 
-{ #category : #settings }
+{ #category : #constants }
 SpScratchApp class >> appFolderName [
 	self subclassResponsibility
 ]
 
-{ #category : #settings }
+{ #category : #constants }
 SpScratchApp class >> appName [
 	self subclassResponsibility
+]
+
+{ #category : #constants }
+SpScratchApp class >> basedVersion [
+	^ '1.4 (source code of 23-Sep-09)'
 ]
 
 { #category : #accessing }
@@ -87,12 +97,22 @@ SpScratchApp class >> dontClose: aBoolean [
 	self settings at: #dontClose put: aBoolean
 ]
 
-{ #category : #settings }
+{ #category : #constants }
 SpScratchApp class >> extension [
 	self subclassResponsibility
 ]
 
-{ #category : #private }
+{ #category : #settings }
+SpScratchApp class >> hideDebugMenu [
+	^ self settings at: #hideDebugMenu ifAbsentPut: [ false ]
+]
+
+{ #category : #settings }
+SpScratchApp class >> hideDebugMenu: aBoolean [
+	self settings at: #hideDebugMenu put: aBoolean
+]
+
+{ #category : #constants }
 SpScratchApp class >> icon [
 	^ (Form
 	extent: (16@16)
@@ -192,18 +212,18 @@ SpScratchApp class >> optionsFor: aSymbol [
 	^ #()
 ]
 
-{ #category : #private }
+{ #category : #constants }
 SpScratchApp class >> presentationClass [
 	self subclassResponsibility
 ]
 
-{ #category : #settings }
+{ #category : #constants }
 SpScratchApp class >> previewClass [
 	"self projectClass if use preview"
 	^ nil
 ]
 
-{ #category : #settings }
+{ #category : #constants }
 SpScratchApp class >> projectClass [
 	self subclassResponsibility
 ]
@@ -332,11 +352,6 @@ SpScratchApp class >> useErrorCatcher: aBoolean [
 	self settings at: #useErrorCatcher put: aBoolean
 ]
 
-{ #category : #private }
-SpScratchApp >> aboutAppString [
-	self subclassResponsibility
-]
-
 { #category : #'button actions' }
 SpScratchApp >> addList: aScript [
 
@@ -396,11 +411,6 @@ SpScratchApp >> appName [
 { #category : #private }
 SpScratchApp >> backupProject [
 	self subclassResponsibility
-]
-
-{ #category : #private }
-SpScratchApp >> basedVersion [
-	^ '1.4 (source code of 23-Sep-09)'
 ]
 
 { #category : #private }
@@ -740,7 +750,7 @@ SpScratchApp >> project [
 { #category : #accessing }
 SpScratchApp >> projectDirectory [
 	^ projectDirectory
-		ifNil: [ projectDirectory := self class projectDir asFileReference ]
+		ifNil: [ self class projectDir asFileReference ]
 ]
 
 { #category : #accessing }

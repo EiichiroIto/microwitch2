@@ -168,76 +168,66 @@ SpMicrowitchFrame >> exportMenu [
 { #category : #'menu building' }
 SpMicrowitchFrame >> fileMenu [
 
-	^ self newMenu
-		  addGroup: [ :grp | 
-			  grp
-				  addItem: [ :item | 
-					  item
-						  name: 'New' localized;
-						  action: [ 
-							  application newProject.
-							  self plotter clearPlots ] ];
-				  addItem: [ :item | 
-					  item
-						  name: 'Open' localized;
-						  action: [ 
-							  application openProject.
-							  self plotter clearPlots ] ];
-				  addItem: [ :item | 
-					  item
-						  name: 'Save' localized;
-						  action: [ application saveProjectNoDialog ] ];
-				  addItem: [ :item | 
-					  item
-						  name: 'Save As' localized;
-						  action: [ application saveProject ] ] ];
-		  addGroup: [ :grp | 
-			  grp
-				  addItem: [ :item | 
-					  item
-						  name: 'Import' localized;
-						  subMenu: self importMenu ];
-				  addItem: [ :item | 
-					  item
-						  name: 'Export' localized;
-						  subMenu: self exportMenu ] ];
-		  addItem: [ :item | 
-			  item
-				  name: 'Close' localized;
-				  action: [ application closeAllWindows ];
-				  enabled: [ application class dontClose not ] ];
-		  addItem: [ :item | 
-			  item
-				  name: 'Quit' localized;
-				  action: [ application quit ] ];
-		  yourself
+	| m |
+	m := self newMenu.
+	m addGroup: [ :grp | 
+		grp
+			addItem: [ :item | 
+				item
+					name: 'New' localized;
+					action: [ 
+						application newProject.
+						self plotter clearPlots ] ];
+			addItem: [ :item | 
+				item
+					name: 'Open' localized;
+					action: [ 
+						application openProject.
+						self plotter clearPlots ] ] ].
+	application examplesDirectory isDirectory ifTrue: [ 
+		m addGroup: [ :grp | 
+			grp addItem: [ :item | 
+				item
+					name: 'Examples' localized;
+					subMenu: self examplesMenu ] ] ].
+	m
+		addGroup: [ :grp | 
+			grp
+				addItem: [ :item | 
+					item
+						name: 'Save' localized;
+						action: [ application saveProjectNoDialog ] ];
+				addItem: [ :item | 
+					item
+						name: 'Save As' localized;
+						action: [ application saveProject ] ] ];
+		addGroup: [ :grp | 
+			grp
+				addItem: [ :item | 
+					item
+						name: 'Import' localized;
+						subMenu: self importMenu ];
+				addItem: [ :item | 
+					item
+						name: 'Export' localized;
+						subMenu: self exportMenu ] ];
+		addGroup: [ :grp | 
+			grp
+				addItem: [ :item | 
+					item
+						name: 'Close' localized;
+						action: [ application closeAllWindows ];
+						enabled: [ application class dontClose not ] ];
+				addItem: [ :item | 
+					item
+						name: 'Quit' localized;
+						action: [ application quit ] ] ].
+	^ m
 ]
 
 { #category : #api }
 SpMicrowitchFrame >> getDirectory [
 	^ stageFrame getDirectory
-]
-
-{ #category : #'menu building' }
-SpMicrowitchFrame >> helpMenu [
-	^ self newMenu
-		addItem: [ :item | 
-			item
-				name: 'About ' , application appName;
-				action: [ owner window showAbout ] ];
-		addItem: [ :item | 
-			item
-				name: 'Restart';
-				action: [ stageFrame startStepping ] ];
-		addItem: [ :item | 
-			item
-				name: 'Inspect';
-				action: [ application inspect ] ];
-		addItem: [ :item | 
-			item
-				name: 'Settings';
-				subMenu: self settingsMenu ];
-		yourself
 ]
 
 { #category : #'menu building' }

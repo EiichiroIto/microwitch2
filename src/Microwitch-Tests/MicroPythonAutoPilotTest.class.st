@@ -27,14 +27,14 @@ MicroPythonAutoPilotTest >> testClear [
 
 	| o |
 	o := self newObj.
-	self assert: o pasteLines isNil.
+	self assert: o sendLines isNil.
 	self assert: o selector isNil.
-	o pasteLines: #(1 2 3).
+	o sendLines: #(1 2 3).
 	o selector: #abc.
-	self deny: o pasteLines isNil.
+	self deny: o sendLines isNil.
 	self deny: o selector isNil.
 	o clear.
-	self assert: o pasteLines isNil.
+	self assert: o sendLines isNil.
 	self assert: o selector isNil
 ]
 
@@ -62,23 +62,24 @@ MicroPythonAutoPilotTest >> testIsEmpty [
 	| o |
 	o := self newObj.
 	self assert: o isEmpty.
-	o pasteLines: #( 1 2 3 ).
+	o sendLines: #( 1 2 3 ).
 	self deny: o isEmpty.
-	o pasteLines: #(  ).
+	o sendLines: #(  ).
 	self assert: o isEmpty.
 	o clear.
 	self assert: o isEmpty
 ]
 
 { #category : #test }
-MicroPythonAutoPilotTest >> testPasteLines [
+MicroPythonAutoPilotTest >> testMode [
 
-	| o a |
+	| o |
 	o := self newObj.
-	self assert: o pasteLines isNil.
-	a := #(1 2 3).
-	o pasteLines: a.
-	self assert: o pasteLines equals: a asOrderedCollection
+	self assert: o mode isNil.
+	o mode: #stepPaste.
+	self assert: o mode equals: #stepPaste.
+	o mode: #stepNormal.
+	self assert: o mode equals: #stepNormal
 ]
 
 { #category : #test }
@@ -100,6 +101,37 @@ MicroPythonAutoPilotTest >> testSelector [
 	self assert: o selector isNil.
 	o selector: #abc.
 	self assert: o selector equals: #abc
+]
+
+{ #category : #test }
+MicroPythonAutoPilotTest >> testSendLines [
+
+	| o a |
+	o := self newObj.
+	self assert: o sendLines isNil.
+	a := #(1 2 3).
+	o sendLines: a.
+	self assert: o sendLines equals: a asOrderedCollection
+]
+
+{ #category : #test }
+MicroPythonAutoPilotTest >> testSendNormal [
+
+	| o |
+	o := self newObj.
+	self assert: o mode isNil.
+	o sendNormal.
+	self assert: o mode equals: #stepNormal
+]
+
+{ #category : #test }
+MicroPythonAutoPilotTest >> testSendPaste [
+
+	| o |
+	o := self newObj.
+	self assert: o mode isNil.
+	o sendPaste.
+	self assert: o mode equals: #stepPaste
 ]
 
 { #category : #test }

@@ -95,9 +95,9 @@ SpMicrowitchStage >> connectIfFail: aBlock [
 		self autoSelectPortName.
 		proxy isIdle ifTrue: [ 
 			^ aBlock cull: 'cannot select port' localized ] ].
-	proxy isNotConnected ifFalse: [ ^ self ].
-	proxy open ifFalse: [ 
-		^ aBlock cull: 'cannot open:' localized , proxy comm portName ].
+	proxy isNotConnected ifTrue: [ 
+		proxy open ifFalse: [ 
+			^ aBlock cull: 'cannot open:' localized , proxy comm portName ] ].
 	owner disableConnect
 ]
 

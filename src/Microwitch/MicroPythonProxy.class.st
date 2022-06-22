@@ -138,7 +138,9 @@ MicroPythonProxy >> deleteFileNamed: aString [
 
 	| lines |
 	lines := self makeDeleteFileNamed: aString.
-	autoPilot execute: lines
+	autoPilot
+		execute: lines;
+		sendPaste
 ]
 
 { #category : #api }
@@ -152,7 +154,7 @@ MicroPythonProxy >> downloadFileNamed: aString ifError: aBlock [
 
 	| lines |
 	lines := self makeDownloadFileNamed: aString.
-	^ self evaluate: lines ifError: aString
+	^ self evaluate: lines ifError: aBlock
 ]
 
 { #category : #api }
@@ -179,7 +181,9 @@ MicroPythonProxy >> evaluate: aCollection ifError: aBlock [
 { #category : #api }
 MicroPythonProxy >> execute: aCollection [
 
-	autoPilot execute: aCollection
+	autoPilot
+		execute: aCollection;
+		sendPaste
 ]
 
 { #category : #api }
@@ -481,7 +485,9 @@ MicroPythonProxy >> upload: aString fileNamed: aString2 [
 
 	| lines |
 	lines := self makeUpload: aString fileNamed: aString2.
-	autoPilot execute: lines
+	autoPilot
+		execute: lines;
+		sendNormal
 ]
 
 { #category : #api }

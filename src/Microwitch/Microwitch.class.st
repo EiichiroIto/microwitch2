@@ -7,17 +7,30 @@ Class {
 	#category : #'Microwitch-Spec2'
 }
 
-{ #category : #accessing }
+{ #category : #constants }
+Microwitch class >> aboutAppString [
+
+	^ self appName , ' ' , self appVersion , '
+Copyright © 2022 Eiichiro Ito (ghc02331@nifty.com)
+All rights reserved.
+
+Based on Scratch from the MIT Media Lab, v' , self basedVersion , '
+Copyright © 2009 Massachusetts Institute of Technology.
+All rights reserved.
+'
+]
+
+{ #category : #constants }
 Microwitch class >> appFolderName [
 	^ 'microwitch2'
 ]
 
-{ #category : #accessing }
+{ #category : #constants }
 Microwitch class >> appName [
 	^ 'Microwitch'
 ]
 
-{ #category : #accessing }
+{ #category : #constants }
 Microwitch class >> appVersion [
 	^ '0.1.1'
 ]
@@ -34,7 +47,7 @@ Microwitch class >> defaultModules: aString [
 	self settings at: #defaultModules put: aString
 ]
 
-{ #category : #accessing }
+{ #category : #constants }
 Microwitch class >> extension [
 	^ 'mw2'
 ]
@@ -94,12 +107,12 @@ Microwitch class >> outputFlowControlType: aNumber [
 	self settings at: #outputFlowControlType put: aNumber
 ]
 
-{ #category : #private }
+{ #category : #constants }
 Microwitch class >> presentationClass [
 	^ SpMicrowitchFrame
 ]
 
-{ #category : #settings }
+{ #category : #constants }
 Microwitch class >> projectClass [
 	^ MicroPythonProject
 ]
@@ -113,22 +126,14 @@ Microwitch class >> setupOptions [
 	self defaultModules: ''
 ]
 
-{ #category : #private }
-Microwitch class >> themesURL [
-	^ 'https://github.com/EiichiroIto/microwitch2/raw/main/misc/Themes.zip'
+{ #category : #constants }
+Microwitch class >> sexpExtension [
+	^ 'mws'
 ]
 
-{ #category : #private }
-Microwitch >> aboutAppString [
-
-	^ self appName , ' ' , self class appVersion , '
-Copyright © 2022 Eiichiro Ito (ghc02331@nifty.com)
-All rights reserved.
-
-Based on Scratch from the MIT Media Lab, v' , self basedVersion , '
-Copyright © 2009 Massachusetts Institute of Technology.
-All rights reserved.
-'
+{ #category : #constants }
+Microwitch class >> themesURL [
+	^ 'https://github.com/EiichiroIto/microwitch2/raw/main/misc/Themes.zip'
 ]
 
 { #category : #accessing }
@@ -236,17 +241,12 @@ Microwitch >> exportMicroPython [
 
 { #category : #'menu actions' }
 Microwitch >> exportSexpCode [
-	self export: (MicroPythonSexpExporter appName: self appName) extension: self sexpExtension
-]
-
-{ #category : #private }
-Microwitch >> hexExtension [
-	^ 'hex'
+	self export: (MicroPythonSexpExporter appName: self appName) extension: self class sexpExtension
 ]
 
 { #category : #'menu actions' }
 Microwitch >> importSexpCode [
-	self import: (MicroPythonSexpImporter appName: self appName) extension: self sexpExtension
+	self import: (MicroPythonSexpImporter appName: self appName) extension: self class sexpExtension
 ]
 
 { #category : #private }
@@ -357,11 +357,6 @@ Microwitch >> selectRemoteFile [
 	choices := presenter getDirectory.
 	(choices isNil or: [ choices isEmpty ]) ifTrue: [ ^ nil ].
 	^ self select: 'Select file' localized chooseFrom: choices
-]
-
-{ #category : #private }
-Microwitch >> sexpExtension [
-	^ 'mws'
 ]
 
 { #category : #private }
