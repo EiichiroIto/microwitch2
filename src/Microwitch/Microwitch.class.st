@@ -32,7 +32,7 @@ Microwitch class >> appName [
 
 { #category : #constants }
 Microwitch class >> appVersion [
-	^ '0.1.1'
+	^ '2.0.1'
 ]
 
 { #category : #settings }
