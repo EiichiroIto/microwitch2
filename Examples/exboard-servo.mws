@@ -1,0 +1,14 @@
+(Microwitch (main) (exboard)
+ ((for main ( )
+   (
+   (when start
+    ((debInit: 64)
+     (doForever
+      ((debServoCh:degrees: 1 90)
+       (mwait:elapsed:from: 1000)
+       (debServoCh:degrees: 1 180)
+       (mwait:elapsed:from: 1000)
+       (debServoCh:degrees: 1 90)
+       (mwait:elapsed:from: 1000)
+       (debServoCh:degrees: 1 0)
+       (mwait:elapsed:from: 1000)))))))))
