@@ -3,7 +3,7 @@ microwitch2 is newer [micro:witch](https://github.com/EiichiroIto/microwitch) im
 
 ![screenshot1](https://github.com/EiichiroIto/microwitch2/raw/main/misc/PharoScreenshot.png)
 
-micro:witch2 is built on Pharo Smalltalk 10. (with Spec2).
+micro:witch2 is built on Pharo Smalltalk 10 (with Spec2).
 
 ## Install on Windows
 1. Go to [release page](https://github.com/EiichiroIto/microwitch2/releases), and download a latest release file.
