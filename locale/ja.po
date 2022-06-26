@@ -1,0 +1,986 @@
+msgid "Language-Name"
+msgstr "日本語"
+
+msgid "ArgFont"
+msgstr "IPAPGothic:14"
+
+msgid "ButtonFont"
+msgstr "IPAPGothic:16"
+
+msgid "CodeFont"
+msgstr "IPAGothic:15"
+
+msgid "LabelFont"
+msgstr "IPAPGothic:14"
+
+msgid "TitleFont"
+msgstr "IPAMincho:12"
+
+msgid "[idle]"
+msgstr "[未接続]"
+
+msgid "[connected]"
+msgstr "[接続済み]"
+
+msgid "[notConnected]"
+msgstr "[接続待ち]"
+
+msgid "[pasteReady]"
+msgstr "[paste受付中]"
+
+msgid "[ready]"
+msgstr "[受付中]"
+
+msgid "[running]"
+msgstr "[実行中]"
+
+msgid "[waiting]"
+msgstr "[待機中]"
+
+msgid "[waitingEnterPaste]"
+msgstr "[enterPaste待機中]"
+
+msgid "[waitingPaste]"
+msgstr "[paste待機中]"
+
+msgid "Choose list var to delete."
+msgstr "削除するリスト変数を選んでください."
+
+msgid "Choose variable to delete."
+msgstr "削除する変数を選んでください."
+
+msgid "Clear plots"
+msgstr "プロットを消す"
+
+msgid "Close"
+msgstr "閉じる"
+
+msgid "Could not create folder!"
+msgstr "フォルダを作れません!"
+
+msgid "Could not read file: "
+msgstr "ファイルを読めません: "
+
+msgid "Could not write file: "
+msgstr "ファイルを書けません: "
+
+msgid "Delete a list"
+msgstr "リストを削除する"
+
+msgid "Delete a variable"
+msgstr "変数を削除する"
+
+msgid "Enter for "
+msgstr "入力してください:"
+
+msgid "Error!"
+msgstr "エラー!"
+
+msgid "Examples"
+msgstr "例"
+
+msgid "Export ..."
+msgstr "エクスポート ..."
+
+msgid "Export S-expression"
+msgstr "S式でエクスポートする"
+
+msgid "Export"
+msgstr "エクスポート"
+
+msgid "File"
+msgstr "ファイル"
+
+msgid "Folder may be locked or read-only"
+msgstr "フォルダがロックされているか読み込みのみになっています"
+
+msgid "Help"
+msgstr "ヘルプ"
+
+msgid "Import ..."
+msgstr "インポート ..."
+
+msgid "Import S-expression"
+msgstr "S式をインポートする"
+
+msgid "Import"
+msgstr "インポート"
+
+msgid "Important confirmation"
+msgstr "重要な確認"
+
+msgid "Information request"
+msgstr "情報入力"
+
+msgid "Invalid file version!"
+msgstr "ファイルバージョンが不正です!"
+
+msgid "Invalid project format:"
+msgstr "プロジェクトの形式が不正です:"
+
+msgid "List name?"
+msgstr "リスト名?"
+
+msgid "Make a list"
+msgstr "リストを作る"
+
+msgid "Make a variable"
+msgstr "変数を作る"
+
+msgid "Multiple Select"
+msgstr "複数選択"
+
+msgid "Message name:"
+msgstr "メッセージ名:"
+
+msgid "New folder name:"
+msgstr "新規フォルダ名:"
+
+msgid "New"
+msgstr "新規"
+
+msgid "Open Project"
+msgstr "プロジェクトを開く"
+
+msgid "Open"
+msgstr "開く"
+
+msgid "Plot data"
+msgstr "データをプロットする"
+
+msgid "Plotter menu"
+msgstr "プロットメニュー"
+
+msgid "Project Notes"
+msgstr "プロジェクトノート"
+
+msgid "Quit Application?"
+msgstr "アプリを終了しますか?"
+
+msgid "Quit"
+msgstr "終了する"
+
+msgid "Reading"
+msgstr "読み込み中"
+
+msgid "Save As"
+msgstr "名前を付けて保存"
+
+msgid "Save Plots Snapshot"
+msgstr "プロットの画像を保存"
+
+msgid "Save Project"
+msgstr "プロジェクトを保存する"
+
+msgid "Save failed"
+msgstr "保存失敗"
+
+msgid "Save failed. The folder may be read-only."
+msgstr "保存失敗. フォルダが読み込みのみの可能性があります."
+
+msgid "Save plot data"
+msgstr "プロットデータを保存する"
+
+msgid "Save settings"
+msgstr "設定を保存する"
+
+msgid "Save the current project?"
+msgstr "プロジェクトを保存しますか?"
+
+msgid "Save"
+msgstr "保存"
+
+msgid "Select Message name"
+msgstr "メッセージ名を選んでください"
+
+msgid "Select an option for "
+msgstr "オプションを選んでください"
+
+msgid "Select file"
+msgstr "ファイルを選んでください"
+
+msgid "Select one"
+msgstr "１つ選んでください"
+
+msgid "Set max plots"
+msgstr "最大プロット数を設定する"
+
+msgid "Set max value"
+msgstr "最大値を設定する"
+
+msgid "Set min value"
+msgstr "最小値を設定する"
+
+msgid "Set update period"
+msgstr "更新間隔を設定する"
+
+msgid "Sub name?"
+msgstr "サブ名?"
+
+msgid "That list name is already in use!"
+msgstr "そのリスト名は既に使われています!"
+
+msgid "That sub name is already in use!"
+msgstr "そのサブ名は既に使われています!"
+
+msgid "That variable name is already in use!"
+msgstr "その変数名は既に使われています!"
+
+msgid "Tools"
+msgstr "ツール"
+
+msgid "Upload file name?"
+msgstr "アップロードファイル名?"
+
+msgid "Upload file"
+msgstr "ファイルをアップロードする"
+
+msgid "Upload Modules"
+msgstr "モジュールをアップロードする"
+
+msgid "Variable name?"
+msgstr "変数名?"
+
+msgid "View on stage"
+msgstr "ステージ上で見る"
+
+msgid "accelerometer"
+msgstr "加速度センサ"
+
+msgid "add sub block"
+msgstr "サブブロックを追加する"
+
+msgid "alert!"
+msgstr "警告!"
+
+msgid "all"
+msgstr "全て"
+
+msgid "clean up"
+msgstr "きれいにする"
+
+msgid "compass"
+msgstr "方位"
+
+msgid "control"
+msgstr "制御"
+
+msgid "copy"
+msgstr "コピー"
+
+msgid "cut"
+msgstr "切り取り"
+
+msgid "delete"
+msgstr "削除"
+
+msgid "display"
+msgstr "表示"
+
+msgid "duplicate"
+msgstr "複製"
+
+msgid "else"
+msgstr "でなければ"
+
+msgid "i2c"
+msgstr "i2c通信"
+
+msgid "invalid sub name!"
+msgstr "不正なサブ名です!"
+
+msgid "io"
+msgstr "入出力"
+
+msgid "last"
+msgstr "最後"
+
+msgid "lists"
+msgstr "リスト"
+
+msgid "maximum plot value?"
+msgstr "プロットの最大値?"
+
+msgid "minimum plot value?"
+msgstr "プロットの最小値?"
+
+msgid "misc"
+msgstr "その他"
+
+msgid "mouse-pointer"
+msgstr "マウス位置"
+
+msgid "music"
+msgstr "音楽"
+
+msgid "neopixel"
+msgstr "neopixel"
+
+msgid "new"
+msgstr "新規"
+
+msgid "no object"
+msgstr "対象なし"
+
+msgid "number of max plots?"
+msgstr "最大プロット数?"
+
+msgid "operators"
+msgstr "演算"
+
+msgid "paste"
+msgstr "貼り付け"
+
+msgid "radio"
+msgstr "無線"
+
+msgid "sensing"
+msgstr "センサ"
+
+msgid "uart"
+msgstr "シリアル通信"
+
+msgid "update plot period? (in milliseconds)"
+msgstr "更新間隔を設定する? (ミリ秒単位で入力)"
+
+msgid "variables"
+msgstr "変数"
+
+msgid "Connect"
+msgstr "接続する"
+
+msgid "Could not generate code: "
+msgstr "コードを生成できませんでした: "
+
+msgid "Delete file"
+msgstr "ファイルを削除する"
+
+msgid "Disconnect"
+msgstr "切断する"
+
+msgid "Download file"
+msgstr "ファイルをダウンロードする"
+
+msgid "Export MicroPython"
+msgstr "MicroPythonでエクスポートする"
+
+msgid "Initialize micro:bit"
+msgstr "micro:bitを初期化する"
+
+msgid "Only one micro:bit can be updated."
+msgstr "１台のmicro:bitだけ更新できます."
+
+msgid "Output"
+msgstr "出力"
+
+msgid "Plotter"
+msgstr "プロット"
+
+msgid "Restart"
+msgstr "再起動する"
+
+msgid "Select Modules"
+msgstr "モジュールを選ぶ"
+
+msgid "Select port"
+msgstr "ポートを選んでください"
+
+msgid "Start"
+msgstr "実行する"
+
+msgid "Start script only needs one"
+msgstr "開始ブロックが１つ必要です"
+
+msgid "Stop"
+msgstr "停止する"
+
+msgid "cannot open:"
+msgstr "開けません:"
+
+msgid "cannot select port"
+msgstr "ポートを選択できません"
+
+msgid "details.txt is not found"
+msgstr "details.txtが見つかりません"
+
+msgid "device is not ready"
+msgstr "デバイスの準備ができていません"
+
+msgid "done"
+msgstr "完了"
+
+msgid "initialize micro:bit?"
+msgstr "micro:bitを初期化する?"
+
+msgid "micro:bit not found."
+msgstr "micro:bitが見つかりません."
+
+msgid "not available module: "
+msgstr "モジュールが使えません: "
+
+msgid "pin"
+msgstr "ピン"
+
+msgid "port closed"
+msgstr "ポートが閉じました"
+
+msgid "restarted"
+msgstr "再起動しました"
+
+msgid "select micro:bit device"
+msgstr "micro:bitを選んでください"
+
+msgid "stopped"
+msgstr "停止しました"
+
+msgid "timeout"
+msgstr "タイムアウトしました"
+
+msgid "unable to find the appropriate firmware"
+msgstr "適切なファームウェアが見つかりません"
+
+msgid "%b and %b"
+msgstr "%b かつ %b"
+
+msgid "%b or %b"
+msgstr "%b または %b "
+
+msgid "%f of %n"
+msgstr "%n の %f"
+
+msgid "%n * %n"
+msgstr "%n × %n"
+
+msgid "%n + %n"
+msgstr "%n ＋ %n"
+
+msgid "%n - %n"
+msgstr "%n − %n"
+
+msgid "%n / %n"
+msgstr "%n ÷ %n"
+
+msgid "%n between %n and %n"
+msgstr "%n が %n 以上 %n 以下"
+
+msgid "%n bit shift left %n"
+msgstr "%n の %n ビット左シフト"
+
+msgid "%n bit shift right %n"
+msgstr "%n の %n ビット右シフト"
+
+msgid "%n bitand %n"
+msgstr "%n と %n の論理積"
+
+msgid "%n bitor %n"
+msgstr "%n と %n の論理和"
+
+msgid "%n bitxor %n"
+msgstr "%n と %n の排他的論理和"
+
+msgid "%n div %n"
+msgstr "%n を %n で割った商"
+
+msgid "%n mod %n"
+msgstr "%n を %n で割った余り"
+
+msgid "%s < %s"
+msgstr "%s ＜ %s"
+
+msgid "%s = %s"
+msgstr "%s ＝ %s"
+
+msgid "%s > %s"
+msgstr "%s ＞ %s"
+
+msgid "%s is None"
+msgstr "%s がNoneか"
+
+msgid "- %n"
+msgstr "− %n"
+
+msgid "change %v by %n"
+msgstr "%v を %n ずつ変える"
+
+msgid "returned value"
+msgstr "リターン値"
+
+msgid "set %v to %n"
+msgstr "%v を %n にする"
+
+msgid "when I receive"
+msgstr "受け取った時"
+
+msgid "when loop"
+msgstr "ループする時"
+
+msgid "when setup"
+msgstr "セットアップする時"
+
+msgid "when start"
+msgstr "スタートする時"
+
+
+
+msgid "%n in %n and %n"
+msgstr "%n2 から %n3 の範囲の %n1"
+
+msgid "%s ends with %s"
+msgstr "%s が %s で終わるか"
+
+msgid "%s starts with %s"
+msgstr "%s が %s で始まるか"
+
+msgid "%s with cr"
+msgstr "改行付きの %s"
+
+msgid "%T is touched"
+msgstr "%T を触っている"
+
+msgid "%v contains %s"
+msgstr "%v が %s を含んでいる"
+
+msgid "abs %n sign %n"
+msgstr "%n の絶対値と %n の符号"
+
+msgid "abs %n"
+msgstr "%n の絶対値"
+
+msgid "accelerometer x"
+msgstr "x軸加速度"
+
+msgid "accelerometer y"
+msgstr "y軸加速度"
+
+msgid "accelerometer z"
+msgstr "z軸加速度"
+
+msgid "add %s to %v"
+msgstr "%s を %v に追加する"
+
+msgid "analog read pin %F"
+msgstr "アナログピン %F の値"
+
+msgid "analog set period pin %F to %n msec"
+msgstr "アナログピン %F の周期を %n マイクロ秒にする"
+
+msgid "analog write pin %F to %n"
+msgstr "アナログピン %F を %n にする"
+
+msgid "any of %s"
+msgstr "%s のどれか"
+
+msgid "arrow image at %n"
+msgstr "%n 番目の矢印イメージ"
+
+msgid "arrow image of %A"
+msgstr "矢印 %A のイメージ"
+
+msgid "break"
+msgstr "繰り返しを抜ける"
+
+msgid "button %B is pressed"
+msgstr "ボタン %B が押されている"
+
+msgid "button %B was pressed"
+msgstr "ボタン %B が押された"
+
+msgid "bytes of %v"
+msgstr "%v のバイト列"
+
+msgid "bytes from %s encoding %s"
+msgstr "bytes from %s encoding %s"
+
+msgid "calibrate compass"
+msgstr "方位を調整する"
+
+msgid "call %S"
+msgstr "%S を呼び出す"
+
+msgid "character image of %I"
+msgstr "キャラ %I のイメージ"
+
+msgid "clear"
+msgstr "消す"
+
+msgid "clear calibration"
+msgstr "方位の調整を取り消す"
+
+msgid "clear LCD"
+msgstr "LCDを消す"
+
+msgid "clear list %v"
+msgstr "リスト %v を空にする"
+
+msgid "clear NeoPixel pin %G"
+msgstr "ピン %G のNeoPixelを消す"
+
+msgid "clock image at %n"
+msgstr "%n 番目の時計イメージ"
+
+msgid "clock image of %c"
+msgstr "時計 %c のイメージ"
+
+msgid "compass x"
+msgstr "x軸方位"
+
+msgid "compass y"
+msgstr "y軸方位"
+
+msgid "compass z"
+msgstr "z軸方位"
+
+msgid "config radio group %n"
+msgstr "無線グループを %n に設定する"
+
+msgid "continue"
+msgstr "繰り返しを進める"
+
+msgid "copy of %s"
+msgstr "%s のコピー"
+
+msgid "count of %s"
+msgstr "%s の個数"
+
+msgid "count of button %B pressed"
+msgstr "ボタン %B が押された回数"
+
+msgid "current event"
+msgstr "現在のイベント"
+
+msgid "current gesture"
+msgstr "現在のジェスチャ"
+
+msgid "delete %y of %v"
+msgstr "%y 番目を %v から削除する"
+
+msgid "digital read pin %G"
+msgstr "デジタルピン %G の値"
+
+msgid "digital write pin %G to %n"
+msgstr "デジタルピン %G を %n にする"
+
+msgid "display %s at bottom"
+msgstr "%s を最後に表示する"
+
+msgid "display %s at top"
+msgstr "%s を最初に表示する"
+
+msgid "do %s each %l"
+msgstr "do %s each %l"
+
+msgid "empty list"
+msgstr "空リスト"
+
+msgid "false"
+msgstr "いいえ"
+
+msgid "field strength"
+msgstr "磁場の強さ"
+
+msgid "file names"
+msgstr "ファイル名"
+
+msgid "forever"
+msgstr "ずっと"
+
+msgid "gestures"
+msgstr "ジェスチャ"
+
+msgid "get events"
+msgstr "イベントを取リ出す"
+
+msgid "heading"
+msgstr "方位の向き"
+
+msgid "I2C read %n bytes from %n"
+msgstr "I2Cのアドレス %n2 から %n1 バイト取り出す"
+
+msgid "I2C scan"
+msgstr "I2Cをスキャンする"
+
+msgid "I2C write %n %n %n to %n"
+msgstr "I2Cのアドレス %n4 に %n1 %n2 %n3 を書く"
+
+msgid "I2C write %n %n to %n"
+msgstr "I2Cのアドレス %n3 に %n1 %n2 を書く"
+
+msgid "I2C write %n to %n"
+msgstr "I2Cのアドレス %n2 に %n1 を書く"
+
+msgid "I2C write %v to %n"
+msgstr "I2Cのアドレス %n に %v を書く"
+
+msgid "if %b"
+msgstr "もし %b なら"
+
+msgid "image of %C"
+msgstr "%C のイメージ"
+
+msgid "init ExBoard"
+msgstr "ExBoardを初期化する"
+
+msgid "init LCD"
+msgstr "LCDを初期化する"
+
+msgid "init MPU"
+msgstr "MPUを初期化する"
+
+msgid "init ToF"
+msgstr "ToFを初期化する"
+
+msgid "init usonic trig %G echo %G"
+msgstr "超音波センサをtrig %G echo %G で初期化する"
+
+msgid "insert %s at %n of %v"
+msgstr "%v の %n 番目に %s を挿入する"
+
+msgid "is calibrated"
+msgstr "方位が調整済みか"
+
+msgid "is event %U ?"
+msgstr "%U イベントが起こっている?"
+
+msgid "is gesture %g ?"
+msgstr "ジェスチャ %g か?"
+
+msgid "item %n of %s"
+msgstr "%s の %n 番目"
+
+msgid "item %n of %v"
+msgstr "%v の %n 番目"
+
+msgid "join %s %s"
+msgstr "%s と %s"
+
+msgid "LED is on"
+msgstr "LEDがオンか?"
+
+msgid "LED off"
+msgstr "LEDオフ"
+
+msgid "LED on"
+msgstr "LEDオン"
+
+msgid "length of %s"
+msgstr "%s の長さ"
+
+msgid "light"
+msgstr "明るさ"
+
+msgid "list each %n size %n"
+msgstr "中身が %n で個数が %n のリスト"
+
+msgid "motor %n speed %n"
+msgstr "%n のモーターの速度を %n にする"
+
+msgid "MPU values"
+msgstr "MPU値"
+
+msgid "NeoPixel set pin %G num %n"
+msgstr "NeoPixelをピン %G 個数 %n で初期化する"
+
+msgid "not %b"
+msgstr "%b ではない"
+
+msgid "number of %s"
+msgstr "%s の数値"
+
+msgid "OLED fill %n"
+msgstr "OLEDを %n 色で塗りつぶす"
+
+msgid "OLED fill rect %n , %n to %n , %n color %n"
+msgstr "OLEDに %n , %n から %n , %n まで %n 色で塗りつぶす"
+
+msgid "OLED line %n , %n to %n , %n color %n"
+msgstr "OLEDに %n , %n から %n , %n まで %n 色の線を描く"
+
+msgid "OLED rect %n , %n to %n , %n color %n"
+msgstr "OLEDに %n , %n から %n , %n まで %n 色の四角形を描く"
+
+msgid "OLED show"
+msgstr "OLEDを表示する"
+
+msgid "OLED text %s x %n y %n"
+msgstr "OLEDに %s を %n , %n に書く"
+
+msgid "panic %n"
+msgstr "緊急停止 %n"
+
+msgid "pick random %n to %n"
+msgstr "%n から %n までの乱数"
+
+msgid "pin %G no %n r %n g %n b %n"
+msgstr "ピン %G の %n を赤 %n 緑 %n 青 %n にする"
+
+msgid "play music %P"
+msgstr "音楽 %P を演奏する"
+
+msgid "play music %s"
+msgstr "音楽 %s を演奏する"
+
+msgid "play music %s loop %b wait %b"
+msgstr "音楽 %s をloop %b wait %b で演奏する"
+
+msgid "play pitch %n Hz for %n msec"
+msgstr "ピッチが %n Hzの音を %n ミリ秒鳴らす"
+
+msgid "point x %n y %n"
+msgstr "x座標 %n y座標 %n の値"
+
+msgid "print %s"
+msgstr "%s を表示する"
+
+msgid "radio off"
+msgstr "無線オフ"
+
+msgid "radio on"
+msgstr "無線オン"
+
+msgid "radio reset"
+msgstr "無線リセット"
+
+msgid "range %n to %n step %n"
+msgstr "%n から %n までステップ %n のリスト"
+
+msgid "received radio message"
+msgstr "無線メッセージ"
+
+msgid "repeat %n each %l"
+msgstr "repeat %n each %l"
+
+msgid "repeat until %b"
+msgstr "%b まで繰り返す"
+
+msgid "replace item %n of %v with %s"
+msgstr "%v の %n 番目を %s で置き換える"
+
+msgid "reset music settings"
+msgstr "音楽の設定をリセットする"
+
+msgid "return %n"
+msgstr "リターン値を %n にして終了"
+
+msgid "round %n"
+msgstr "%n を丸める"
+
+msgid "running time"
+msgstr "実行時間"
+
+msgid "scroll %s"
+msgstr "%s をスクロール表示する"
+
+msgid "scroll %s no wait"
+msgstr "%s をスクロール表示し、終わりを待たない"
+
+msgid "send a radio message %s"
+msgstr "無線メッセージ %s を送る"
+
+msgid "servo %n degrees %n"
+msgstr "%n のサーボの角度を %n にする"
+
+msgid "servo write pin %G to %n degrees"
+msgstr "サーボピン %G を %n 度にする"
+
+msgid "servo set pin %G %n msec %n to %n"
+msgstr "サーボピン %G を %n ミリ秒で %n から %n に設定する"
+
+msgid "set OLED w %n h %n"
+msgstr "OLEDを幅 %n 高さ %n で初期化する"
+
+msgid "set random seed to %n"
+msgstr "乱数を %n に初期化する"
+
+msgid "set tempo to %n bpm"
+msgstr "テンポを %n bpmに設定する"
+
+msgid "set tempo to %n ticks"
+msgstr "テンポを %n ティックに設定する"
+
+msgid "set threshold event %U value %n"
+msgstr "イベント %U のしきい値を %n にする"
+
+msgid "set x %n y %n to %n"
+msgstr "x座標 %n y座標 %n を %n にする"
+
+msgid "shape image of %H"
+msgstr "図形 %H のイメージ"
+
+msgid "show %s"
+msgstr "%s を表示する"
+
+msgid "show NeoPixel pin %G"
+msgstr "ピン %G のNeoPixelを表示する"
+
+msgid "sound level"
+msgstr "音量"
+
+msgid "speaker off"
+msgstr "スピーカーオフ"
+
+msgid "speaker on"
+msgstr "スピーカーオン"
+
+msgid "split %s by %s limit %n"
+msgstr "%s を %s で %n 回分割する"
+
+msgid "split %s by space"
+msgstr "%s を空白で分割する"
+
+msgid "stop music"
+msgstr "音楽の演奏を止める"
+
+msgid "string from %s encoding %s"
+msgstr "string from %s encoding %s"
+
+msgid "string of %n"
+msgstr "%n の文字列"
+
+msgid "symbol image at %M"
+msgstr "シンボル %M のイメージ"
+
+msgid "temperature"
+msgstr "温度"
+
+msgid "tempo"
+msgstr "テンポ"
+
+msgid "ToF read"
+msgstr "ToF読み込み"
+
+msgid "ToF start"
+msgstr "ToF開始"
+
+msgid "true"
+msgstr "はい"
+
+msgid "truncate %n"
+msgstr "%n を切り捨てる"
+
+msgid "uart init baudrate %n"
+msgstr "シリアルをボーレート %n で初期化する"
+
+msgid "uart read"
+msgstr "シリアル読み込み"
+
+msgid "uart read line"
+msgstr "シリアル１行読み込み"
+
+msgid "uart write %s"
+msgstr "シリアルに %s を書き込む"
+
+msgid "usonic distance"
+msgstr "超音波センサの距離"
+
+msgid "wait %n msecs"
+msgstr "%n ミリ秒待つ"
+
+msgid "was gesture %g ?"
+msgstr "ジェスチャ %g だった?"
+
+msgid "when %m clicked"
+msgstr "%m がクリックされたとき"
+
+msgid "while %b"
+msgstr "%b の間繰り返す"
+
