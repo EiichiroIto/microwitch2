@@ -187,7 +187,7 @@ SpScratchApp class >> multiLineRequest: aString initialAnswer: aString2 [
 SpScratchApp class >> multiSelect: aString chooseFrom: aCollection selectedItems: aCollection2 [
 
 	^ SpMultiSelectDialog new
-		  title: 'Multiple Select';
+		  title: 'Multiple Select' localized;
 		  label: aString;
 		  items: aCollection;
 		  selectedItems: aCollection2;

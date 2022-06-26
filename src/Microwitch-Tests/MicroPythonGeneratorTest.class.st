@@ -54,7 +54,7 @@ MicroPythonGeneratorTest >> testAndWith [
 MicroPythonGeneratorTest >> testAnyOf [
 	| g |
 	g := self newGenerator.
-	self assert: (g anyOf: 'x') equals: 'random.random_choice(x)'
+	self assert: (g anyOf: 'x') equals: 'random.choice(x)'
 ]
 
 { #category : #test }
@@ -799,6 +799,13 @@ MicroPythonGeneratorTest >> testTernaryFunctionArg1Arg2Arg3 [
 	self
 		assert: (g ternaryFunction: 'abc' arg1: [ 10 ] arg2: [ 1 + 2 ] arg3: [ 4 ])
 		equals: 'abc(10,3,4)'
+]
+
+{ #category : #test }
+MicroPythonGeneratorTest >> testTruncated [
+	| g |
+	g := self newGenerator.
+	self assert: (g truncated: 'x') equals: 'math.trunc(x)'
 ]
 
 { #category : #test }

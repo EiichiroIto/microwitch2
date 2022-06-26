@@ -94,7 +94,7 @@ SpMicrowitchOutput >> createTextPage [
 { #category : #initialization }
 SpMicrowitchOutput >> initializePresenters [
 	buttonClear := self newButton
-		label: 'Clear';
+		label: 'clear' localized;
 		icon: (self iconNamed: #glamorousClose);
 		yourself.
 	notebook := self newNotebook
@@ -110,10 +110,10 @@ SpMicrowitchOutput >> plotter [
 
 { #category : #private }
 SpMicrowitchOutput >> plotterLabel [
-	^ 'Plotter'
+	^ 'Plotter' localized
 ]
 
 { #category : #private }
 SpMicrowitchOutput >> textLabel [
-	^ 'Output'
+	^ 'Output' localized
 ]

@@ -40,7 +40,7 @@ MicroPythonGenerator >> and: x with: y [
 
 { #category : #'operators ops' }
 MicroPythonGenerator >> anyOf: anObject [
-	^ self unaryFunction: self random, 'random_choice' arg: anObject
+	^ self unaryFunction: self random, 'choice' arg: anObject
 ]
 
 { #category : #private }
@@ -617,6 +617,12 @@ MicroPythonGenerator >> ternaryFunction: aSymbol arg1: anObject1 arg2: anObject2
 	b := self valueOf: anObject2.
 	c := self valueOf: anObject3.
 	^ aSymbol, '(', a, ',', b, ',', c, ')'
+]
+
+{ #category : #'operators ops' }
+MicroPythonGenerator >> truncated: aNumber [
+
+	^ self unaryFunction: self math , 'trunc' arg: aNumber
 ]
 
 { #category : #private }

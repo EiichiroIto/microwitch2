@@ -199,10 +199,10 @@ SpMicrowitchStage >> initializePresenters [
 		morph: self createTimerMorph;
 		yourself.
 	labelStatus := self newLabel
-		label: 'status';
+		label: '';
 		yourself.
 	labelMessage := self newLabel
-		label: 'message';
+		label: '';
 		yourself.
 	self focusOrder
 		add: output
@@ -270,7 +270,7 @@ SpMicrowitchStage >> startStepping [
 
 { #category : #api }
 SpMicrowitchStage >> status: aString [
-	labelStatus label: aString
+	labelStatus label: aString localized
 ]
 
 { #category : #stepping }

@@ -24,12 +24,14 @@ MicrobitBlockSpecs >> addArgBuilderTo: anArgBuilder [
 			selector: #gestureNames
 			target: self
 			initialChoice: '';
-		addNumberExpressArg: $G
+		addChoiceArg: $G
 			selector: #ioPinNames
-			target: self;
-		addNumberExpressArg: $F
+			target: self
+			initialChoice: '';
+		addChoiceArg: $F
 			selector: #analogPinNames
-			target: self;
+			target: self
+			initialChoice: '';
 		addChoiceArg: $H
 			selector: #ledShapeNames
 			target: self
@@ -74,9 +76,6 @@ MicrobitBlockSpecs >> addBlockCategoryTo: aBlockDef [
 { #category : #'argument menus' }
 MicrobitBlockSpecs >> analogPinNames [
 	^ #(0 1 2 3 4 10)
-		collect: [ :s | 
-			{('pin' localized , s asString).
-			s} ]
 ]
 
 { #category : #'argument menus' }
@@ -98,19 +97,16 @@ MicrobitBlockSpecs >> ioBlocks [
 			('%T is touched'							b		pinIsTouched: pin_logo)
 			('count of button %B pressed'		r		countOfButtonPressed:)
 			-
-			('servo write pin %G to %n degrees'
-																	-		writeServo:to: 0 180)
 			('servo set pin %G %n msec %n to %n'
 																	-		setServo:msec:min:max:	0	5	100	500)
+			('servo write pin %G to %n degrees'
+																	-		writeServo:to: 0 180)
 		)
 ]
 
 { #category : #'argument menus' }
 MicrobitBlockSpecs >> ioPinNames [
 	^ (0 to: 16) , #(19 20)
-		collect: [ :s | 
-			{('pin' localized , s asString).
-			s} ]
 ]
 
 { #category : #'argument menus' }

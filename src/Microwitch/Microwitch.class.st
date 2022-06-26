@@ -20,6 +20,19 @@ All rights reserved.
 '
 ]
 
+{ #category : #utilities }
+Microwitch class >> allBlockDefs [
+
+	"MicroPythonProject initialize.
+	FileSystem workingDirectory / 'blocks.txt' writeStreamDo: [ :s | 
+		s nextPutAll:
+			(Microwitch allBlockDefs sorted joinUsing: Character cr) ]."
+
+	^ (({ MicrobitBlockSpecs new intModuleDef }
+	    , MicroPythonProject availableModules values collect: #blockDict) 
+		   collect: #values) flattened collect: #block
+]
+
 { #category : #constants }
 Microwitch class >> appFolderName [
 	^ 'microwitch2'
@@ -129,6 +142,15 @@ Microwitch class >> setupOptions [
 { #category : #constants }
 Microwitch class >> sexpExtension [
 	^ 'mws'
+]
+
+{ #category : #utilities }
+Microwitch class >> sourceCodeUsingLocalize [
+
+	"FileSystem workingDirectory / 'localized.txt' writeStreamDo: [ :s | 
+		s nextPutAll: (self sourceCodeUsingLocalize joinUsing: Character cr) ]"
+
+	^ #localized senders collect: #sourceCode
 ]
 
 { #category : #constants }

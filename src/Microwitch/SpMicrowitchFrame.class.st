@@ -200,7 +200,11 @@ SpMicrowitchFrame >> fileMenu [
 				addItem: [ :item | 
 					item
 						name: 'Save As' localized;
-						action: [ application saveProject ] ] ];
+						action: [ application saveProject ] ];
+				addItem: [ :item | 
+					item
+						name: 'Project Notes' localized;
+						action: [ application editNotes ] ] ];
 		addGroup: [ :grp | 
 			grp
 				addItem: [ :item | 
@@ -256,26 +260,26 @@ SpMicrowitchFrame >> initializePresenters [
 		              yourself.
 	buttonConnect := self newButton
 		                 help: 'Connect to micro:bit';
-		                 label: 'Connect';
+		                 label: 'Connect' localized;
 		                 icon: (ScratchTheme formAt: #connect);
 		                 yourself.
 	buttonDisconnect := self newButton
 		                    help: 'Disconnect from micro:bit';
-		                    label: 'Disconnect';
+		                    label: 'Disconnect' localized;
 		                    icon: (ScratchTheme formAt: #disconnect);
 		                    disable;
 		                    yourself.
 	buttonRestart := self newButton
 		                 help: 'Restart micro:bit';
-		                 label: 'Restart';
+		                 label: 'Restart' localized;
 		                 icon: (self iconNamed: #refresh).
 	buttonBreak := self newButton
 		               help: 'Stop';
-		               label: 'Stop';
+		               label: 'Stop' localized;
 		               icon: (ScratchTheme formAt: #stopButton).
 	buttonSend := self newButton
 		              help: 'Start program';
-		              label: 'Start';
+		              label: 'Start' localized;
 		              icon: (ScratchTheme formAt: #goButton).
 	menu := self newMenuBar.
 	self setupMenu.
@@ -324,7 +328,7 @@ SpMicrowitchFrame >> selectModules [
 	choices := application availableModuleNames.
 	selectedItems := application enabledModuleNames asSet.
 	result := SpScratchApp
-		          multiSelect: 'Select modules'
+		          multiSelect: 'Select modules' localized
 		          chooseFrom: choices
 		          selectedItems: selectedItems.
 	result ifNil: [ ^ self ].
@@ -378,14 +382,16 @@ SpMicrowitchFrame >> target: aScript [
 SpMicrowitchFrame >> toolsMenu [
 
 	^ self newMenu
-		  addItem: [ :item | 
-			  item
-				  name: 'Project Notes' localized;
-				  action: [ application editNotes ] ];
-		  addItem: [ :item | 
-			  item
-				  name: 'Select Modules' localized;
-				  action: [ self selectModules ] ];
+		  addGroup: [ :grp | 
+			  grp
+				  addItem: [ :item | 
+					  item
+						  name: 'Select Modules' localized;
+						  action: [ self selectModules ] ];
+				  addItem: [ :item | 
+					  item
+						  name: 'Upload Modules' localized;
+						  action: [ application uploadModuleFiles ] ] ];
 		  addGroup: [ :grp | 
 			  grp
 				  addItem: [ :item | 
@@ -406,7 +412,7 @@ SpMicrowitchFrame >> toolsMenu [
 		  addGroup: [ :grp | 
 			  grp addItem: [ :item | 
 				  item
-					  name: 'Upload firmware' localized;
+					  name: 'Initialize micro:bit' localized;
 					  icon: (self iconNamed: #glamorousOver);
 					  action: [ application uploadFirmware ] ] ];
 		  yourself

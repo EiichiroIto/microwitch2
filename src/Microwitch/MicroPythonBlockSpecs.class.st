@@ -96,6 +96,18 @@ MicroPythonBlockSpecs >> intModuleBlocks [
 		ifNotNil: [ :def | def blockTuples asArray ]
 ]
 
+{ #category : #accessing }
+MicroPythonBlockSpecs >> intModuleDef [
+
+	^ intModuleDef
+]
+
+{ #category : #accessing }
+MicroPythonBlockSpecs >> intModuleDef: anObject [
+
+	intModuleDef := anObject
+]
+
 { #category : #'block specs' }
 MicroPythonBlockSpecs >> ioBlocks [
 	^ #()
@@ -119,16 +131,6 @@ MicroPythonBlockSpecs >> listIndexForDeleteNames [
 { #category : #'argument menus' }
 MicroPythonBlockSpecs >> listIndexNames [
 	^ #('0' last) collect: [ :s | {s localized. s} ]
-]
-
-{ #category : #'block specs' }
-MicroPythonBlockSpecs >> modulesBlocks [
-	^ #(
-		'modules'
-			('execute %a of %m'		-		execute:of: '' '')
-			('evaluate %a of %m'		r 		evaluate:of: '' '')
-			-
-		)
 ]
 
 { #category : #'block specs' }
@@ -171,10 +173,10 @@ MicroPythonBlockSpecs >> operatorsBlocks [
 			('length of %s'				r	stringLength: 'world')
 			('any of %s'					r	anyOf: 'hello')
 			-
-			('round %n'							r	rounded: -)
-			('truncate %n'						r	truncated: -)
-			('abs %n'								r	abs: -)
-			('abs %n sign %n'			r	abs:sign:	- -)
+			('round %n'							r	rounded: 1.5)
+			('truncate %n'						r	truncated: 1.5)
+			('abs %n'								r	abs: -5)
+			('abs %n sign %n'			r	abs:sign:	5 -1)
 			('%f of %n'							r	computeFunction:of: 'sqrt' 10)
 			-
 			('string from %s encoding %s'

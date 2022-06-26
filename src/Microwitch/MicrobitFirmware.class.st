@@ -50,7 +50,7 @@ MicrobitFirmware >> firmwarePathIfFail: aBlock [
 	ret := MicrowitchLibCall new microbitDriveLetters.
 	ret isEmpty ifTrue: [ aBlock cull: 'micro:bit not found.' localized ].
 	ret size > 1 ifTrue: [ 
-		aBlock cull: 'Only one micro: bit can be updated.' localized ].
+		aBlock cull: 'Only one micro:bit can be updated.' localized ].
 	^ ret first asFileReference
 ]
 
