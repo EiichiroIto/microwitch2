@@ -395,7 +395,6 @@ MicroPythonGeneratorTest >> testGenerateHeader [
 		assert: g header
 		equals:
 			'import abc' , String lf , 'from def import ghi' , String lf
-				, 'a=None' , String lf , 'b=[]' , String lf
 ]
 
 { #category : #test }
@@ -431,22 +430,6 @@ MicroPythonGeneratorTest >> testGenerateInitModules [
 ]
 
 { #category : #test }
-MicroPythonGeneratorTest >> testGenerateInitVariables [
-	| g |
-	g := self newGenerator.
-	g useVar: 'x'.
-	g useListVar: 'b'.
-	g useVar: 'c'.
-	g useListVar: 'a'.
-	g generateHeader.
-	self
-		assert: g header
-		equals:
-			'c=None' , String lf , 'x=None' , String lf , 'a=[]' , String lf
-				, 'b=[]' , String lf
-]
-
-{ #category : #test }
 MicroPythonGeneratorTest >> testGeneratePass [
 	| g |
 	g := self newGenerator.
@@ -459,13 +442,6 @@ MicroPythonGeneratorTest >> testGetFalse [
 	| g |
 	g := self newGenerator.
 	self assert: g getFalse equals: 'False'
-]
-
-{ #category : #test }
-MicroPythonGeneratorTest >> testGetList [
-	| g |
-	g := self newGenerator.
-	self assert: (g getList: 'x') equals: 'x'
 ]
 
 { #category : #test }

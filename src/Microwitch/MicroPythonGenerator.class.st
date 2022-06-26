@@ -189,7 +189,7 @@ MicroPythonGenerator >> doIfEnd [
 { #category : #'control ops' }
 MicroPythonGenerator >> doIterateBegin: list var: var [
 	self
-		appendWithNewline: 'for ' , (self valueOf: var) , ' in ' , (self getList: list) , ':'
+		appendWithNewline: 'for ' , (self valueOf: var) , ' in ' , (self valueOf: list) , ':'
 ]
 
 { #category : #'control ops' }
@@ -306,8 +306,7 @@ MicroPythonGenerator >> generateGlobalVars: aCollection [
 MicroPythonGenerator >> generateHeader [
 	self
 		indent: 0;
-		generateInitModules;
-		generateInitVariables
+		generateInitModules
 ]
 
 { #category : #'code generator' }
@@ -334,12 +333,6 @@ MicroPythonGenerator >> generateInitModules [
 ]
 
 { #category : #'code generator' }
-MicroPythonGenerator >> generateInitVariables [
-	vars sorted do: [ :each | self appendWithNewline: each , '=None' ].
-	listVars sorted do: [ :each | self appendWithNewline: each , '=[]' ]
-]
-
-{ #category : #'code generator' }
 MicroPythonGenerator >> generateIntCode: aSymbol arguments: aCollection for: aScript [
 	| blockDef code |
 	blockDef := aScript intBlockDefOf: aSymbol.
@@ -358,12 +351,6 @@ MicroPythonGenerator >> generatePass [
 { #category : #'operators ops' }
 MicroPythonGenerator >> getFalse [
 	^ 'False'
-]
-
-{ #category : #private }
-MicroPythonGenerator >> getList: aList [
-	"self useListVar: aList."
-	^ self valueOf: aList
 ]
 
 { #category : #'operators ops' }

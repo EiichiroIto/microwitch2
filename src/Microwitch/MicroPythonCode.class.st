@@ -39,7 +39,7 @@ MicroPythonCode >> doIfEnd: aMorph [
 { #category : #'control ops' }
 MicroPythonCode >> doIterateBegin: aMorph [
 	| list var |
-	list := aMorph blockArgs first choice.
+	list := aMorph blockArgs first argString: parser.
 	var := aMorph blockArgs second varName.
 	generator doIterateBegin: list var: var
 ]
