@@ -646,7 +646,7 @@
     splitBySpace:)
    (reporterBlock:args:return:code:imports:selector:
     "split %s by %s limit %n"
-    ("a,b,c" ",")
+    ("a,b,c,d" "," 2)
     r
     "%s1.split(%s2,%n)"
     ()

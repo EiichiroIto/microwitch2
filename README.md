@@ -14,8 +14,8 @@ micro:witch2 is built on Pharo Smalltalk 10 (with Spec2).
 1. Start micro:witch2 application. (see above)
 2. Connect a micro:bit to your PC.
 3. Wait for the PC to recognize the micro:bit.
-4. Select "Upload Firmware" from the Tools menu.
-5. Click YES to update firmware.
+4. Select "Initialize micro:bit" from the Tools menu.
+5. Click YES to initialize the micro:bit.
 6. Again, wait for the PC to recognize the micro:bit.
 
 ## Getting Started
@@ -37,5 +37,4 @@ Metacello new
 
 ## Limitations
 - It has no micro:bit simulators.
-- micro:bit v1 is not recommended due to memory capacity.
 

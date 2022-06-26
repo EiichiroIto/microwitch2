@@ -667,7 +667,7 @@ msgid "display %s at top"
 msgstr "%s を最初に表示する"
 
 msgid "do %s each %l"
-msgstr "do %s each %l"
+msgstr "リスト %s の項目を %l に格納する"
 
 msgid "empty list"
 msgstr "空リスト"
@@ -847,7 +847,7 @@ msgid "received radio message"
 msgstr "無線メッセージ"
 
 msgid "repeat %n each %l"
-msgstr "repeat %n each %l"
+msgstr "%n 回繰り返し、各回を %l に格納する"
 
 msgid "repeat until %b"
 msgstr "%b まで繰り返す"
