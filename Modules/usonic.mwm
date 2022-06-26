@@ -5,9 +5,9 @@
   ("import usonic")
   ((category: "usonic")
    (commandBlock:args:code:imports:selector:
-    "init usonic trigger %n echo %n"
+    "init usonic trig %G echo %G"
     (1 2)
-    "usonic.init(trigger=pin%n1,echo=pin%n2)"
+    "usonic.init(trigger=pin%G1,echo=pin%G2)"
     ((microbit "*"))
     usonicInitTrigger:echo:)
    (reporterBlock:args:return:code:imports:selector:

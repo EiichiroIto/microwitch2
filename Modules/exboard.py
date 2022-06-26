@@ -3,9 +3,9 @@ import microbit as mb
 
 address=None
 
-def init(addr=64):
+def init():
   global address
-  address = addr
+  address = 64
   i2c.write(address,bytes([0,0]))
   oldmode = (i2c.read(address,1))[0]
   newmode = ((oldmode & 127) | 16)
@@ -17,7 +17,7 @@ def init(addr=64):
         
 def servo(ch, deg):
   if address is None:
-    init(64)
+    init()
   tmp = round(((((deg * 10) + 600) * 4095) / 20000))
   pxt = []
   pxt.append((6 + (4 * (16 - ch))))
@@ -29,7 +29,7 @@ def servo(ch, deg):
 
 def motor(ch, speed):
   if address is None:
-    init(64)
+    init()
   tmp = speed * 16
   tmp = min(tmp,4095)
   tmp = max(tmp,-4095)

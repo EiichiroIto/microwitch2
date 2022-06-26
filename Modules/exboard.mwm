@@ -5,9 +5,9 @@
   ("import exboard")
   ((category: "exboard")
    (commandBlock:args:code:imports:selector:
-    "init exboard as %n"
-    (64)
-    "exboard.init(%n)"
+    "init ExBoard"
+    ()
+    "exboard.init()"
     ()
     debInit:)
    (commandBlock:args:code:imports:selector:

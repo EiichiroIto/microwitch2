@@ -5,13 +5,13 @@
   ("import text32lcd")
   ((category: "text32lcd")
    (commandBlock:args:code:imports:selector:
-    "init display"
+    "init LCD"
     ()
     "_lcd=text32lcd.KitronikText32()"
     ()
     text32Init:)
    (commandBlock:args:code:imports:selector:
-    "clear"
+    "clear LCD"
     ()
     "_lcd.clear()"
     ()

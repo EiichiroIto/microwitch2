@@ -31,7 +31,7 @@
     ()
     return:)
    (reporterBlock:args:return:code:imports:selector:
-    "return value"
+    "returned value"
     ()
     r
     "_r"
@@ -84,10 +84,10 @@
     currentEvent)
    (reporterBlock:args:return:code:imports:selector:
     "is event %U ?"
-    ()
+    (QUIET)
     b
-    "microphone.is_event(microbit.SoundEvent.%U)"
-    ((microbit microphone))
+    "microphone.is_event(SoundEvent.%U)"
+    ((microbit microphone) (microbit SoundEvent))
     isEvent:)
    (reporterBlock:args:return:code:imports:selector:
     "get events"
@@ -98,9 +98,9 @@
     getEvents)
    (commandBlock:args:code:imports:selector:
     "set threshold event %U value %n"
-    ()
-    "microphone.set_threshold(microbit.SoundEvent.%U,%n)"
-    ((microbit microphone))
+    (QUIET)
+    "microphone.set_threshold(SoundEvent.%U,%n)"
+    ((microbit microphone) (microbit SoundEvent))
     setThresholdEvent:value:)
    (reporterBlock:args:return:code:imports:selector:
     "sound level"
@@ -391,13 +391,13 @@
     (microbit)
     readAnalog:)
    (commandBlock:args:code:imports:selector:
-    "analog write pin %G to %n"
+    "analog write pin %F to %n"
     (0 0)
     "microbit.pin%G.write_analog(%n)"
     (microbit)
     writeAnalog:to:)
    (commandBlock:args:code:imports:selector:
-    "analog set period pin %G to %n msec"
+    "analog set period pin %F to %n msec"
     (0 500)
     "microbit.pin%G.set_analog_period_microseconds(%n)"
     (microbit)
@@ -501,19 +501,19 @@
     imageOf:)
    (separator)
    (commandBlock:args:code:imports:selector:
-    "led on"
+    "LED on"
     ()
     "display.on()"
     ((microbit display))
     ledOn)
    (commandBlock:args:code:imports:selector:
-    "led off"
+    "LED off"
     ()
     "display.off()"
     ((microbit display))
     ledOff)
    (reporterBlock:args:return:code:imports:selector:
-    "led is on"
+    "LED is on"
     ()
     b
     "display.is_on()"
@@ -522,7 +522,7 @@
 
    (category: "neopixel")
    (commandBlock:args:code:imports:selector:
-    "neopixel set pin %G num %n"
+    "NeoPixel set pin %G num %n"
     (0 5)
     "_np%G=neopixel.NeoPixel(microbit.pin%G,%n)"
     (neopixel microbit)
@@ -534,13 +534,13 @@
     ()
     neopixelPin:no:r:g:b:)
    (commandBlock:args:code:imports:selector:
-    "show neopixel pin %G"
+    "show NeoPixel pin %G"
     (0)
     "_np%G.show()"
     ()
     neopixelShowPin:)
    (commandBlock:args:code:imports:selector:
-    "clear neopixel pin %G"
+    "clear NeoPixel pin %G"
     (0)
     "_np%G.clear()"
     ()
@@ -548,39 +548,39 @@
 
    (category: "i2c")
    (reporterBlock:args:return:code:imports:selector:
-    "i2c scan"
+    "I2C scan"
     ()
     r
     "i2c.scan()"
     ((microbit i2c))
     i2cScan)
    (reporterBlock:args:return:code:imports:selector:
-    "i2c read %n bytes from %n"
+    "I2C read %n bytes from %n"
     (4 0)
     r
     "i2c.read(%n2,%n1)"
     ((microbit i2c))
     i2cRead:from:)
    (commandBlock:args:code:imports:selector:
-    "i2c write %n to %n"
+    "I2C write %n to %n"
     (1 0)
     "i2c.write(%n2,bytes([%n1]))"
     ((microbit i2c))
     i2cWrite:to:)
    (commandBlock:args:code:imports:selector:
-    "i2c write %n %n to %n"
+    "I2C write %n %n to %n"
     (1 2 0)
     "i2c.write(%n3,bytes([%n1,%n2]))"
     ((microbit i2c))
     i2cWrite:and:to:)
    (commandBlock:args:code:imports:selector:
-    "i2c write %n %n %n to %n"
+    "I2C write %n %n %n to %n"
     (1 2 3 0)
     "i2c.write(%n4,bytes([%n1,%n2,%n3]))"
     ((microbit i2c))
     i2cWrite:and:and:to:)
    (commandBlock:args:code:imports:selector:
-    "i2c write %v to %n"
+    "I2C write %v to %n"
     ("var" 0)
     "i2c.write(%n,bytes(%v))"
     ((microbit i2c))

@@ -5,12 +5,12 @@
   ("import mpu6050")
   ((category: "mpu6050")
    (commandBlock:args:code:imports:
-    "init mpu"
+    "init MPU"
     ()
     "_mpu=mpu6050.accel(_i2c)"
     ())
    (reporterBlock:args:return:code:imports:
-    "mpu values"
+    "MPU values"
     ()
     r
     "_mpu.get_values()"
