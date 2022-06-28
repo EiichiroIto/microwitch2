@@ -195,16 +195,16 @@ SpMicrowitchFrame >> fileMenu [
 			grp
 				addItem: [ :item | 
 					item
+						name: 'Project Notes' localized;
+						action: [ application editNotes ] ];
+				addItem: [ :item | 
+					item
 						name: 'Save' localized;
 						action: [ application saveProjectNoDialog ] ];
 				addItem: [ :item | 
 					item
 						name: 'Save As' localized;
-						action: [ application saveProject ] ];
-				addItem: [ :item | 
-					item
-						name: 'Project Notes' localized;
-						action: [ application editNotes ] ] ];
+						action: [ application saveProject ] ] ];
 		addGroup: [ :grp | 
 			grp
 				addItem: [ :item | 
