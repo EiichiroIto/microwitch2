@@ -1,0 +1,9 @@
+SmalltalkCISpec {
+  #loading : [
+    SCIMetacelloLoadSpec {
+      #baseline : 'Microwitch',
+      #directory : 'src',
+      #platforms : [ #pharo ]
+    }
+  ]
+}
