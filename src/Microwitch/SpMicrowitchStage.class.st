@@ -101,6 +101,12 @@ SpMicrowitchStage >> connectIfFail: aBlock [
 	owner disableConnect
 ]
 
+{ #category : #initialization }
+SpMicrowitchStage >> connectPresenters [
+
+	output whenInputClicked: [ self directInput ]
+]
+
 { #category : #private }
 SpMicrowitchStage >> createTimerMorph [
 	^ ScratchStepperMorph new
@@ -122,6 +128,18 @@ SpMicrowitchStage >> deleteFileNamed: aString [
 	proxy deleteFileNamed: aString.
 	showOutput := false.
 	self message: 'done' localized
+]
+
+{ #category : #'button actions' }
+SpMicrowitchStage >> directInput [
+
+	| ret |
+	proxy isReady ifFalse: [ ^ self ].
+	ret := Microwitch request: 'Enter expression' localized.
+	ret ifNil: [ ^ self ].
+	ret isEmpty ifTrue: [ ^ self ].
+	proxy isReady ifFalse: [ ^ self ].
+	proxy execute: { ret }
 ]
 
 { #category : #'button actions' }

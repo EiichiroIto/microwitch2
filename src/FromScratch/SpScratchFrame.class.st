@@ -88,7 +88,7 @@ SpScratchFrame >> addScriptMenu: aMenu for: aScript [
 						action: [ aScript cleanUp ] ] ]
 ]
 
-{ #category : #accessing }
+{ #category : #'menu building' }
 SpScratchFrame >> blockMenuFor: aBlockMorph inScriptEditor: aBoolean [
 	| menu |
 	aBoolean
@@ -208,7 +208,7 @@ SpScratchFrame >> scriptForm [
 	^ editorPane screenshot
 ]
 
-{ #category : #accessing }
+{ #category : #'menu building' }
 SpScratchFrame >> scriptMenuFor: aScript [
 	| menu |
 	menu := self newMenu.

@@ -72,7 +72,7 @@ SpMicrowitchFrame >> autoConnect [
 	^ stageFrame autoConnect
 ]
 
-{ #category : #accessing }
+{ #category : #'menu building' }
 SpMicrowitchFrame >> blockMenuFor: aBlockMorph inScriptEditor: aBoolean [
 	| m |
 	m := self newMenu.
@@ -81,11 +81,11 @@ SpMicrowitchFrame >> blockMenuFor: aBlockMorph inScriptEditor: aBoolean [
 			grp
 				addItem: [ :item | 
 					item
-						name: 'show code';
+						name: 'show code' localized;
 						action: [ application showCodeOf: aBlockMorph topBlock ] ];
 				addItem: [ :item | 
 					item
-						name: 'start';
+						name: 'start' localized;
 						action: [ aBlockMorph topBlock toggleProcess ] ] ].
 	aBoolean
 		ifTrue: [ self addBlockMenu: m for: aBlockMorph ].
@@ -328,7 +328,7 @@ SpMicrowitchFrame >> selectModules [
 	choices := application availableModuleNames.
 	selectedItems := application enabledModuleNames asSet.
 	result := SpScratchApp
-		          multiSelect: 'Select modules' localized
+		          multiSelect: 'Select Modules' localized
 		          chooseFrom: choices
 		          selectedItems: selectedItems.
 	result ifNil: [ ^ self ].

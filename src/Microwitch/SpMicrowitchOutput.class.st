@@ -5,17 +5,23 @@ Class {
 		'plotter',
 		'textOutput',
 		'notebook',
-		'buttonClear'
+		'buttonClear',
+		'buttonInput'
 	],
 	#category : #'Microwitch-Spec2'
 }
 
 { #category : #specs }
 SpMicrowitchOutput class >> defaultLayout [
+
 	^ SpBoxLayout newVertical
-		add: #buttonClear withConstraints: [ :c | c height: self buttonHeight ];
-		add: #notebook;
-		yourself
+		  add: (SpBoxLayout newHorizontal
+				   add: #buttonInput;
+				   add: #buttonClear;
+				   yourself)
+		  withConstraints: [ :c | c height: self buttonHeight ];
+		  add: #notebook;
+		  yourself
 ]
 
 { #category : #accessing }
@@ -93,6 +99,10 @@ SpMicrowitchOutput >> createTextPage [
 
 { #category : #initialization }
 SpMicrowitchOutput >> initializePresenters [
+	buttonInput := self newButton
+		label: 'input' localized;
+		icon: (self iconNamed: #edit);
+		yourself.
 	buttonClear := self newButton
 		label: 'clear' localized;
 		icon: (self iconNamed: #glamorousClose);
@@ -116,4 +126,10 @@ SpMicrowitchOutput >> plotterLabel [
 { #category : #private }
 SpMicrowitchOutput >> textLabel [
 	^ 'Output' localized
+]
+
+{ #category : #accessing }
+SpMicrowitchOutput >> whenInputClicked: aBlock [
+
+	buttonInput action: aBlock
 ]

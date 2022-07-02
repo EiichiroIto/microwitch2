@@ -392,7 +392,7 @@ Microwitch >> showCode: aString title: aTitleString [
 Microwitch >> showCodeOf: aBlockMorph [
 	| code |
 	code := self newCode parse: aBlockMorph withHeader: true.
-	self showCode: code title: 'show code'
+	self showCode: code title: 'show code' localized
 ]
 
 { #category : #processes }

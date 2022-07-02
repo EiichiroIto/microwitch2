@@ -24,6 +24,7 @@ SpScratchApp class >> alert: aString [
 	SpInformDialog new
 		title: 'alert!' localized;
 		label: aString;
+		acceptLabel: 'Close' localized;
 		openModal
 ]
 
@@ -58,6 +59,8 @@ SpScratchApp class >> confirm: aString [
 	^ SpConfirmDialog new
 		  title: 'Important confirmation' localized;
 		  label: aString;
+			acceptLabel: 'OK' localized;
+			cancelLabel: 'Cancel' localized;
 		  openModal
 ]
 
@@ -180,6 +183,8 @@ SpScratchApp class >> multiLineRequest: aString initialAnswer: aString2 [
 		  title: 'Information request' localized;
 		  label: aString;
 		  text: aString2;
+			acceptLabel: 'OK' localized;
+			cancelLabel: 'Cancel' localized;
 		  openModal
 ]
 
@@ -192,6 +197,8 @@ SpScratchApp class >> multiSelect: aString chooseFrom: aCollection selectedItems
 		  items: aCollection;
 		  selectedItems: aCollection2;
 		  display: [ :each | each ];
+			acceptLabel: 'OK' localized;
+			cancelLabel: 'Cancel' localized;
 		  openModal
 ]
 
@@ -255,6 +262,8 @@ SpScratchApp class >> request: aString [
 	^ SpRequestDialog new
 		  title: 'Information request' localized;
 		  label: aString;
+			acceptLabel: 'OK' localized;
+			cancelLabel: 'Cancel' localized;
 		  openModal
 ]
 
@@ -265,6 +274,8 @@ SpScratchApp class >> request: aString initialAnswer: aString2 [
 		  title: 'Information request' localized;
 		  label: aString;
 		  text: aString2;
+			acceptLabel: 'OK' localized;
+			cancelLabel: 'Cancel' localized;
 		  openModal
 ]
 
@@ -285,6 +296,8 @@ SpScratchApp class >> select: aString chooseFrom: aCollection [
 	^ SpSelectDialog new
 		  title: aString;
 		  items: aCollection;
+			acceptLabel: 'OK' localized;
+			cancelLabel: 'Cancel' localized;
 		  openModal
 ]
 
