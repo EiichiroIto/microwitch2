@@ -13,7 +13,7 @@ micro:witch2 is the successor to [micro:witch](https://github.com/EiichiroIto/mi
 3. Double-click microwitch.exe to start the application.
 
 ## Updating MicroPython firmware
-1. Start micro:witch2 application. (see above)
+1. Start micro:witch2 application.
 2. Connect a micro:bit to your PC.
 3. Wait for the PC to recognize the micro:bit.
 4. Select "Initialize micro:bit" from the Tools menu.
@@ -39,4 +39,7 @@ Metacello new
 
 ## Limitations
 - It has no micro:bit simulators.
+
+## License
+- MIT LICENSE
 
