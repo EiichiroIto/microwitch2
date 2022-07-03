@@ -1,7 +1,9 @@
 # micro:witch2
-micro:witch2 is a block-style programming environment for micro:bit.
+[日本語](https://github.com/EiichiroIto/microwitch2/raw/main/README.ja.md)
 
-micro:witch2 is the successor to [micro:witch](https://github.com/EiichiroIto/microwitch) and is implemented in Pharo Smalltalk 10 (with Spec2).
+micro:witch2 is a block-style programming environment for BBC micro:bit.
+
+micro:witch2 is the successor to [micro:witch](https://github.com/EiichiroIto/microwitch) and is implemented in Pharo Smalltalk 10.
 
 ![screenshot1](https://github.com/EiichiroIto/microwitch2/raw/main/misc/PharoScreenshot.png)
 
@@ -23,7 +25,7 @@ micro:witch2 is the successor to [micro:witch](https://github.com/EiichiroIto/mi
 2. Connect a micro:bit to your PC.
 3. Click "display" at the top left of the screen.
 4. Drag and drop "scroll Hello" block into the area on the right.
-5. Double-click on the block to see hello on the micro: bit.
+5. Double-click on the block to see hello on the micro:bit.
 
 ## Install repository on Pharo
 micro:witch2 sources available on github (https://github.com/EiichiroIto/microwitch2/).
