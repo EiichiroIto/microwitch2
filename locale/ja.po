@@ -796,7 +796,7 @@ msgid "MPU values"
 msgstr "MPU値"
 
 msgid "NeoPixel set pin %G num %n"
-msgstr "NeoPixelをピン %G 個数 %n で初期化する"
+msgstr "ピン %G のNeoPixelを %n 個で初期化する"
 
 msgid "not %b"
 msgstr "%b ではない"
@@ -829,7 +829,7 @@ msgid "pick random %n to %n"
 msgstr "%n から %n までの乱数"
 
 msgid "pin %G no %n r %n g %n b %n"
-msgstr "ピン %G の %n を赤 %n 緑 %n 青 %n にする"
+msgstr "ピン %G の %n 番を赤 %n 緑 %n 青 %n にする"
 
 msgid "play music %P"
 msgstr "音楽 %P を演奏する"
@@ -907,7 +907,7 @@ msgid "set OLED w %n h %n"
 msgstr "OLEDを幅 %n 高さ %n で初期化する"
 
 msgid "set random seed to %n"
-msgstr "乱数を %n に初期化する"
+msgstr "乱数を %n で初期化する"
 
 msgid "set tempo to %n bpm"
 msgstr "テンポを %n bpmに設定する"
