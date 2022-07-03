@@ -43,6 +43,9 @@ msgstr "[enterPaste待機中]"
 msgid "[waitingPaste]"
 msgstr "[paste待機中]"
 
+msgid "Cancel"
+msgstr "キャンセル"
+
 msgid "Choose list var to delete."
 msgstr "削除するリスト変数を選んでください."
 
@@ -138,6 +141,9 @@ msgstr "新規フォルダ名:"
 
 msgid "New"
 msgstr "新規"
+
+msgid "OK"
+msgstr "OK"
 
 msgid "Open Project"
 msgstr "プロジェクトを開く"
@@ -361,6 +367,9 @@ msgstr "切断する"
 msgid "Download file"
 msgstr "ファイルをダウンロードする"
 
+msgid "Enter expression"
+msgstr "式を入力してください"
+
 msgid "Export MicroPython"
 msgstr "MicroPythonでエクスポートする"
 
@@ -400,6 +409,9 @@ msgstr "開けません:"
 msgid "cannot select port"
 msgstr "ポートを選択できません"
 
+msgid "clear"
+msgstr "消す"
+
 msgid "details.txt is not found"
 msgstr "details.txtが見つかりません"
 
@@ -411,6 +423,9 @@ msgstr "完了"
 
 msgid "initialize micro:bit?"
 msgstr "micro:bitを初期化する?"
+
+msgid "input"
+msgstr "入力する"
 
 msgid "micro:bit not found."
 msgstr "micro:bitが見つかりません."
@@ -429,6 +444,12 @@ msgstr "再起動しました"
 
 msgid "select micro:bit device"
 msgstr "micro:bitを選んでください"
+
+msgid "show code"
+msgstr "コードの表示"
+
+msgid "start"
+msgstr "実行"
 
 msgid "stopped"
 msgstr "停止しました"
@@ -600,9 +621,6 @@ msgstr "%S を呼び出す"
 msgid "character image of %I"
 msgstr "キャラ %I のイメージ"
 
-msgid "clear"
-msgstr "消す"
-
 msgid "clear calibration"
 msgstr "方位の調整を取り消す"
 
@@ -772,7 +790,7 @@ msgid "list each %n size %n"
 msgstr "中身が %n で個数が %n のリスト"
 
 msgid "motor %n speed %n"
-msgstr "%n のモーターの速度を %n にする"
+msgstr "モーター %n の速度を %n にする"
 
 msgid "MPU values"
 msgstr "MPU値"
@@ -877,7 +895,7 @@ msgid "send a radio message %s"
 msgstr "無線メッセージ %s を送る"
 
 msgid "servo %n degrees %n"
-msgstr "%n のサーボの角度を %n にする"
+msgstr "サーボ %n の角度を %n にする"
 
 msgid "servo write pin %G to %n degrees"
 msgstr "サーボピン %G を %n 度にする"
