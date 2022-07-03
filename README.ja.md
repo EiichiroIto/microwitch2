@@ -1,5 +1,5 @@
 # micro:witch2
-micro:witch2はBBC micro:bit用のブロック型プログラミング言語です。
+micro:witch2はBBC micro:bit用のブロック型プログラミング環境です。
 
 micro:witch2は[micro:witch](https://github.com/EiichiroIto/microwitch)の後継であり、Pharo Smalltalk 10で実装されています。
 
