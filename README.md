@@ -1,5 +1,5 @@
 # micro:witch2
-[日本語](https://github.com/EiichiroIto/microwitch2/raw/main/README.ja.md)
+[日本語](https://github.com/EiichiroIto/microwitch2/blob/main/README.ja.md)
 
 micro:witch2 is a block-style programming environment for BBC micro:bit.
 
