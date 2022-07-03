@@ -12,7 +12,7 @@ micro:witch2 is the successor to [micro:witch](https://github.com/EiichiroIto/mi
 2. Extract the zipped release file.
 3. Double-click microwitch.exe to start the application.
 
-## Updating MicroPython firmware
+## Initialize micro:bit
 1. Start micro:witch2 application.
 2. Connect a micro:bit to your PC.
 3. Wait for the PC to recognize the micro:bit.
