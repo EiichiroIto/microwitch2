@@ -1,10 +1,10 @@
 # Settings
-FromSratch Apps has some settings, but these settings are disabled by default.
+FromSratch App has some settings, but these settings are disabled by default.
 You can enable the setting(s) by explicitly creating a settings.ston file .
 
 The settings.ston file is a simple text file written in STON format like JSON.
 
-For example, if you want to enable the dontClose option, you can create settings.ston file as follows.
+For example, if you want to enable the dontClose setting, you can create settings.ston file as follows.
 
 ```
 {#dontClose:true}
@@ -30,40 +30,40 @@ Once you have created the settings.ston file, you can change the settings from t
 - hideDebugMenu
 
 ## dontClose
-The dontClose option disables the window close button.
+The dontClose setting disables the window close button.
 
 Possible options are true or false.
 
 ## keepMaximize
-The keepMaximize option automatically scales the window to fit the application window automatically.
+The keepMaximize setting automatically scales the window to fit the application window automatically.
 
 Possible options are true or false.
 
 ## language
-The language option localizes the texts in the application.
+The language setting localizes the texts in the application.
 
 You need to prepare the locale file in the locales folder in advance.
 
-For example, you created a locale file named ja.po, you can specify 'ja' as a language option.
+For example, you created a locale file named ja.po, you can specify 'ja' as a language setting.
 
 ## stickyWindow
-The stickyWindow option disables moving the application window.
+The stickyWindow setting disables moving the application window.
 
 Possible options are true or false.
 
 ## useErrorCatcher
-The useErrorCatcher option suppresses the display of debug dialogs.
+The useErrorCatcher setting suppresses the display of debug dialogs.
 
 Possible options are true or false.
 
 ## projectDir
-The projectDir option specifies the directory name to open/save projects.
+The projectDir setting specifies the directory name to open/save projects.
 
 Possible option is a string of the directory.
 It can be included '{documents}' for system's documents directory.
 
 ## hideDebugMenu
-The hideDebugMenu option disables Help-Inspect and Help-Settings menu items.
+The hideDebugMenu setting disables Help-Inspect and Help-Settings menu items.
 
 Possible options are true or false.
 
