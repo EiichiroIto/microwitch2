@@ -1,5 +1,5 @@
-# Options
-FromSratch Apps has some options, but these options are disabled by default.
+# Settings
+FromSratch Apps has some settings, but these settings are disabled by default.
 You can enable the option(s) by explicitly creating a settings.ston file .
 
 The settings.ston file is a simple text file written in STON format like JSON.
@@ -12,15 +12,15 @@ For example, if you want to enable the dontClose option, you can create settings
 
 The settings.ston file should be placed in the same folder as the Scratch apps image.
 
-Multiple options must be separated by commas like this:
+Multiple settings must be separated by commas like this:
 
 ```
 {#projectDir:'{documents}/microwitch2',#useErrorCatcher:false}
 ```
 
-Once you have created the settings.ston file, you can change the options from the Help-Settings menu.
+Once you have created the settings.ston file, you can change the settings from the Help-Settings menu.
 
-# Available options
+# Available settings
 - dontClose
 - keepMaximize
 - language
