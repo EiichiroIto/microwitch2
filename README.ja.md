@@ -6,7 +6,7 @@ micro:witch2は[micro:witch](https://github.com/EiichiroIto/microwitch)の後継
 ![screenshot1](https://github.com/EiichiroIto/microwitch2/raw/main/misc/PharoScreenshot.png)
 
 ## Windows版インストール
-1. [release page](https://github.com/EiichiroIto/microwitch2/releases)を開いて、最新のリリースファイル（末尾がjpの圧縮ファイル）をダウンロードします。
+1. [release page](https://github.com/EiichiroIto/microwitch2/releases)を開いて、Assetsから最新のリリースファイル（末尾がjpの圧縮ファイル）をダウンロードします。
 2. 圧縮ファイルを展開します。
 3. 展開したフォルダ内の microwitch.exe をダブルクリックすればアプリケーションが起動します。
 
