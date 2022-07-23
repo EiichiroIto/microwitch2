@@ -1,7 +1,7 @@
 Class {
 	#name : #MWComm,
 	#superclass : #Object,
-	#category : #'Microwitch-Comm'
+	#category : #'MicroPythonProxy-Comm'
 }
 
 { #category : #api }
@@ -17,6 +17,11 @@ MWComm >> get [
 { #category : #api }
 MWComm >> isConnected [
 	self subclassResponsibility
+]
+
+{ #category : #testing }
+MWComm >> isWebRepl [
+	^ false
 ]
 
 { #category : #api }

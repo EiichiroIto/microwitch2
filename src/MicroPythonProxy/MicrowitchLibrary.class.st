@@ -1,7 +1,7 @@
 Class {
 	#name : #MicrowitchLibrary,
 	#superclass : #FFILibrary,
-	#category : #'Microwitch-Plugins'
+	#category : #'MicroPythonProxy-Plugins'
 }
 
 { #category : #'accessing platform' }

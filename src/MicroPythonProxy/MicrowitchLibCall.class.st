@@ -1,7 +1,7 @@
 Class {
 	#name : #MicrowitchLibCall,
 	#superclass : #Object,
-	#category : #'Microwitch-Plugins'
+	#category : #'MicroPythonProxy-Plugins'
 }
 
 { #category : #resources }

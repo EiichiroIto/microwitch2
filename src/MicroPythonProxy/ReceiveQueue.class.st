@@ -8,7 +8,7 @@ Class {
 		'timeout',
 		'delimiters'
 	],
-	#category : #'Microwitch-Comm'
+	#category : #'MicroPythonProxy-Comm'
 }
 
 { #category : #api }

@@ -1,10 +1,10 @@
 "
-A MicroPythonParserTest is a test class for testing the behavior of MicroPythonParser
+A MicroPythonParser2Test is a test class for testing the behavior of MicroPythonParser
 "
 Class {
 	#name : #MicroPythonParserTest,
 	#superclass : #TestCase,
-	#category : #'Microwitch-Tests'
+	#category : #'MicroPythonProxy-Tests'
 }
 
 { #category : #private }
@@ -53,11 +53,11 @@ MicroPythonParserTest >> testParseItem [
 MicroPythonParserTest >> testParseItemsDelimiter [
 	| p in list |
 	p := self newParser.
-	in := ReadStream on: '123,456]'.
+	in := ReadStream on: '123,456 , 789]'.
 	list := p parseItems: in delimiter: $].
-	self assertCollection: list equals: #(123 456).
+	self assertCollection: list equals: #(123 456 789).
 	self assert: in atEnd.
-	in := ReadStream on: ']'.
+	in := ReadStream on: '    ]'.
 	list := p parseItems: in delimiter: $].
 	self assert: list isEmpty.
 ]

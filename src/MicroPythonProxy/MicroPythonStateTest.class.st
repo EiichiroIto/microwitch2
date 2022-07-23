@@ -4,7 +4,7 @@ A MicroPythonStatusTest is a test class for testing the behavior of MicroPythonS
 Class {
 	#name : #MicroPythonStateTest,
 	#superclass : #TestCase,
-	#category : #'Microwitch-Tests'
+	#category : #'MicroPythonProxy-Tests'
 }
 
 { #category : #private }

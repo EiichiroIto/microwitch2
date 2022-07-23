@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'state'
 	],
-	#category : #'Microwitch-MPython'
+	#category : #'MicroPythonProxy-Core'
 }
 
 { #category : #api }

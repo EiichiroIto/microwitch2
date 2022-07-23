@@ -7,7 +7,7 @@ Class {
 		'sendLines',
 		'mode'
 	],
-	#category : #'Microwitch-MPython'
+	#category : #'MicroPythonProxy-Core'
 }
 
 { #category : #api }

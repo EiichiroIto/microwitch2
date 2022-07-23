@@ -9,7 +9,7 @@ Class {
 		'autoPilot',
 		'state'
 	],
-	#category : #'Microwitch-MPython'
+	#category : #'MicroPythonProxy-Core'
 }
 
 { #category : #constants }
@@ -245,6 +245,13 @@ MicroPythonProxy >> initialize [
 ]
 
 { #category : #testing }
+MicroPythonProxy >> isConnected [
+
+	state isIdle ifTrue: [ ^ false ].
+	^ state isNotConnected not
+]
+
+{ #category : #testing }
 MicroPythonProxy >> isIdle [
 	^ state isIdle
 ]
@@ -389,6 +396,15 @@ MicroPythonProxy >> receiveQueue: anObject [
 ]
 
 { #category : #api }
+MicroPythonProxy >> responseString [
+
+	| s |
+	s := WriteStream on: ByteArray new.
+	receiveQueue getAll do: [ :each | s nextPutAll: each ].
+	^ s contents asString
+]
+
+{ #category : #api }
 MicroPythonProxy >> restart [
 
 	state isReady ifFalse: [ ^ self ].
@@ -491,13 +507,25 @@ MicroPythonProxy >> upload: aString fileNamed: aString2 [
 ]
 
 { #category : #api }
+MicroPythonProxy >> waitCompleteSendIfError: aBlock [
+
+	self updateTimeoutMsec.
+	[ 
+	self step.
+	state isReady ifTrue: [ ^ self ].
+	state isRunning ifTrue: [ ^ self ].
+	self ifTimeoutDo: [ ^ aBlock cull: 'timeout' ].
+	50 milliSeconds wait ] repeat
+]
+
+{ #category : #api }
 MicroPythonProxy >> waitPromptIfError: aBlock [
 
 	state isWaiting ifFalse: [ ^ aBlock cull: 'state is not waiting' ].
 	self updateTimeoutMsec.
 	[ 
 	self step.
-	self checkPrompted ifTrue: [ ^ state beReady ].
+	state isReady ifTrue: [ ^ self ].
 	self ifTimeoutDo: [ ^ aBlock cull: 'timeout' ].
 	50 milliSeconds wait ] repeat
 ]

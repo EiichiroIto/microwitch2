@@ -4,7 +4,7 @@ A MicroPythonProxy2Test is a test class for testing the behavior of MicroPythonP
 Class {
 	#name : #MicroPythonProxyTest,
 	#superclass : #TestCase,
-	#category : #'Microwitch-Tests'
+	#category : #'MicroPythonProxy-Tests'
 }
 
 { #category : #private }
@@ -217,6 +217,18 @@ MicroPythonProxyTest >> testInitialize [
 	self assert: (p autoPilot isKindOf: MicroPythonAutoPilot).
 	self assert: p timeout equals: p defaultTimeout.
 	self assert: p timeoutMsec isNil
+]
+
+{ #category : #test }
+MicroPythonProxyTest >> testIsConnected [
+
+	| p |
+	p := self newProxy.
+	self deny: p isConnected.
+	p state beNotConnected.
+	self deny: p isConnected.
+	p state beConnected.
+	self assert: p isConnected
 ]
 
 { #category : #test }

@@ -4,7 +4,7 @@ A MicroPythonAutoPilotTest is a test class for testing the behavior of MicroPyth
 Class {
 	#name : #MicroPythonAutoPilotTest,
 	#superclass : #TestCase,
-	#category : #'Microwitch-Tests'
+	#category : #'MicroPythonProxy-Tests'
 }
 
 { #category : #private }

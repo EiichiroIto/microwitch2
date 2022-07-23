@@ -1,10 +1,10 @@
 "
-A DummyComm2Test is a test class for testing the behavior of DummyComm2
+A DummyComm22Test is a test class for testing the behavior of DummyComm22
 "
 Class {
 	#name : #DummyCommTest,
 	#superclass : #TestCase,
-	#category : #'Microwitch-Tests'
+	#category : #'MicroPythonProxy-Tests'
 }
 
 { #category : #private }

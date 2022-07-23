@@ -106,7 +106,7 @@ SpMicrowitchFrame >> connectPresenters [
 { #category : #private }
 SpMicrowitchFrame >> createEditor [
 
-	^ ScrollFrameMorph2 new
+	^ ScrollFrameMorph new
 		  growthFraction: 0.1;
 		  color: ScratchTheme scriptsPaneColor;
 		  yourself

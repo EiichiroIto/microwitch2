@@ -8,7 +8,7 @@ Class {
 		'isConnected',
 		'portName'
 	],
-	#category : #'Microwitch-Comm'
+	#category : #'MicroPythonProxy-Comm'
 }
 
 { #category : #api }

@@ -15,7 +15,9 @@ Class {
 		'hbarInset',
 		'vbarInset',
 		'contentsChanged',
-		'growthFraction'
+		'growthFraction',
+		'scrollBarEndInset',
+		'scrollBarStartInset'
 	],
 	#category : #'FromScratch-Morphic'
 }
@@ -57,39 +59,54 @@ ScrollFrameMorph >> contentsBounds [
 ScrollFrameMorph >> drawSubmorphsOn: aCanvas [
 	"If my contents has changed, fix it's extent and update my scrollbar ranges. Clip submorph drawing to my bounds."
 
+	| clipR |
 	contentsChanged ifTrue: [
 		self updateContentsExtent.
 		self updateScrollbars.
 		contentsChanged := false].
 
-	super drawSubmorphsOn: (aCanvas copyClipRect: self innerBounds).
+	"draw my contents morph clipped to my visible extent"
+	aCanvas isShadowDrawing ifFalse: [ 
+	clipR := self innerBounds topLeft extent: self visibleExtent.
+	(aCanvas copyClipRect: clipR) fullDrawMorph: contents].
+
+	"draw all my submorphs other than my contents"
+	submorphs reverseDo:[:m |
+		(m ~~ contents) ifTrue: [aCanvas fullDrawMorph: m]].
+
+
 
 ]
 
 { #category : #geometry }
 ScrollFrameMorph >> extent: aPoint [
+
 	"After setting my size, position and size my scrollbars and grow box. Also update my contents and scrollbar ranges."
 
 	| inner w h |
-	super extent: (aPoint truncated max: self minWidth@self minHeight).
+	super extent: (aPoint truncated max: self minWidth @ self minHeight).
+
+	scrollBarStartInset ifNil: [ 
+		scrollBarStartInset := scrollBarEndInset := 0 ].
+
 	inner := self innerBounds.
 
-	w := inner width.
-	vScrollbar owner = self ifTrue: [w := w - vbarInset].
-	hScrollbar position: inner left@(inner bottom - hbarInset).
-	hScrollbar extent: w@hbarInset.
+	w := inner width - scrollBarStartInset - (vScrollbar owner = self
+		      ifTrue: [ vbarInset ]
+		      ifFalse: [ scrollBarEndInset ]).
+	hScrollbar position:
+		inner left + scrollBarStartInset @ (inner bottom - hbarInset).
+	hScrollbar extent: w @ hbarInset.
 
-	h := inner height.
-	hScrollbar owner = self ifTrue: [h := h - hbarInset].
-	vScrollbar position: (inner right - vbarInset)@inner top.
-	vScrollbar extent: vbarInset@h.
-
-	cornerMorph position: (inner bottomRight - (vbarInset@hbarInset)).
-	cornerMorph extent: vbarInset@hbarInset.
+	h := inner height - scrollBarStartInset - (hScrollbar owner = self
+		      ifTrue: [ hbarInset ]
+		      ifFalse: [ scrollBarEndInset ]).
+	vScrollbar position:
+		inner right - vbarInset @ (inner top + scrollBarStartInset).
+	vScrollbar extent: vbarInset @ h.
 
 	self updateContentsExtent.
-	self updateScrollbars.
-
+	self updateScrollbars
 ]
 
 { #category : #geometry }
@@ -149,35 +166,32 @@ ScrollFrameMorph >> hScrollRelative: aFloat [
 ScrollFrameMorph >> initialize [
 
 	super initialize.
-	self color: Color red.
-	hbarInset := 12.
-	vbarInset := 12.
+	self borderWidth: 0.
+	"self removeAllMorphs."
+	self color: Color blue.
+	hbarInset := 30.
+	vbarInset := 25.
+	scrollBarStartInset := 10.
+	scrollBarEndInset := 14.
 	contentsChanged := false.
-	growthFraction := 0.6.  "amount to grow when contents do not fit as a fraction of the current size"
+	growthFraction := 0.6.
 
 	contents := PasteUpMorph new
-		color: Color red;
-		borderWidth: 0;
-		enableDragNDrop: true.
-
-	hScrollbar := ScrollBar new
-		model: self;
-		setValueSelector: #hScrollRelative:";
-		hasMenuButton: false".
-	vScrollbar := ScrollBar new
-		model: self;
-		setValueSelector: #vScrollRelative:";
-		hasMenuButton: false".
-	cornerMorph := BorderedMorph new
-		borderRaised; borderWidth: 2; color: hScrollbar color.
+		            color: (Color gray: 0.9);
+		            borderWidth: 0;
+		            enableDragNDrop: true.
+	hScrollbar := ScratchScrollBar newHorizontal
+		              target: self;
+		              selector: #hScrollRelative:.
+	vScrollbar := ScratchScrollBar newVertical
+		              target: self;
+		              selector: #vScrollRelative:.
 
 	contents position: self position + borderWidth.
 	self addMorph: contents.
 	self addMorph: hScrollbar.
 	self addMorph: vScrollbar.
-	self addMorph: cornerMorph.
-	self extent: 160@120.
-
+	self extent: 160 @ 120
 ]
 
 { #category : #geometry }
@@ -225,13 +239,11 @@ ScrollFrameMorph >> minWidth [
 ScrollFrameMorph >> showHorizontalScrollbar: aBoolean [
 	"Show or hide my horizontal scrollbar."
 
+	aBoolean = (hScrollbar owner = self) ifTrue: [^ self].
+
 	aBoolean
-		ifTrue: [
-			self addMorph: hScrollbar.
-			vScrollbar owner = self ifTrue: [self addMorph: cornerMorph]]
-		ifFalse: [
-			hScrollbar delete.
-			cornerMorph delete].
+		ifTrue: [self addMorph: hScrollbar]
+		ifFalse: [hScrollbar delete].
 
 	self extent: self extent.
 
@@ -241,13 +253,11 @@ ScrollFrameMorph >> showHorizontalScrollbar: aBoolean [
 ScrollFrameMorph >> showVerticalScrollbar: aBoolean [
 	"Show or hide my vertical scrollbar."
 
+	aBoolean = (vScrollbar owner = self) ifTrue: [^ self].
+
 	aBoolean
-		ifTrue: [
-			self addMorph: vScrollbar.
-			hScrollbar owner = self ifTrue: [self addMorph: cornerMorph]]
-		ifFalse: [
-			vScrollbar delete.
-			cornerMorph delete].
+		ifTrue: [self addMorph: vScrollbar]
+		ifFalse: [vScrollbar delete].
 
 	self extent: self extent.
 

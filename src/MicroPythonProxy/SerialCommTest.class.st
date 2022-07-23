@@ -1,7 +1,7 @@
 Class {
 	#name : #SerialCommTest,
 	#superclass : #TestCase,
-	#category : #'Microwitch-Tests'
+	#category : #'MicroPythonProxy-Tests'
 }
 
 { #category : #private }

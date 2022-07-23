@@ -6,7 +6,7 @@ Class {
 		'portName',
 		'baudRate'
 	],
-	#category : #'Microwitch-Comm'
+	#category : #'MicroPythonProxy-Comm'
 }
 
 { #category : #private }

@@ -6,14 +6,17 @@ Class {
 
 { #category : #baselines }
 BaselineOfMicrowitch >> baseline: spec [
+
 	<baseline>
-	spec
-		for: #common
-		do: [ spec
-				package: 'FromScratch';
-				package: 'FromScratch-Tests'
-					with: [ spec requires: #('FromScratch') ];
-				package: 'Microwitch' with: [ spec requires: #('FromScratch') ];
-				package: 'Microwitch-Tests'
-					with: [ spec requires: #('FromScratch' 'Microwitch') ] ]
+	spec for: #common do: [ 
+		spec
+			package: 'FromScratch';
+			package: 'FromScratch-Tests'
+			with: [ spec requires: #( 'FromScratch' ) ];
+			package: 'MicroPythonProxy';
+			package: 'Microwitch'
+			with: [ spec requires: #( 'FromScratch' 'MicroPythonProxy' ) ];
+			package: 'Microwitch-Tests'
+			with: [ 
+				spec requires: #( 'FromScratch' 'Microwitch' 'MicroPythonProxy' ) ] ]
 ]

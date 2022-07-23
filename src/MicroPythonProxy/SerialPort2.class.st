@@ -5,7 +5,7 @@ Class {
 		'portNum',
 		'plugin'
 	],
-	#category : #'Microwitch-Plugins'
+	#category : #'MicroPythonProxy-Plugins'
 }
 
 { #category : #enumeration }

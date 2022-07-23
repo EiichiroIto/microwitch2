@@ -1,7 +1,7 @@
 Class {
 	#name : #MicroPythonParser,
 	#superclass : #Object,
-	#category : #'Microwitch-Converter'
+	#category : #'MicroPythonProxy-Core'
 }
 
 { #category : #parsing }
@@ -29,7 +29,8 @@ MicroPythonParser >> parseItem: aStream [
 	| token |
 	aStream atEnd
 		ifTrue: [ ^ nil ].
-	[ token := aStream next. token = Character space ] whileTrue.
+	aStream skipSeparators.
+	token := aStream next.
 	token = $[
 		ifTrue: [ ^ self parseItems: aStream delimiter: $] ].
 	(token = $" or: [ token = $' ])
@@ -47,11 +48,13 @@ MicroPythonParser >> parseItem: aStream [
 MicroPythonParser >> parseItems: aStream delimiter: aCharacter [
 	| list item c |
 	list := OrderedCollection new.
+	aStream skipSeparators.
 	aStream next = aCharacter
 		ifTrue: [ ^ list asArray ].
 	aStream back.
 	[ item := self parseItem: aStream.
 	list add: item.
+	aStream skipSeparators.
 	c := aStream next.
 	c = aCharacter
 		ifTrue: [ ^ list asArray ].
@@ -68,8 +71,8 @@ MicroPythonParser >> parseNumber: aStream [
 			(c isDigit or: [ c = $. ])
 				ifTrue: [ out nextPut: c ]
 				ifFalse: [ aStream back.
-					^ out contents asNumberNoError ] ].
-	^ out contents asNumberNoError
+					^ out contents asNumber ] ].
+	^ out contents asNumber
 ]
 
 { #category : #private }
