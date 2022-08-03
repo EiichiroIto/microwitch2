@@ -28,8 +28,6 @@ MicrobitFirmware class >> initialize [
 	"MicrobitFirmware initialize"
 
 	Default := self new
-		           readFirmwares;
-		           yourself
 ]
 
 { #category : #api }
@@ -93,6 +91,7 @@ MicrobitFirmware >> readFirmwares [
 	| dir dict |
 	dict := Dictionary new.
 	dir := FileSystem workingDirectory / 'MicroPython'.
+	dir createDirectory.
 	(dir filesMatching: '*.hex') do: [ :each | 
 		dict at: each base asSymbol put: each contents ].
 	firmwares := dict

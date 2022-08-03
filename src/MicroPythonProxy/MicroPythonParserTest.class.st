@@ -22,6 +22,17 @@ MicroPythonParserTest >> testParse [
 ]
 
 { #category : #test }
+MicroPythonParserTest >> testParseData [
+	| p |
+	p := self newParser.
+	self assert: (p parseData: '123') equals: 123.
+	p := self newParser.
+	self assert: (p parseData: '''abc''') equals: 'abc'.
+	p := self newParser.
+	self assert: (p parseData: '') equals: nil
+]
+
+{ #category : #test }
 MicroPythonParserTest >> testParseIdentifier [
 	| p s |
 	p := self newParser.
@@ -63,6 +74,22 @@ MicroPythonParserTest >> testParseItemsDelimiter [
 ]
 
 { #category : #test }
+MicroPythonParserTest >> testParseList [
+	| p s r |
+	s := ReadStream on: '[]'.
+	p := self newParser.
+	p stream: s.
+	r := p parseList.
+	self assert: r isCollection.
+	self assert: r isEmpty.
+	s := ReadStream on: '[1 , 2,3 ]'.
+	p := self newParser.
+	p stream: s.
+	r := p parseList.
+	self assertCollection: r equals: #(1 2 3) asOrderedCollection
+]
+
+{ #category : #test }
 MicroPythonParserTest >> testParseNumber [
 	| p s |
 	p := self newParser.
@@ -73,6 +100,52 @@ MicroPythonParserTest >> testParseNumber [
 	s := ReadStream on: '123abc'.
 	self assert: (p parseNumber: s) equals: 123.
 	self assert: s next equals: $a
+]
+
+{ #category : #test }
+MicroPythonParserTest >> testParseSequentialUpTo [
+	| p s r |
+	s := ReadStream on: '<>'.
+	p := self newParser.
+	p stream: s.
+	r := p parseSequential: Array new upTo: $>.
+	self assert: r isArray.
+	self assert: r isEmpty.
+	s := ReadStream on: '<1 , 2,3 >'.
+	p := self newParser.
+	p stream: s.
+	r := p parseSequential: Array new upTo: $>.
+	self assertCollection: r equals: #(1 2 3)
+]
+
+{ #category : #test }
+MicroPythonParserTest >> testParseString [
+	| p s |
+	s := ReadStream on: '''123''X'.
+	p := self newParser.
+	p stream: s.
+	self assert: p parseString equals: '123'.
+	self assert: p stream next equals: $X.
+	s := ReadStream on: '''12"34'''.
+	p := self newParser.
+	p stream: s.
+	self assert: p parseString equals: '12"34'.
+	s := ReadStream on: '"12''34"'.
+	p := self newParser.
+	p stream: s.
+	self assert: p parseString equals: '12''34'.
+	s := ReadStream on: '''12\''34'''.
+	p := self newParser.
+	p stream: s.
+	self assert: p parseString equals: '12''34'.
+	s := ReadStream on: '"12\"34"'.
+	p := self newParser.
+	p stream: s.
+	self assert: p parseString equals: '12"34'.
+	s := ReadStream on: '"12\\34"'.
+	p := self newParser.
+	p stream: s.
+	self assert: p parseString equals: '12\34'
 ]
 
 { #category : #test }
@@ -87,4 +160,30 @@ MicroPythonParserTest >> testParseStringDelimiter [
 	self
 		assert: (p parseString: s delimiter: $")
 		equals: 'abc' , String lf , 'def'
+]
+
+{ #category : #test }
+MicroPythonParserTest >> testParseTuple [
+	| p s r |
+	s := ReadStream on: '()'.
+	p := self newParser.
+	p stream: s.
+	r := p parseTuple.
+	self assert: r isArray.
+	self assert: r isEmpty.
+	s := ReadStream on: '(1 , 2,3 )'.
+	p := self newParser.
+	p stream: s.
+	r := p parseTuple.
+	self assertCollection: r equals: #(1 2 3)
+]
+
+{ #category : #test }
+MicroPythonParserTest >> testStream [
+	| p s |
+	p := self newParser.
+	self assert: p stream isNil.
+	s := ReadStream on: 'abc'.
+	p stream: s.
+	self assert: p stream identicalTo: s
 ]

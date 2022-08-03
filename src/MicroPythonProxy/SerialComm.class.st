@@ -53,6 +53,11 @@ SerialComm >> isConnected [
 	^ port notNil and: [ port isOpen ]
 ]
 
+{ #category : #testing }
+SerialComm >> isWebRepl [
+	^ false
+]
+
 { #category : #api }
 SerialComm >> open [
 	self isConnected

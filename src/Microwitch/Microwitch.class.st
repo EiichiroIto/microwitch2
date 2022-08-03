@@ -236,7 +236,7 @@ Microwitch >> downloadFile [
 	code := presenter downloadFileNamed: file.
 	(code isNil or: [ code isEmpty ]) ifTrue: [ ^ self ].
 	code := MicroPythonParser new parse: code.
-	code := self confirmCode: code title: 'OK to save, or cancel'.
+	code := self confirmCode: code title: 'OK to save, or cancel' localized.
 	code ifNil: [ ^ self ].
 	self exportString: code extension: self pyExtension isBinary: false
 ]
@@ -360,13 +360,6 @@ Microwitch >> pyExtension [
 	^ 'py'
 ]
 
-{ #category : #'menu actions' }
-Microwitch >> quit [
-	(self confirm: 'Quit Application?' translated)
-		ifFalse: [ ^ self ].
-	Smalltalk snapshot: false andQuit: true
-]
-
 { #category : #private }
 Microwitch >> restoreProject [
 	"do nothing"
@@ -463,6 +456,7 @@ Microwitch >> uploadFile [
 Microwitch >> uploadFirmware [
 
 	| dir file firmware |
+	MicrobitFirmware default readFirmwares.
 	dir := MicrobitFirmware default firmwarePathIfFail: [ :msg | 
 		       ^ self alert: msg ].
 	dir ifNil: [ 

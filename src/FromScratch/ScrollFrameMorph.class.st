@@ -11,13 +11,8 @@ Class {
 		'contents',
 		'hScrollbar',
 		'vScrollbar',
-		'cornerMorph',
-		'hbarInset',
-		'vbarInset',
 		'contentsChanged',
-		'growthFraction',
-		'scrollBarEndInset',
-		'scrollBarStartInset'
+		'growthFraction'
 	],
 	#category : #'FromScratch-Morphic'
 }
@@ -86,24 +81,21 @@ ScrollFrameMorph >> extent: aPoint [
 	| inner w h |
 	super extent: (aPoint truncated max: self minWidth @ self minHeight).
 
-	scrollBarStartInset ifNil: [ 
-		scrollBarStartInset := scrollBarEndInset := 0 ].
-
 	inner := self innerBounds.
 
-	w := inner width - scrollBarStartInset - (vScrollbar owner = self
-		      ifTrue: [ vbarInset ]
-		      ifFalse: [ scrollBarEndInset ]).
+	w := inner width - self scrollBarStartInset - (vScrollbar owner = self
+		      ifTrue: [ self vbarInset ]
+		      ifFalse: [ self scrollBarEndInset ]).
 	hScrollbar position:
-		inner left + scrollBarStartInset @ (inner bottom - hbarInset).
-	hScrollbar extent: w @ hbarInset.
+		inner left + self scrollBarStartInset @ (inner bottom - self hbarInset).
+	hScrollbar extent: w @ self hbarInset.
 
-	h := inner height - scrollBarStartInset - (hScrollbar owner = self
-		      ifTrue: [ hbarInset ]
-		      ifFalse: [ scrollBarEndInset ]).
+	h := inner height - self scrollBarStartInset - (hScrollbar owner = self
+		      ifTrue: [ self hbarInset ]
+		      ifFalse: [ self scrollBarEndInset ]).
 	vScrollbar position:
-		inner right - vbarInset @ (inner top + scrollBarStartInset).
-	vScrollbar extent: vbarInset @ h.
+		inner right - self vbarInset @ (inner top + self scrollBarStartInset).
+	vScrollbar extent: self vbarInset @ h.
 
 	self updateContentsExtent.
 	self updateScrollbars
@@ -162,17 +154,17 @@ ScrollFrameMorph >> hScrollRelative: aFloat [
 
 ]
 
+{ #category : #private }
+ScrollFrameMorph >> hbarInset [
+	^ 30
+]
+
 { #category : #initialization }
 ScrollFrameMorph >> initialize [
 
 	super initialize.
 	self borderWidth: 0.
-	"self removeAllMorphs."
 	self color: Color blue.
-	hbarInset := 30.
-	vbarInset := 25.
-	scrollBarStartInset := 10.
-	scrollBarEndInset := 14.
 	contentsChanged := false.
 	growthFraction := 0.6.
 
@@ -233,6 +225,16 @@ ScrollFrameMorph >> minWidth [
 
 	^ 60
 
+]
+
+{ #category : #private }
+ScrollFrameMorph >> scrollBarEndInset [
+	^ 14
+]
+
+{ #category : #private }
+ScrollFrameMorph >> scrollBarStartInset [
+	^ 10
 ]
 
 { #category : #'scrollbar visibility' }
@@ -360,6 +362,11 @@ ScrollFrameMorph >> vScrollRelative: aFloat [
 ]
 
 { #category : #private }
+ScrollFrameMorph >> vbarInset [
+	^ 25
+]
+
+{ #category : #private }
 ScrollFrameMorph >> visibleExtent [
 	"Answer the extent of my visible area. That is, the area within my borders minus the space used for scrollbars."
 
@@ -368,9 +375,9 @@ ScrollFrameMorph >> visibleExtent [
 	clipToScrollBarEdge ifFalse: [^ self extent - (2 * borderWidth)].
 
 	visibleW := self width - (2 * borderWidth).
-	vScrollbar owner = self ifTrue: [visibleW := visibleW - vbarInset].
+	vScrollbar owner = self ifTrue: [visibleW := visibleW - self vbarInset].
 	visibleH := self height - (2 * borderWidth).
-	hScrollbar owner = self ifTrue: [visibleH := visibleH - hbarInset].
+	hScrollbar owner = self ifTrue: [visibleH := visibleH - self hbarInset].
 	^ visibleW@visibleH
 
 ]

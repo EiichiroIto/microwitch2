@@ -78,6 +78,7 @@ SpMicrowitchStage >> break [
 			owner enableConnect.
 			^ self message: 'cannot open:' localized , proxy comm portName ] ].
 	proxy break.
+	owner disableConnect.
 	self message: 'stopped' localized
 ]
 

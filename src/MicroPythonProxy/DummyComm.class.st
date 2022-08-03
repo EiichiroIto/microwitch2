@@ -11,6 +11,16 @@ Class {
 	#category : #'MicroPythonProxy-Comm'
 }
 
+{ #category : #accessing }
+DummyComm >> baudRate [
+	^ baudRate
+]
+
+{ #category : #accessing }
+DummyComm >> baudRate: anObject [
+	baudRate := anObject
+]
+
 { #category : #api }
 DummyComm >> close [
 	isConnected := false
@@ -58,6 +68,11 @@ DummyComm >> isConnected: anObject [
 	isConnected := anObject
 ]
 
+{ #category : #testing }
+DummyComm >> isWebRepl [
+	^ false
+]
+
 { #category : #accessing }
 DummyComm >> mode [
 
@@ -76,6 +91,16 @@ DummyComm >> open [
 		ifTrue: [ ^ false ].
 	isConnected := true.
 	^ true
+]
+
+{ #category : #accessing }
+DummyComm >> options [
+	^ #()
+]
+
+{ #category : #accessing }
+DummyComm >> optionsNamed: aString [ 
+	^ #()
 ]
 
 { #category : #accessing }
@@ -117,7 +142,42 @@ DummyComm >> puts: anObject [
 	puts := anObject
 ]
 
+{ #category : #accessing }
+DummyComm >> receives [
+	^ receives
+]
+
+{ #category : #accessing }
+DummyComm >> receives: anObject [
+	receives := anObject
+]
+
+{ #category : #accessing }
+DummyComm >> sends [
+	^ sends
+]
+
+{ #category : #accessing }
+DummyComm >> sends: anObject [
+	sends := anObject
+]
+
+{ #category : #accessing }
+DummyComm >> setOption: aString to: aString2 [ 
+	"do nothing"
+]
+
 { #category : #api }
 DummyComm >> step [
 	
+]
+
+{ #category : #accessing }
+DummyComm >> whenPutDo [
+	^ whenPutDo
+]
+
+{ #category : #accessing }
+DummyComm >> whenPutDo: anObject [
+	whenPutDo := anObject
 ]
