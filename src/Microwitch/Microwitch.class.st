@@ -48,18 +48,6 @@ Microwitch class >> appVersion [
 	^ '2.0.3'
 ]
 
-{ #category : #settings }
-Microwitch class >> defaultModules [
-
-	^ self settings at: #defaultModules ifAbsentPut: [ '' ]
-]
-
-{ #category : #settings }
-Microwitch class >> defaultModules: aString [
-
-	self settings at: #defaultModules put: aString
-]
-
 { #category : #constants }
 Microwitch class >> extension [
 	^ 'mw2'
@@ -73,19 +61,8 @@ Microwitch class >> initialize [
 	ScratchTheme
 		themesURL: self themesURL;
 		setupThemeNamed: self appFolderName.
-	self setupOptions.
 	"workaround for travis test errors"
 	ObjStream setupVariables
-]
-
-{ #category : #settings }
-Microwitch class >> inputFlowControlType [
-	^ self settings at: #inputFlowControlType ifAbsentPut: [ 0 ]
-]
-
-{ #category : #settings }
-Microwitch class >> inputFlowControlType: aNumber [
-	self settings at: #inputFlowControlType put: aNumber
 ]
 
 { #category : #'world menu' }
@@ -99,27 +76,6 @@ Microwitch class >> menuCommandOn: aBuilder [
 		icon: self icon
 ]
 
-{ #category : #settings }
-Microwitch class >> optionsFor: aSymbol [
-	aSymbol = #inputFlowControlType
-		ifTrue: [ ^ #(0 1 2) ].
-	aSymbol = #outputFlowControlType
-		ifTrue: [ ^ #(0 1 2) ].
-	aSymbol = #defaultModules
-		ifTrue: [ ^ #string ].
-	^ super optionsFor: aSymbol
-]
-
-{ #category : #settings }
-Microwitch class >> outputFlowControlType [
-	^ self settings at: #outputFlowControlType ifAbsentPut: [ 0 ]
-]
-
-{ #category : #settings }
-Microwitch class >> outputFlowControlType: aNumber [
-	self settings at: #outputFlowControlType put: aNumber
-]
-
 { #category : #constants }
 Microwitch class >> presentationClass [
 	^ SpMicrowitchFrame
@@ -130,13 +86,10 @@ Microwitch class >> projectClass [
 	^ MicroPythonProject
 ]
 
-{ #category : #settings }
-Microwitch class >> setupOptions [
+{ #category : #constants }
+Microwitch class >> settingsClass [
 
-	super setupOptions.
-	self inputFlowControlType: 0.
-	self outputFlowControlType: 0.
-	self defaultModules: ''
+	^ MicrowitchSettings
 ]
 
 { #category : #constants }
@@ -205,7 +158,7 @@ Microwitch >> createProject [
 	| proj modules |
 	proj := super createProject.
 	proj blockSpecs: self createBlockSpecs.
-	modules := self class defaultModules splitOn: Character space.
+	modules := settings defaultModules splitOn: Character space.
 	modules := modules intersection: self availableModuleNames.
 	modules do: [ :each | proj addModule: each ].
 	^ proj
