@@ -105,7 +105,7 @@ SpMicrowitchStage >> connectIfFail: aBlock [
 { #category : #initialization }
 SpMicrowitchStage >> connectPresenters [
 
-	output whenInputClicked: [ self directInput ]
+	output whenInputClicked: [ self input ]
 ]
 
 { #category : #private }
@@ -129,18 +129,6 @@ SpMicrowitchStage >> deleteFileNamed: aString [
 	proxy deleteFileNamed: aString.
 	showOutput := false.
 	self message: 'done' localized
-]
-
-{ #category : #'button actions' }
-SpMicrowitchStage >> directInput [
-
-	| ret |
-	proxy isReady ifFalse: [ ^ self ].
-	ret := Microwitch request: 'Enter expression' localized.
-	ret ifNil: [ ^ self ].
-	ret isEmpty ifTrue: [ ^ self ].
-	proxy isReady ifFalse: [ ^ self ].
-	proxy execute: { ret }
 ]
 
 { #category : #'button actions' }
@@ -225,6 +213,21 @@ SpMicrowitchStage >> initializePresenters [
 		yourself.
 	self focusOrder
 		add: output
+]
+
+{ #category : #'button actions' }
+SpMicrowitchStage >> input [
+
+	| ret |
+	self autoConnectIfFail: [ :msg | ^ self message: msg ].
+	ret := Microwitch
+		       multiLineRequest: 'Enter expression' localized
+		       initialAnswer: ''.
+	ret ifNil: [ ^ self ].
+	ret := ret lines reject: #isEmpty.
+	ret isEmpty ifTrue: [ ^ self ].
+	proxy isReady ifFalse: [ ^ self ].
+	proxy execute: ret
 ]
 
 { #category : #api }

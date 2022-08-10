@@ -28,7 +28,8 @@ ScratchSettings >> dictionary [
 { #category : #accessing }
 ScratchSettings >> dictionary: aDictionary [
 
-	dictionary := aDictionary
+	dictionary := aDictionary.
+	SpScratchApp useErrorCatcher: self useErrorCatcher
 ]
 
 { #category : #accessing }
