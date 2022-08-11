@@ -28,6 +28,8 @@ Once you have created the settings.ston file, you can change the settings from t
 - useErrorCatcher
 - projectDir
 - hideDebugMenu
+- resizable
+- fullscreen
 
 ## dontClose
 The dontClose setting disables the window close button.
@@ -67,3 +69,14 @@ The hideDebugMenu setting disables Help-Inspect and Help-Settings menu items.
 
 Possible options are true or false.
 
+## resizable
+The resizable setting specifies whether the application's window can be resized.
+If the resizable setting is true, window decorations will not be displayed.
+
+Possible options are true or false.
+
+## fullscreen
+The fullscreen setting maximizes the application's screen in the host's windowing environment.
+Note that it may not work depending on the host window environment.
+
+Possible options are true or false.
