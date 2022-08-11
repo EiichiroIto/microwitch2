@@ -15,7 +15,7 @@ The settings.ston file should be placed in the same folder as the Pharo image fi
 Multiple settings must be separated by commas like this:
 
 ```
-{#projectDir:'{documents}/microwitch2',#useErrorCatcher:false}
+{#projectDir:'{documents}/{app}',#useErrorCatcher:false}
 ```
 
 Once you have created the settings.ston file, you can change the settings from the Help-Settings menu.
@@ -62,7 +62,7 @@ Possible options are true or false.
 The projectDir setting specifies the directory name to open/save projects.
 
 Possible option is a string of the directory.
-It can be included '{documents}' for system's documents directory.
+It can be included '{documents}' for system's documents directory and '{app}' for application's name.
 
 ## hideDebugMenu
 The hideDebugMenu setting disables Help-Inspect and Help-Settings menu items.
@@ -71,7 +71,7 @@ Possible options are true or false.
 
 ## resizable
 The resizable setting specifies whether the application's window can be resized.
-If the resizable setting is true, window decorations will not be displayed.
+If the resizable setting is false, window decorations will not be displayed.
 
 Possible options are true or false.
 
