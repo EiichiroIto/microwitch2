@@ -1,4 +1,6 @@
 # micro:witch2
+[![Build Status](https://app.travis-ci.com/EiichiroIto/microwitch2.svg?branch=main)](https://app.travis-ci.com/EiichiroIto/microwitch2)
+
 [日本語](https://github.com/EiichiroIto/microwitch2/blob/main/README.ja.md)
 
 micro:witch2 is a block-style programming environment for BBC micro:bit.
