@@ -272,8 +272,8 @@ ScratchProject >> readProjectFrom: aFileReference [
 			projData := f contents.
 			newProj := self extractProjectFrom: projData.
 			newProj extractInfoFrom: projData ]
-		onFailure: [ :err :rcvr | 
-			SpScratchApp alert: err.
+		onFailure: [ :err | 
+			SpScratchApp alert: err messageText.
 			^ nil ].
 	self modified: false.
 	^ newProj
@@ -344,7 +344,7 @@ ScratchProject >> writeProjectAs: aFileReference [
 					self storeProjectInfoOn: out.
 					self newObjStream storeObj: self on: out.
 					out close ] ]
-		onFailure: [ :err :rcvr | 
+		onFailure: [ :err | 
 			out ifNotNil: [ 
 				[ 
 				out close.

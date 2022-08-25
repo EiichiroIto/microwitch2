@@ -45,7 +45,7 @@ Microwitch class >> appName [
 
 { #category : #constants }
 Microwitch class >> appVersion [
-	^ '2.0.3'
+	^ '2.0.4'
 ]
 
 { #category : #constants }
@@ -114,19 +114,6 @@ Microwitch class >> themesURL [
 { #category : #accessing }
 Microwitch >> availableModuleNames [
 	^ MicroPythonProject availableModuleNames
-]
-
-{ #category : #private }
-Microwitch >> checkValidScript: aScript [
-	aScript eventBlocks size = 1
-		ifFalse: [ self alert: 'Start script only needs one' localized.
-			^ false ].
-	^ true
-]
-
-{ #category : #private }
-Microwitch >> checkValidScripts [
-	^ project scripts allSatisfy: [ :each | self checkValidScript: each ]
 ]
 
 { #category : #private }
@@ -299,6 +286,13 @@ Microwitch >> prepareForOpening [
 ]
 
 { #category : #accessing }
+Microwitch >> projectName: aString [
+
+	presenter projectName: aString.
+	super projectName: aString
+]
+
+{ #category : #accessing }
 Microwitch >> proxy [
 	^ presenter proxy
 ]
@@ -359,8 +353,11 @@ Microwitch >> startProcessFor: aTopBlock [
 
 { #category : #'menu actions' }
 Microwitch >> startProgram [
-	self checkValidScripts
-		ifFalse: [ ^ self ].
+
+	project scripts do: [ :each | 
+		each eventBlocks size = 1 ifFalse: [ 
+			self alert: 'Start script only needs one' localized.
+			^ self ] ].
 	presenter autoConnect ifFalse: [ ^ self ].
 	self uploadModuleFiles.
 	self uploadProgram.

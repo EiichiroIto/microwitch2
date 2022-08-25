@@ -191,12 +191,16 @@ MicroPythonProject >> evaluateFor: aTopBlock [
 
 { #category : #'block specs' }
 MicroPythonProject >> extBlockTuples [
+
 	| st |
 	st := WriteStream on: Array new.
 	st nextPut: 'modules'.
-	self modules
-		do:
-			[ :each | st nextPutAll: (self class availableModules at: each) blockTuples ]
+	modules
+		do: [ :each | 
+			st nextPutAll: (self class availableModules at: each ifAbsent: [ 
+					 self error:
+						 'The following modules are not installed:' localized , each ])
+					blockTuples ]
 		separatedBy: [ st nextPut: '-' ].
 	^ st contents
 ]
@@ -258,7 +262,7 @@ MicroPythonProject >> moduleFileFor: aString [
 { #category : #accessing }
 MicroPythonProject >> moduleFiles [
 	| list |
-	list := self modules collect: [ :each | self moduleFileFor: each ].
+	list := modules collect: [ :each | self moduleFileFor: each ].
 	^ list reject: #isNil
 ]
 

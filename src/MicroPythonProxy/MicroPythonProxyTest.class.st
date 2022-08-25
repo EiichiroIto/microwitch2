@@ -305,6 +305,31 @@ MicroPythonProxyTest >> testIsWaiting [
 ]
 
 { #category : #test }
+MicroPythonProxyTest >> testLinesWithoutComments [
+
+	| p r |
+	p := self newProxy.
+	r := p linesWithoutComments: 'abc'.
+	self assertCollection: r equals: #( 'abc' ).
+	r := p linesWithoutComments: 'abc
+  def'.
+	self assertCollection: r equals: #( 'abc' '  def' ).
+	r := p linesWithoutComments: 'abc     
+def     '.
+	self assertCollection: r equals: #( 'abc' 'def' ).
+	r := p linesWithoutComments: 'abc # aaa
+def     # asda   '.
+	self assertCollection: r equals: #( 'abc' 'def' ).
+	r := p linesWithoutComments: 'abc # aaa
+     # asda   
+ghi'.
+	self assertCollection: r equals: #( 'abc' 'ghi' ).
+	r := p linesWithoutComments: ' # aaa
+     # asda   '.
+	self assert: r isEmpty
+]
+
+{ #category : #test }
 MicroPythonProxyTest >> testMakeDeleteFileNamed [
 
 	| p r |
@@ -341,14 +366,14 @@ MicroPythonProxyTest >> testMakeUploadFileNamed [
 
 	| p r |
 	p := self newProxy.
-	r := p makeUpload: 'import microbit' fileNamed: 'main.py'.
+	r := p makeUpload: #( 'import microbit' ) fileNamed: 'main.py'.
 	self assert: r isCollection.
 	self assert: r size equals: 3.
 	self assert: r first equals: '_s=open("main.py","w")'.
 	self assert: r second equals: '_=_s.write("import microbit\n")'.
 	self assert: r third equals: '_s.close()'.
 
-	r := p makeUpload: 'hello("abc")' fileNamed: 'main.py'.
+	r := p makeUpload: #( 'hello("abc")' ) fileNamed: 'main.py'.
 	self assert: r isCollection.
 	self assert: r size equals: 3.
 	self assert: r first equals: '_s=open("main.py","w")'.
@@ -356,7 +381,7 @@ MicroPythonProxyTest >> testMakeUploadFileNamed [
 	self assert: r third equals: '_s.close()'.
 
 	r := p
-		     makeUpload: 'def a():' , String cr , '  return 1+2'
+		     makeUpload: #( 'def a():' '  return 1+2' )
 		     fileNamed: 'main.py'.
 	self assert: r isCollection.
 	self assert: r size equals: 4.

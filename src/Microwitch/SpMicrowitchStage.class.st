@@ -160,7 +160,7 @@ SpMicrowitchStage >> evaluate: aString [
 	self autoConnectIfFail: [ :msg | 
 		self message: msg.
 		^ 'Error!' ].
-	ret := proxy evaluate: aString lines ifError: [ :msg | 
+	ret := proxy evaluate: aString ifError: [ :msg | 
 		       self message: msg.
 		       ^ 'Error!' ].
 	self message: 'done' localized.
@@ -172,7 +172,7 @@ SpMicrowitchStage >> execute: aString [
 
 	self autoConnectIfFail: [ :msg | ^ self message: msg ].
 
-	proxy execute: aString lines.
+	proxy execute: aString.
 	self message: 'done' localized
 ]
 
@@ -185,7 +185,7 @@ SpMicrowitchStage >> getDirectory [
 		^ nil ].
 
 	cmd := 'import os' , String lf , 'os.listdir()'.
-	ret := proxy evaluate: cmd lines ifError: [ :msg | 
+	ret := proxy evaluate: cmd ifError: [ :msg | 
 		       self message: msg.
 		       ^ nil ].
 
@@ -224,8 +224,6 @@ SpMicrowitchStage >> input [
 		       multiLineRequest: 'Enter expression' localized
 		       initialAnswer: ''.
 	ret ifNil: [ ^ self ].
-	ret := ret lines reject: #isEmpty.
-	ret isEmpty ifTrue: [ ^ self ].
 	proxy isReady ifFalse: [ ^ self ].
 	proxy execute: ret
 ]

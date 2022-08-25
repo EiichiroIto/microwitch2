@@ -99,6 +99,24 @@ ScratchTranslator class >> labelFont [
 	^ self fontAt: #Label
 ]
 
+{ #category : #private }
+ScratchTranslator class >> localizedTexts [
+
+	"ScratchTranslator localizedTexts"
+
+	| list list2 list3 |
+	list := #localized senders.
+	list2 := WriteStream on: Array new.
+	list do: [ :each | 
+		list3 := each sendNodes select: [ :each2 | 
+			         each2 selector = #localized and: [ 
+				         each2 receiver isLiteralNode and: [ 
+					         each2 receiver isLiteralArray not ] ] ].
+		list3 := list3 collect: [ :each2 | each2 receiver value ].
+		list2 nextPutAll: list3 ].
+	^ list2 contents asSet sorted
+]
+
 { #category : #'import/export' }
 ScratchTranslator class >> parseCommandSpec: aCommandSpec [
 	"Answer an array of token strings containing my keywords and argument specs."

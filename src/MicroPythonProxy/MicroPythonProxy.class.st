@@ -154,7 +154,7 @@ MicroPythonProxy >> downloadFileNamed: aString ifError: aBlock [
 
 	| lines |
 	lines := self makeDownloadFileNamed: aString.
-	^ self evaluate: lines ifError: aBlock
+	^ self evaluateLines: lines ifError: aBlock
 ]
 
 { #category : #api }
@@ -166,12 +166,22 @@ MicroPythonProxy >> enterPasteMode [
 ]
 
 { #category : #api }
-MicroPythonProxy >> evaluate: aCollection ifError: aBlock [
+MicroPythonProxy >> evaluate: aString ifError: aBlock [
+
+	| lines |
+	lines := self linesWithoutComments: aString.
+	^ self evaluateLines: lines ifError: aBlock
+]
+
+{ #category : #private }
+MicroPythonProxy >> evaluateLines: aCollection ifError: aBlock [
 
 	| stream |
+	aCollection isEmpty ifTrue: [ ^ '' ].
 	stream := WriteStream on: Array new.
 	aCollection do: [ :each | 
-		state isReady ifFalse: [ aBlock cull: 'device is not ready' localized ].
+		state isReady ifFalse: [ 
+			aBlock cull: 'device is not ready' localized ].
 		self sendLine: each.
 		self waitPromptIfError: aBlock.
 		stream nextPutAll: receiveQueue getAll ].
@@ -179,10 +189,12 @@ MicroPythonProxy >> evaluate: aCollection ifError: aBlock [
 ]
 
 { #category : #api }
-MicroPythonProxy >> execute: aCollection [
+MicroPythonProxy >> execute: aString [
 
+	| lines |
+	lines := self linesWithoutComments: aString.
 	autoPilot
-		execute: aCollection;
+		execute: lines;
 		sendPaste
 ]
 
@@ -289,6 +301,20 @@ MicroPythonProxy >> isWaiting [
 	^ state isWaiting
 ]
 
+{ #category : #utilities }
+MicroPythonProxy >> linesWithoutComments: aString [
+
+	| out i str |
+	out := WriteStream on: Array new.
+	aString lines do: [ :each | 
+		i := each indexOf: $#.
+		str := each.
+		i > 0 ifTrue: [ str := each copyFrom: 1 to: i - 1 ].
+		str := str trimRight.
+		str isEmpty ifFalse: [ out nextPut: str ] ].
+	^ out contents
+]
+
 { #category : #private }
 MicroPythonProxy >> logReceiveQueue [
 
@@ -321,18 +347,17 @@ MicroPythonProxy >> makeDownloadFileNamed: aString [
 ]
 
 { #category : #utilities }
-MicroPythonProxy >> makeUpload: aString fileNamed: aString2 [
+MicroPythonProxy >> makeUpload: aCollection fileNamed: aString [
 
 	| s result |
 	result := OrderedCollection new.
 	s := WriteStream on: String new.
 	s
 		nextPutAll: '_s=open("';
-		nextPutAll: aString2;
+		nextPutAll: aString;
 		nextPutAll: '","w")'.
 	result add: s contents.
-
-	aString linesDo: [ :each | 
+	aCollection do: [ :each | 
 		s := WriteStream on: String new.
 		s nextPutAll: '_=_s.write("'.
 		each do: [ :c | 
@@ -500,7 +525,8 @@ MicroPythonProxy >> updateTimeoutMsec [
 MicroPythonProxy >> upload: aString fileNamed: aString2 [
 
 	| lines |
-	lines := self makeUpload: aString fileNamed: aString2.
+	lines := self linesWithoutComments: aString.
+	lines := self makeUpload: lines fileNamed: aString2.
 	autoPilot
 		execute: lines;
 		sendNormal

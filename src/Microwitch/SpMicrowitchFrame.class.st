@@ -10,7 +10,8 @@ Class {
 		'buttonDisconnect',
 		'buttonRestart',
 		'buttonBreak',
-		'buttonSend'
+		'buttonSend',
+		'labelProject'
 	],
 	#category : #'Microwitch-Spec2'
 }
@@ -35,6 +36,8 @@ SpMicrowitchFrame class >> defaultLayout [
 				   add: (SpPanedLayout newHorizontal
 						    positionOfSlider: 0.7;
 						    add: (SpBoxLayout newVertical
+								     add: #labelProject
+								     withConstraints: [ :c | c expand: false ];
 								     add: (SpBoxLayout newHorizontal
 										      add: #buttonSend;
 										      add: #buttonConnect;
@@ -289,6 +292,9 @@ SpMicrowitchFrame >> initializePresenters [
 		              yourself.
 	titlePane := self instantiate: SpScratchTitle.
 	stageFrame := self instantiate: SpMicrowitchStage.
+	labelProject := self newLabel
+		label: 'New Project';
+		yourself.
 	self focusOrder
 		add: buttonSend;
 		add: buttonConnect;
@@ -301,6 +307,12 @@ SpMicrowitchFrame >> initializePresenters [
 { #category : #accessing }
 SpMicrowitchFrame >> plotter [
 	^ stageFrame plotter
+]
+
+{ #category : #accessing }
+SpMicrowitchFrame >> projectName: aString [
+
+	labelProject label: aString
 ]
 
 { #category : #accessing }
