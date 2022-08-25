@@ -58,8 +58,14 @@ msgstr "プロットを消す"
 msgid "Close"
 msgstr "閉じる"
 
+msgid "Connect"
+msgstr "接続する"
+
 msgid "Could not create folder!"
 msgstr "フォルダを作れません!"
+
+msgid "Could not generate code: "
+msgstr "コードを生成できませんでした: "
 
 msgid "Could not read file: "
 msgstr "ファイルを読めません: "
@@ -73,6 +79,18 @@ msgstr "リストを削除する"
 msgid "Delete a variable"
 msgstr "変数を削除する"
 
+msgid "Delete file"
+msgstr "ファイルを削除する"
+
+msgid "Disconnect"
+msgstr "切断する"
+
+msgid "Download file"
+msgstr "ファイルをダウンロードする"
+
+msgid "Enter expression"
+msgstr "式を入力してください"
+
 msgid "Enter for "
 msgstr "入力してください:"
 
@@ -82,14 +100,17 @@ msgstr "エラー!"
 msgid "Examples"
 msgstr "例"
 
+msgid "Export"
+msgstr "エクスポート"
+
 msgid "Export ..."
 msgstr "エクスポート ..."
 
+msgid "Export MicroPython"
+msgstr "MicroPythonでエクスポートする"
+
 msgid "Export S-expression"
 msgstr "S式でエクスポートする"
-
-msgid "Export"
-msgstr "エクスポート"
 
 msgid "File"
 msgstr "ファイル"
@@ -100,14 +121,14 @@ msgstr "フォルダがロックされているか読み込みのみになって
 msgid "Help"
 msgstr "ヘルプ"
 
+msgid "Import"
+msgstr "インポート"
+
 msgid "Import ..."
 msgstr "インポート ..."
 
 msgid "Import S-expression"
 msgstr "S式をインポートする"
-
-msgid "Import"
-msgstr "インポート"
 
 msgid "Important confirmation"
 msgstr "重要な確認"
@@ -130,29 +151,41 @@ msgstr "リストを作る"
 msgid "Make a variable"
 msgstr "変数を作る"
 
-msgid "Multiple Select"
-msgstr "複数選択"
-
 msgid "Message name:"
 msgstr "メッセージ名:"
 
-msgid "New folder name:"
-msgstr "新規フォルダ名:"
+msgid "Multiple Select"
+msgstr "複数選択"
 
 msgid "New"
 msgstr "新規"
 
+msgid "New folder name:"
+msgstr "新規フォルダ名:"
+
 msgid "OK"
 msgstr "OK"
 
-msgid "Open Project"
-msgstr "プロジェクトを開く"
+msgid "OK to save, or cancel"
+msgstr "保存するならOKを押してください"
+
+msgid "Only one micro:bit can be updated."
+msgstr "１台のmicro:bitだけ更新できます."
 
 msgid "Open"
 msgstr "開く"
 
+msgid "Open Project"
+msgstr "プロジェクトを開く"
+
+msgid "Output"
+msgstr "出力"
+
 msgid "Plot data"
 msgstr "データをプロットする"
+
+msgid "Plotter"
+msgstr "プロット"
 
 msgid "Plotter menu"
 msgstr "プロットメニュー"
@@ -160,14 +193,20 @@ msgstr "プロットメニュー"
 msgid "Project Notes"
 msgstr "プロジェクトノート"
 
-msgid "Quit Application?"
-msgstr "アプリを終了しますか?"
-
 msgid "Quit"
 msgstr "終了する"
 
+msgid "Quit Application?"
+msgstr "アプリを終了しますか?"
+
 msgid "Reading"
 msgstr "読み込み中"
+
+msgid "Restart"
+msgstr "再起動する"
+
+msgid "Save"
+msgstr "保存"
 
 msgid "Save As"
 msgstr "名前を付けて保存"
@@ -193,11 +232,11 @@ msgstr "設定を保存する"
 msgid "Save the current project?"
 msgstr "プロジェクトを保存しますか?"
 
-msgid "Save"
-msgstr "保存"
-
 msgid "Select Message name"
 msgstr "メッセージ名を選んでください"
+
+msgid "Select Modules"
+msgstr "モジュールを選ぶ"
 
 msgid "Select an option for "
 msgstr "オプションを選んでください"
@@ -207,6 +246,9 @@ msgstr "ファイルを選んでください"
 
 msgid "Select one"
 msgstr "１つ選んでください"
+
+msgid "Select port"
+msgstr "ポートを選んでください"
 
 msgid "Set max plots"
 msgstr "最大プロット数を設定する"
@@ -220,6 +262,15 @@ msgstr "最小値を設定する"
 msgid "Set update period"
 msgstr "更新間隔を設定する"
 
+msgid "Start"
+msgstr "実行する"
+
+msgid "Start script only needs one"
+msgstr "開始ブロックが１つ必要です"
+
+msgid "Stop"
+msgstr "停止する"
+
 msgid "Sub name?"
 msgstr "サブ名?"
 
@@ -232,17 +283,20 @@ msgstr "そのサブ名は既に使われています!"
 msgid "That variable name is already in use!"
 msgstr "その変数名は既に使われています!"
 
+msgid "The following modules are not installed:"
+msgstr "モジュールがインストールされていません:"
+
 msgid "Tools"
 msgstr "ツール"
 
-msgid "Upload file name?"
-msgstr "アップロードファイル名?"
+msgid "Upload Modules"
+msgstr "モジュールをアップロードする"
 
 msgid "Upload file"
 msgstr "ファイルをアップロードする"
 
-msgid "Upload Modules"
-msgstr "モジュールをアップロードする"
+msgid "Upload file name?"
+msgstr "アップロードファイル名?"
 
 msgid "Variable name?"
 msgstr "変数名?"
@@ -250,26 +304,23 @@ msgstr "変数名?"
 msgid "View on stage"
 msgstr "ステージ上で見る"
 
-msgid "accelerometer"
-msgstr "加速度センサ"
-
 msgid "add sub block"
 msgstr "サブブロックを追加する"
 
 msgid "alert!"
 msgstr "警告!"
 
-msgid "all"
-msgstr "全て"
+msgid "cannot open:"
+msgstr "開けません:"
+
+msgid "cannot select port"
+msgstr "ポートを選択できません"
 
 msgid "clean up"
 msgstr "きれいにする"
 
-msgid "compass"
-msgstr "方位"
-
-msgid "control"
-msgstr "制御"
+msgid "clear"
+msgstr "消す"
 
 msgid "copy"
 msgstr "コピー"
@@ -280,138 +331,6 @@ msgstr "切り取り"
 msgid "delete"
 msgstr "削除"
 
-msgid "display"
-msgstr "表示"
-
-msgid "duplicate"
-msgstr "複製"
-
-msgid "else"
-msgstr "でなければ"
-
-msgid "i2c"
-msgstr "i2c通信"
-
-msgid "invalid sub name!"
-msgstr "不正なサブ名です!"
-
-msgid "io"
-msgstr "入出力"
-
-msgid "last"
-msgstr "最後"
-
-msgid "lists"
-msgstr "リスト"
-
-msgid "maximum plot value?"
-msgstr "プロットの最大値?"
-
-msgid "minimum plot value?"
-msgstr "プロットの最小値?"
-
-msgid "misc"
-msgstr "その他"
-
-msgid "mouse-pointer"
-msgstr "マウス位置"
-
-msgid "music"
-msgstr "音楽"
-
-msgid "neopixel"
-msgstr "neopixel"
-
-msgid "new"
-msgstr "新規"
-
-msgid "no object"
-msgstr "対象なし"
-
-msgid "number of max plots?"
-msgstr "最大プロット数?"
-
-msgid "operators"
-msgstr "演算"
-
-msgid "paste"
-msgstr "貼り付け"
-
-msgid "radio"
-msgstr "無線"
-
-msgid "sensing"
-msgstr "センサ"
-
-msgid "uart"
-msgstr "シリアル通信"
-
-msgid "update plot period? (in milliseconds)"
-msgstr "更新間隔を設定する? (ミリ秒単位で入力)"
-
-msgid "variables"
-msgstr "変数"
-
-msgid "Connect"
-msgstr "接続する"
-
-msgid "Could not generate code: "
-msgstr "コードを生成できませんでした: "
-
-msgid "Delete file"
-msgstr "ファイルを削除する"
-
-msgid "Disconnect"
-msgstr "切断する"
-
-msgid "Download file"
-msgstr "ファイルをダウンロードする"
-
-msgid "Enter expression"
-msgstr "式を入力してください"
-
-msgid "Export MicroPython"
-msgstr "MicroPythonでエクスポートする"
-
-msgid "Initialize micro:bit"
-msgstr "micro:bitを初期化する"
-
-msgid "Only one micro:bit can be updated."
-msgstr "１台のmicro:bitだけ更新できます."
-
-msgid "Output"
-msgstr "出力"
-
-msgid "Plotter"
-msgstr "プロット"
-
-msgid "Restart"
-msgstr "再起動する"
-
-msgid "Select Modules"
-msgstr "モジュールを選ぶ"
-
-msgid "Select port"
-msgstr "ポートを選んでください"
-
-msgid "Start"
-msgstr "実行する"
-
-msgid "Start script only needs one"
-msgstr "開始ブロックが１つ必要です"
-
-msgid "Stop"
-msgstr "停止する"
-
-msgid "cannot open:"
-msgstr "開けません:"
-
-msgid "cannot select port"
-msgstr "ポートを選択できません"
-
-msgid "clear"
-msgstr "消す"
-
 msgid "details.txt is not found"
 msgstr "details.txtが見つかりません"
 
@@ -421,20 +340,50 @@ msgstr "デバイスの準備ができていません"
 msgid "done"
 msgstr "完了"
 
+msgid "duplicate"
+msgstr "複製"
+
+msgid "else"
+msgstr "でなければ"
+
+msgid "Initialize micro:bit"
+msgstr "micro:bitを初期化する"
+
 msgid "initialize micro:bit?"
-msgstr "micro:bitを初期化する?"
+msgstr "micro:bitを初期化しますか?(数分かかります)"
 
 msgid "input"
 msgstr "入力する"
 
+msgid "invalid sub name!"
+msgstr "不正なサブ名です!"
+
+msgid "maximum plot value?"
+msgstr "プロットの最大値?"
+
 msgid "micro:bit not found."
 msgstr "micro:bitが見つかりません."
+
+msgid "minimum plot value?"
+msgstr "プロットの最小値?"
+
+msgid "mouse-pointer"
+msgstr "マウス位置"
+
+msgid "new"
+msgstr "新規"
+
+msgid "no object"
+msgstr "対象なし"
 
 msgid "not available module: "
 msgstr "モジュールが使えません: "
 
-msgid "pin"
-msgstr "ピン"
+msgid "number of max plots?"
+msgstr "最大プロット数?"
+
+msgid "paste"
+msgstr "貼り付け"
 
 msgid "port closed"
 msgstr "ポートが閉じました"
@@ -459,6 +408,72 @@ msgstr "タイムアウトしました"
 
 msgid "unable to find the appropriate firmware"
 msgstr "適切なファームウェアが見つかりません"
+
+msgid "update plot period? (in milliseconds)"
+msgstr "更新間隔を設定する? (ミリ秒単位で入力)"
+
+msgid "when I receive"
+msgstr "受け取った時"
+
+msgid "change %v by %n"
+msgstr "%v を %n ずつ変える"
+
+msgid "returned value"
+msgstr "リターン値"
+
+msgid "set %v to %n"
+msgstr "%v を %n にする"
+
+msgid "all"
+msgstr "全て"
+
+msgid "compass"
+msgstr "方位"
+
+msgid "control"
+msgstr "制御"
+
+msgid "display"
+msgstr "表示"
+
+msgid "i2c"
+msgstr "i2c通信"
+
+msgid "io"
+msgstr "入出力"
+
+msgid "last"
+msgstr "最後"
+
+msgid "lists"
+msgstr "リスト"
+
+msgid "misc"
+msgstr "その他"
+
+msgid "music"
+msgstr "音楽"
+
+msgid "neopixel"
+msgstr "neopixel"
+
+msgid "operators"
+msgstr "演算"
+
+msgid "radio"
+msgstr "無線"
+
+msgid "sensing"
+msgstr "センサ"
+
+msgid "uart"
+msgstr "シリアル通信"
+
+msgid "variables"
+msgstr "変数"
+
+msgid "pin"
+msgstr "ピン"
 
 msgid "%b and %b"
 msgstr "%b かつ %b"
@@ -520,18 +535,6 @@ msgstr "%s がNoneか"
 msgid "- %n"
 msgstr "− %n"
 
-msgid "change %v by %n"
-msgstr "%v を %n ずつ変える"
-
-msgid "returned value"
-msgstr "リターン値"
-
-msgid "set %v to %n"
-msgstr "%v を %n にする"
-
-msgid "when I receive"
-msgstr "受け取った時"
-
 msgid "when loop"
 msgstr "ループする時"
 
@@ -540,8 +543,6 @@ msgstr "セットアップする時"
 
 msgid "when start"
 msgstr "スタートする時"
-
-
 
 msgid "%n in %n and %n"
 msgstr "%n2 から %n3 の範囲の %n1"
@@ -566,6 +567,9 @@ msgstr "%n の絶対値と %n の符号"
 
 msgid "abs %n"
 msgstr "%n の絶対値"
+
+msgid "accelerometer"
+msgstr "加速度センサ"
 
 msgid "accelerometer x"
 msgstr "x軸加速度"
