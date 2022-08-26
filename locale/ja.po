@@ -479,7 +479,7 @@ msgid "%b and %b"
 msgstr "%b かつ %b"
 
 msgid "%b or %b"
-msgstr "%b または %b "
+msgstr "%b または %b"
 
 msgid "%f of %n"
 msgstr "%n の %f"
