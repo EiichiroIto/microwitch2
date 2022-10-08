@@ -304,12 +304,10 @@ MicroPythonProxy >> isWaiting [
 { #category : #utilities }
 MicroPythonProxy >> linesWithoutComments: aString [
 
-	| out i str |
+	| out str |
 	out := WriteStream on: Array new.
 	aString lines do: [ :each | 
-		i := each indexOf: $#.
-		str := each.
-		i > 0 ifTrue: [ str := each copyFrom: 1 to: i - 1 ].
+		str := self stringWithoutComment: each.
 		str := str trimRight.
 		str isEmpty ifFalse: [ out nextPut: str ] ].
 	^ out contents
@@ -475,6 +473,32 @@ MicroPythonProxy >> step [
 	msg notNil ] whileTrue: [ receiveQueue received: msg ].
 	self updateState.
 	autoPilot step
+]
+
+{ #category : #utilities }
+MicroPythonProxy >> stringWithoutComment: aString [
+
+	| in out c |
+	in := ReadStream on: aString.
+	out := WriteStream on: String new.
+	[ in atEnd ] whileFalse: [ 
+		c := in next.
+		c
+			caseOf: { 
+					($' -> [ 
+					 out
+						 nextPut: c;
+						 nextPutAll: (in upTo: $');
+						 nextPut: $' ]).
+
+					($" -> [ 
+					 out
+						 nextPut: c;
+						 nextPutAll: (in upTo: $");
+						 nextPut: $" ]).
+					($# -> [ in upToEnd ]) }
+			otherwise: [ out nextPut: c ] ].
+	^ out contents
 ]
 
 { #category : #api }

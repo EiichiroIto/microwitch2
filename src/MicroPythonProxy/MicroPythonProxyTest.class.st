@@ -326,7 +326,11 @@ ghi'.
 	self assertCollection: r equals: #( 'abc' 'ghi' ).
 	r := p linesWithoutComments: ' # aaa
      # asda   '.
-	self assert: r isEmpty
+	self assert: r isEmpty.
+	r := p linesWithoutComments: 'abc" # "aaa'.
+	self assertCollection: r equals: #( 'abc" # "aaa' ).
+	r := p linesWithoutComments: 'abc'' # ''aaa'.
+	self assertCollection: r equals: #( 'abc'' # ''aaa' )
 ]
 
 { #category : #test }
@@ -497,6 +501,27 @@ MicroPythonProxyTest >> testState [
 	self assert: (p state isKindOf: MicroPythonState).
 	p state: nil.
 	self assert: p state isNil
+]
+
+{ #category : #test }
+MicroPythonProxyTest >> testStringWithoutComment [
+
+	| p r |
+	p := self newProxy.
+	r := p stringWithoutComment: ''.
+	self assert: r isEmpty.
+	r := p stringWithoutComment: 'abc'.
+	self assert: r equals: 'abc'.
+	r := p stringWithoutComment: 'abc#def'.
+	self assert: r equals: 'abc'.
+	r := p stringWithoutComment: 'abc"#"def'.
+	self assert: r equals: 'abc"#"def'.
+	r := p stringWithoutComment: 'abc''#''def'.
+	self assert: r equals: 'abc''#''def'.
+	r := p stringWithoutComment: 'abc"#"de#f'.
+	self assert: r equals: 'abc"#"de'.
+	r := p stringWithoutComment: 'abc''#''de"#f"'.
+	self assert: r equals: 'abc''#''de"#f"'
 ]
 
 { #category : #test }

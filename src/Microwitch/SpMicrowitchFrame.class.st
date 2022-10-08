@@ -10,8 +10,7 @@ Class {
 		'buttonDisconnect',
 		'buttonRestart',
 		'buttonBreak',
-		'buttonSend',
-		'labelProject'
+		'buttonSend'
 	],
 	#category : #'Microwitch-Spec2'
 }
@@ -36,7 +35,7 @@ SpMicrowitchFrame class >> defaultLayout [
 				   add: (SpPanedLayout newHorizontal
 						    positionOfSlider: 0.7;
 						    add: (SpBoxLayout newVertical
-								     add: #labelProject
+								     add: #titlePane
 								     withConstraints: [ :c | c expand: false ];
 								     add: (SpBoxLayout newHorizontal
 										      add: #buttonSend;
@@ -178,12 +177,14 @@ SpMicrowitchFrame >> fileMenu [
 			addItem: [ :item | 
 				item
 					name: 'New' localized;
+				  icon: (self iconNamed: #smallNew);
 					action: [ 
 						application newProject.
 						self plotter clearPlots ] ];
 			addItem: [ :item | 
 				item
 					name: 'Open' localized;
+				  icon: (self iconNamed: #smallOpen);
 					action: [ 
 						application openProject.
 						self plotter clearPlots ] ] ].
@@ -199,24 +200,29 @@ SpMicrowitchFrame >> fileMenu [
 				addItem: [ :item | 
 					item
 						name: 'Project Notes' localized;
+					  icon: (self iconNamed: #smallWindow);
 						action: [ application editNotes ] ];
 				addItem: [ :item | 
 					item
 						name: 'Save' localized;
+					  icon: (self iconNamed: #smallSave);
 						action: [ application saveProjectNoDialog ] ];
 				addItem: [ :item | 
 					item
 						name: 'Save As' localized;
+					  icon: (self iconNamed: #smallSaveAs);
 						action: [ application saveProject ] ] ];
 		addGroup: [ :grp | 
 			grp
 				addItem: [ :item | 
 					item
 						name: 'Import' localized;
+					  icon: (self iconNamed: #smallLoadProject);
 						subMenu: self importMenu ];
 				addItem: [ :item | 
 					item
 						name: 'Export' localized;
+					  icon: (self iconNamed: #smallExport);
 						subMenu: self exportMenu ] ];
 		addGroup: [ :grp | 
 			grp
@@ -228,7 +234,8 @@ SpMicrowitchFrame >> fileMenu [
 				addItem: [ :item | 
 					item
 						name: 'Quit' localized;
-						action: [ application quit ] ] ].
+					  icon: (self iconNamed: #smallQuit);
+						action: [ application class quit ] ] ].
 	^ m
 ]
 
@@ -290,11 +297,10 @@ SpMicrowitchFrame >> initializePresenters [
 	editorPane := self newMorph
 		              morph: self createEditor;
 		              yourself.
-	titlePane := self instantiate: SpScratchTitle.
+	titlePane := self newLabel
+		             label: 'New Project';
+		             yourself.
 	stageFrame := self instantiate: SpMicrowitchStage.
-	labelProject := self newLabel
-		label: 'New Project';
-		yourself.
 	self focusOrder
 		add: buttonSend;
 		add: buttonConnect;
@@ -310,9 +316,15 @@ SpMicrowitchFrame >> plotter [
 ]
 
 { #category : #accessing }
+SpMicrowitchFrame >> projectName [
+
+	^ titlePane label
+]
+
+{ #category : #accessing }
 SpMicrowitchFrame >> projectName: aString [
 
-	labelProject label: aString
+	titlePane label: aString
 ]
 
 { #category : #accessing }
@@ -421,6 +433,12 @@ SpMicrowitchFrame >> toolsMenu [
 						  name: 'Delete file' localized;
 						  icon: (self iconNamed: #delete);
 						  action: [ application deleteFile ] ] ];
+		  addGroup: [ :grp | 
+			  grp addItem: [ :item | 
+				  item
+					  name: 'Show MicroPython code' localized;
+					  icon: (self iconNamed: #smallWindow);
+					  action: [ application showMicroPythonCode ] ] ];
 		  addGroup: [ :grp | 
 			  grp addItem: [ :item | 
 				  item

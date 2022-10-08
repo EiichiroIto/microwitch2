@@ -335,6 +335,15 @@ Microwitch >> showCodeOf: aBlockMorph [
 	self showCode: code title: 'show code' localized
 ]
 
+{ #category : #'menu actions' }
+Microwitch >> showMicroPythonCode [
+
+	| str |
+	str := MicroPythonExporter new exportFrom: self isBinary: false.
+	str isEmpty ifTrue: [ ^ self ].
+	self showCode: str title: 'show code' localized
+]
+
 { #category : #processes }
 Microwitch >> startProcessFor: aTopBlock [
 

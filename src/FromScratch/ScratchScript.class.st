@@ -940,39 +940,35 @@ ScratchScript >> variableNameInUse: aString [
 
 { #category : #blocks }
 ScratchScript >> variablesPage [
+
 	| page y maxX |
 	page := self newBlockPaletteMorph
-		isForScript: true;
-		borderWidth: 0.
+		        borderWidth: 0;
+		        yourself.
 	y := 7.
-	self useVariable
-		ifTrue: [ y := self addGenericVariableBlocksTo: page y: y ].
-	self useList
-		ifTrue: [ y := self addGenericListBlocksTo: page y: y ].
+	self useVariable ifTrue: [ 
+		y := self addGenericVariableBlocksTo: page y: y ].
+	self useList ifTrue: [ y := self addGenericListBlocksTo: page y: y ].
 	maxX := page submorphs inject: 0 into: [ :t :m | t max: m right ].
-	page extent: (maxX + 10) @ y.
+	page extent: maxX + 10 @ y.
 	^ page
 ]
 
 { #category : #blocks }
 ScratchScript >> viewerPageForCategory: aCategoryName [
+
 	| bin x y |
-	aCategoryName = 'variables'
-		ifTrue: [ ^ self variablesPage ].
-	bin := self newBlockPaletteMorph
-		isForScript: true;
-		yourself.
+	aCategoryName = 'variables' ifTrue: [ ^ self variablesPage ].
+	bin := self newBlockPaletteMorph.
 	x := 12.
 	y := 10.
-	(self blocksFor: aCategoryName)
-		do: [ :blockOrSym | 
-			blockOrSym = #- | (blockOrSym = #~)
-				ifTrue: [ "insert a half space"
-					blockOrSym = #-
-						ifTrue: [ y := y + 15 ].	"insert a full space"
-					blockOrSym = #~
-						ifTrue: [ y := y + 5 ] ]
-				ifFalse: [ y := self createBlock: blockOrSym atPosition: x @ y onPage: bin ] ].
+	(self blocksFor: aCategoryName) do: [ :blockOrSym | 
+		blockOrSym = #- | (blockOrSym = #~)
+			ifTrue: [ "insert a half space"
+				blockOrSym = #- ifTrue: [ y := y + 15 ]. "insert a full space"
+				blockOrSym = #~ ifTrue: [ y := y + 5 ] ]
+			ifFalse: [ 
+			y := self createBlock: blockOrSym atPosition: x @ y onPage: bin ] ].
 	^ bin
 ]
 

@@ -153,6 +153,13 @@ SpScratchApp class >> projectClass [
 	self subclassResponsibility
 ]
 
+{ #category : #'menu actions' }
+SpScratchApp class >> quit [
+
+	(self confirm: 'Quit Application?' localized) ifFalse: [ ^ self ].
+	Smalltalk snapshot: false andQuit: true
+]
+
 { #category : #utilities }
 SpScratchApp class >> request: aString [
 
@@ -532,6 +539,7 @@ SpScratchApp >> language: aString [
 { #category : #'menu actions' }
 SpScratchApp >> loadExample: aFileReference [
 	| newProj |
+	self stopAllProcesses.
 	newProj := self createProject readProjectFrom: aFileReference.
 	newProj ifNil: [ ^ self ].
 	self projectDirectory: nil.
@@ -701,13 +709,6 @@ SpScratchApp >> projectName: aString [
 { #category : #accessing }
 SpScratchApp >> projectPath [
 	^ self projectDirectory / self projectName
-]
-
-{ #category : #'menu actions' }
-SpScratchApp >> quit [
-	(self confirm: 'Quit Application?' localized)
-		ifFalse: [ ^ self ].
-	Smalltalk snapshot: false andQuit: true
 ]
 
 { #category : #utilities }
