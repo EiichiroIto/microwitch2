@@ -50,6 +50,12 @@
     "microbit.panic(%n)"
     (microbit)
     panic:)
+   (commandBlock:args:code:imports:selector:
+    "reset"
+    ()
+    "microbit.reset()"
+    (microbit)
+    reset)
 
    (category: "sensing")
    (separator)

@@ -877,6 +877,9 @@ msgstr "%b まで繰り返す"
 msgid "replace item %n of %v with %s"
 msgstr "%v の %n 番目を %s で置き換える"
 
+msgid "reset"
+msgstr "リセットする"
+
 msgid "reset music settings"
 msgstr "音楽の設定をリセットする"
 
