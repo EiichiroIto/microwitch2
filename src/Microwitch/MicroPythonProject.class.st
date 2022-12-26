@@ -220,12 +220,6 @@ MicroPythonProject >> getScratchInfoFrom: aFileReference [
 	^ dict
 ]
 
-{ #category : #accessing }
-MicroPythonProject >> handOverTo: aProject [
-
-	aProject blockSpecs: blockSpecs
-]
-
 { #category : #'object i/o' }
 MicroPythonProject >> initFieldsFrom: anObjStream version: classVersion [
 	self
@@ -236,8 +230,10 @@ MicroPythonProject >> initFieldsFrom: anObjStream version: classVersion [
 
 { #category : #initialization }
 MicroPythonProject >> initialize [
+
 	super initialize.
-	modules := Array new
+	modules := Array new.
+	blockSpecs := MicrobitBlockSpecs new
 ]
 
 { #category : #'block specs' }

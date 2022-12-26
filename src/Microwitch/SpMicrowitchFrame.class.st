@@ -65,13 +65,14 @@ SpMicrowitchFrame class >> viewerPaneWidth [
 
 { #category : #accessing }
 SpMicrowitchFrame >> addPlots: aCollection [
+
 	stageFrame addPlots: aCollection
 ]
 
 { #category : #api }
-SpMicrowitchFrame >> autoConnect [
+SpMicrowitchFrame >> addText: aString [
 
-	^ stageFrame autoConnect
+	stageFrame addText: aString
 ]
 
 { #category : #'menu building' }
@@ -98,10 +99,10 @@ SpMicrowitchFrame >> blockMenuFor: aBlockMorph inScriptEditor: aBoolean [
 SpMicrowitchFrame >> connectPresenters [
 	buttonOpen action: [ application openProject ].
 	buttonSave action: [ application saveProject ].
-	buttonConnect action: [ stageFrame connect ].
-	buttonDisconnect action: [ stageFrame disconnect ].
-	buttonRestart action: [ stageFrame restart ].
-	buttonBreak action: [ stageFrame break ].
+	buttonConnect action: [ application connect ].
+	buttonDisconnect action: [ application disconnect ].
+	buttonRestart action: [ application restart ].
+	buttonBreak action: [ application break ].
 	buttonSend action: [ application startProgram ]
 ]
 
@@ -119,38 +120,16 @@ SpMicrowitchFrame >> defaultExtent [
 	^ 1024 @ 768
 ]
 
-{ #category : #api }
-SpMicrowitchFrame >> deleteFileNamed: aString [
-
-	stageFrame deleteFileNamed: aString
-]
-
 { #category : #private }
 SpMicrowitchFrame >> disableConnect [
 	buttonConnect disable.
 	buttonDisconnect enable
 ]
 
-{ #category : #api }
-SpMicrowitchFrame >> downloadFileNamed: aString [
-
-	^ stageFrame downloadFileNamed: aString
-]
-
 { #category : #private }
 SpMicrowitchFrame >> enableConnect [
 	buttonConnect enable.
 	buttonDisconnect disable
-]
-
-{ #category : #api }
-SpMicrowitchFrame >> evaluate: aString [
-	^ stageFrame evaluate: aString
-]
-
-{ #category : #api }
-SpMicrowitchFrame >> execute: aString [
-	stageFrame execute: aString
 ]
 
 { #category : #'menu building' }
@@ -164,6 +143,10 @@ SpMicrowitchFrame >> exportMenu [
 			item
 				name: 'Export MicroPython' localized;
 				action: [ application exportMicroPython ] ];
+		addItem: [ :item | 
+			item
+				name: 'Export Script image' localized;
+				action: [ application exportScriptImage ] ];
 		yourself
 ]
 
@@ -239,11 +222,6 @@ SpMicrowitchFrame >> fileMenu [
 	^ m
 ]
 
-{ #category : #api }
-SpMicrowitchFrame >> getDirectory [
-	^ stageFrame getDirectory
-]
-
 { #category : #'menu building' }
 SpMicrowitchFrame >> importMenu [
 	^ self newMenu
@@ -310,6 +288,12 @@ SpMicrowitchFrame >> initializePresenters [
 		add: editorPane
 ]
 
+{ #category : #api }
+SpMicrowitchFrame >> message: aString [
+
+	stageFrame message: aString
+]
+
 { #category : #accessing }
 SpMicrowitchFrame >> plotter [
 	^ stageFrame plotter
@@ -328,21 +312,9 @@ SpMicrowitchFrame >> projectName: aString [
 ]
 
 { #category : #accessing }
-SpMicrowitchFrame >> proxy [
-	^ stageFrame proxy
-]
+SpMicrowitchFrame >> scriptForm [
 
-{ #category : #accessing }
-SpMicrowitchFrame >> proxy: aProxy [
-	stageFrame proxy: aProxy.
-	"editorPane proxy: aProxy."
-	self updateViewer
-]
-
-{ #category : #api }
-SpMicrowitchFrame >> restartAfterUpload [
-
-	stageFrame restartAfterUpload
+	^ editorPane morph contents screenshot
 ]
 
 { #category : #'menu actions' }
@@ -384,14 +356,10 @@ SpMicrowitchFrame >> stageShotExtent: size [
 	^ nil
 ]
 
-{ #category : #accessing }
-SpMicrowitchFrame >> status: aString [
-	editorPane status: aString
-]
-
 { #category : #api }
-SpMicrowitchFrame >> step [
-	stageFrame step
+SpMicrowitchFrame >> status: aString [
+
+	stageFrame status: aString
 ]
 
 { #category : #accessing }
@@ -458,13 +426,7 @@ SpMicrowitchFrame >> updateViewer [
 	viewerPane target: viewerPane target
 ]
 
-{ #category : #api }
-SpMicrowitchFrame >> upload: aString fileNamed: aString2 [
-
-	stageFrame upload: aString fileNamed: aString2
-]
-
-{ #category : #enumerating }
+{ #category : #accessing }
 SpMicrowitchFrame >> whenStepsDo: aBlock [
 	stageFrame whenStepsDo: aBlock
 ]

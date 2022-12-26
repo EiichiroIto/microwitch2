@@ -302,6 +302,18 @@ MicroPythonProxy >> isWaiting [
 ]
 
 { #category : #utilities }
+MicroPythonProxy >> lines: aCollection withDelimiterEvery: anInteger [
+
+	| out |
+	out := WriteStream on: Array new.
+	aCollection withIndexDo: [ :each :index | 
+		out nextPut: each.
+		index \\ anInteger == 0 ifTrue: [ 
+			out nextPut: '#--- ' , index asString , ' ---' ] ].
+	^ out contents
+]
+
+{ #category : #utilities }
 MicroPythonProxy >> linesWithoutComments: aString [
 
 	| out str |

@@ -305,6 +305,21 @@ MicroPythonProxyTest >> testIsWaiting [
 ]
 
 { #category : #test }
+MicroPythonProxyTest >> testLinesWithDelimiterEvery [
+
+	| proxy r |
+	proxy := self newProxy.
+	r := proxy lines: #( a b c ) withDelimiterEvery: 5.
+	self assertCollection: r equals: #( a b c ).
+	r := proxy lines: #( a b c d e ) withDelimiterEvery: 3.
+	self assertCollection: r equals: #( a b c '#--- 3 ---' d e ).
+	r := proxy lines: #( a b c d e f ) withDelimiterEvery: 3.
+	self
+		assertCollection: r
+		equals: #( a b c '#--- 3 ---' d e f '#--- 6 ---' )
+]
+
+{ #category : #test }
 MicroPythonProxyTest >> testLinesWithoutComments [
 
 	| p r |

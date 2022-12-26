@@ -825,6 +825,11 @@ ScratchScript >> stackFromTupleList: tupleList receiver: scriptOwner [
 	^ stackTop
 ]
 
+{ #category : #'block specs' }
+ScratchScript >> stopBlocks [
+	^ #(stopThread stopAll return: break continue doReturn)
+]
+
 { #category : #'object i/o' }
 ScratchScript >> storeFieldsOn: anObjStream [
 	self storeFieldsNamed: #(blocksBin project) on: anObjStream.

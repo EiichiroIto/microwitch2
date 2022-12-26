@@ -172,6 +172,12 @@ MicroPythonScript >> stopAllProcesses [
 					each litUp: false ] ]
 ]
 
+{ #category : #'block specs' }
+MicroPythonScript >> stopBlocks [
+
+	^ super stopBlocks , #(panic: reset)
+]
+
 { #category : #'object i/o' }
 MicroPythonScript >> storeFieldsOn: anObjStream [
 	super storeFieldsOn: anObjStream.

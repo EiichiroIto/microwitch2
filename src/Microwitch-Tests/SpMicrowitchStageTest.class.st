@@ -9,7 +9,10 @@ Class {
 
 { #category : #private }
 SpMicrowitchStageTest >> newApplication [
+
 	^ Microwitch new
+		  settings: Microwitch settingsClass new;
+		  yourself
 ]
 
 { #category : #private }
