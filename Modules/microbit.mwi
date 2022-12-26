@@ -249,7 +249,7 @@
    (commandBlock:args:code:imports:selector:
     "send a radio message %s"
     ("Hello!")
-    "radio.send(%s)"
+    "radio.send(str(%s))"
     (radio)
     radioSend:)
    (reporterBlock:args:return:code:imports:selector:
@@ -734,6 +734,13 @@
     "(%s)+'\r'"
     ()
     withCr:)
+   (reporterBlock:args:return:code:imports:selector:
+    "ascii of %s"
+    (hello)
+    r
+    "bytes([ord(_) for _ in str(%s)])"
+    ()
+    asciiOf:)
    (reporterBlock:args:return:code:imports:selector:
     "%n in %n and %n"
     (20 10 30)
