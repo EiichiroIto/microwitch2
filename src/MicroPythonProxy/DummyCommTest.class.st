@@ -13,6 +13,15 @@ DummyCommTest >> newComm [
 ]
 
 { #category : #test }
+DummyCommTest >> testBaudRate [
+	| c |
+	c := self newComm.
+	self assert: c baudRate isNil.
+	c baudRate: 9600.
+	self assert: c baudRate equals: 9600
+]
+
+{ #category : #test }
 DummyCommTest >> testClose [
 
 	| c |

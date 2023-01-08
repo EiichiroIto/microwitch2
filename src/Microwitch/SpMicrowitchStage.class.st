@@ -66,8 +66,7 @@ SpMicrowitchStage >> clear [
 { #category : #initialization }
 SpMicrowitchStage >> connectPresenters [
 
-	buttonClear action: [ self clear ].
-	buttonInput action: [ application input ]
+	buttonClear action: [ self clear ]
 ]
 
 { #category : #private }
@@ -188,6 +187,12 @@ SpMicrowitchStage >> status: aString [
 { #category : #private }
 SpMicrowitchStage >> textLabel [
 	^ 'Output' localized
+]
+
+{ #category : #accessing }
+SpMicrowitchStage >> whenInputClicked: aBlock [
+
+	buttonInput action: aBlock
 ]
 
 { #category : #accessing }

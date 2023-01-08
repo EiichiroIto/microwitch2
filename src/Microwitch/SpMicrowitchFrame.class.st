@@ -103,7 +103,8 @@ SpMicrowitchFrame >> connectPresenters [
 	buttonDisconnect action: [ application disconnect ].
 	buttonRestart action: [ application restart ].
 	buttonBreak action: [ application break ].
-	buttonSend action: [ application startProgram ]
+	buttonSend action: [ application startProgram ].
+	stageFrame whenInputClicked: [ application input ]
 ]
 
 { #category : #private }

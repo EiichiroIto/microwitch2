@@ -4,7 +4,8 @@ Class {
 	#instVars : [
 		'process',
 		'proxy',
-		'showOutput'
+		'showOutput',
+		'lastInput'
 	],
 	#category : #'Microwitch-Spec2'
 }
@@ -70,7 +71,7 @@ Microwitch class >> generatePOTFile [
 	ScratchTranslator addLocalizedTextsTo: strings.
 	strings addAll: MicroPythonProject availableModuleNames.
 	strings addAll: self allBlockDefs.
-	ScratchTranslator writePOT: strings fileNamed: 'microwitch.pot'
+	ScratchTranslator writePOT: strings fileNamed: 'microwitch2.pot'
 ]
 
 { #category : #accessing }
@@ -396,7 +397,8 @@ Microwitch >> importSexpCode [
 Microwitch >> initialize [
 
 	super initialize.
-	showOutput := true
+	showOutput := true.
+	lastInput := ''
 ]
 
 { #category : #proxy }
@@ -406,8 +408,9 @@ Microwitch >> input [
 	self autoConnectIfFail: [ :msg | ^ presenter message: msg ].
 	ret := self
 		       multiLineRequest: 'Enter expression' localized
-		       initialAnswer: ''.
+		       initialAnswer: lastInput.
 	ret ifNil: [ ^ self ].
+	lastInput := ret.
 	proxy isReady ifFalse: [ ^ self ].
 	proxy execute: ret
 ]
@@ -435,6 +438,18 @@ Microwitch >> installNewProject: aProject [
 { #category : #processes }
 Microwitch >> isProcessRunning [
 	^ process notNil and: [ process isRunning ]
+]
+
+{ #category : #accessing }
+Microwitch >> lastInput [
+
+	^ lastInput
+]
+
+{ #category : #accessing }
+Microwitch >> lastInput: anObject [
+
+	lastInput := anObject
 ]
 
 { #category : #testing }

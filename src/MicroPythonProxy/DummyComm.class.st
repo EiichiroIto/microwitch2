@@ -6,7 +6,8 @@ Class {
 		'puts',
 		'gets',
 		'isConnected',
-		'portName'
+		'portName',
+		'baudRate'
 	],
 	#category : #'MicroPythonProxy-Comm'
 }
@@ -143,26 +144,6 @@ DummyComm >> puts: anObject [
 ]
 
 { #category : #accessing }
-DummyComm >> receives [
-	^ receives
-]
-
-{ #category : #accessing }
-DummyComm >> receives: anObject [
-	receives := anObject
-]
-
-{ #category : #accessing }
-DummyComm >> sends [
-	^ sends
-]
-
-{ #category : #accessing }
-DummyComm >> sends: anObject [
-	sends := anObject
-]
-
-{ #category : #accessing }
 DummyComm >> setOption: aString to: aString2 [ 
 	"do nothing"
 ]
@@ -170,14 +151,4 @@ DummyComm >> setOption: aString to: aString2 [
 { #category : #api }
 DummyComm >> step [
 	
-]
-
-{ #category : #accessing }
-DummyComm >> whenPutDo [
-	^ whenPutDo
-]
-
-{ #category : #accessing }
-DummyComm >> whenPutDo: anObject [
-	whenPutDo := anObject
 ]
