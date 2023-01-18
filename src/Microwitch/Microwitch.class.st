@@ -36,6 +36,17 @@ Microwitch class >> allBlockDefs [
 		   collect: #values) flattened collect: #block
 ]
 
+{ #category : #utilities }
+Microwitch class >> allProxyStates [
+
+	| obj |
+	obj := MicroPythonState new.
+	^ (MicroPythonState organization protocolOrganizer 
+		   methodsInProtocolNamed: 'api') collect: [ :each | 
+		  obj perform: each.
+		  obj asString ]
+]
+
 { #category : #constants }
 Microwitch class >> appFolderName [
 	^ 'microwitch2'
@@ -71,6 +82,7 @@ Microwitch class >> generatePOTFile [
 	ScratchTranslator addLocalizedTextsTo: strings.
 	strings addAll: MicroPythonProject availableModuleNames.
 	strings addAll: self allBlockDefs.
+	strings addAll: self allProxyStates.
 	ScratchTranslator writePOT: strings fileNamed: 'microwitch2.pot'
 ]
 
@@ -450,6 +462,14 @@ Microwitch >> lastInput [
 Microwitch >> lastInput: anObject [
 
 	lastInput := anObject
+]
+
+{ #category : #accessing }
+Microwitch >> modifiedChanged [
+
+	presenter modifiedText: (project modified
+			 ifTrue: [ '[modified]' localized ]
+			 ifFalse: [ '' ])
 ]
 
 { #category : #testing }
