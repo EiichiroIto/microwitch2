@@ -10,7 +10,8 @@ Class {
 		'buttonDisconnect',
 		'buttonRestart',
 		'buttonBreak',
-		'buttonSend'
+		'buttonSend',
+		'modifiedText'
 	],
 	#category : #'Microwitch-Spec2'
 }
@@ -35,7 +36,11 @@ SpMicrowitchFrame class >> defaultLayout [
 				   add: (SpPanedLayout newHorizontal
 						    positionOfSlider: 0.7;
 						    add: (SpBoxLayout newVertical
-								     add: #titlePane
+								     add: (SpBoxLayout newHorizontal
+										      add: #modifiedText
+										      withConstraints: [ :c | c expand: false ];
+										      add: #titlePane;
+										      yourself)
 								     withConstraints: [ :c | c expand: false ];
 								     add: (SpBoxLayout newHorizontal
 										      add: #buttonSend;
@@ -280,6 +285,9 @@ SpMicrowitchFrame >> initializePresenters [
 		             label: 'New Project';
 		             yourself.
 	stageFrame := self instantiate: SpMicrowitchStage.
+	modifiedText  := self newLabel
+		             label: '[modified]';
+		             yourself.
 	self focusOrder
 		add: buttonSend;
 		add: buttonConnect;
@@ -293,6 +301,18 @@ SpMicrowitchFrame >> initializePresenters [
 SpMicrowitchFrame >> message: aString [
 
 	stageFrame message: aString
+]
+
+{ #category : #accessing }
+SpMicrowitchFrame >> modifiedText [
+
+	^ modifiedText label
+]
+
+{ #category : #accessing }
+SpMicrowitchFrame >> modifiedText: aString [
+
+	modifiedText label: aString
 ]
 
 { #category : #accessing }
