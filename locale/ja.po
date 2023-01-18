@@ -421,6 +421,9 @@ msgstr "[接続済み]"
 msgid "[idle]"
 msgstr "[初期状態]"
 
+msgid "[modified]"
+msgstr "[変更あり]"
+
 msgid "[notConnected]"
 msgstr "[未接続]"
 
