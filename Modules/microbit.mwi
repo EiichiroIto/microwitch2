@@ -397,13 +397,13 @@
     (microbit)
     readAnalog:)
    (commandBlock:args:code:imports:selector:
-    "analog write pin %F to %n"
+    "analog write pin %G to %n"
     (0 0)
     "microbit.pin%G.write_analog(%n)"
     (microbit)
     writeAnalog:to:)
    (commandBlock:args:code:imports:selector:
-    "analog set period pin %F to %n msec"
+    "analog set period pin %G to %n msec"
     (0 500)
     "microbit.pin%G.set_analog_period_microseconds(%n)"
     (microbit)
