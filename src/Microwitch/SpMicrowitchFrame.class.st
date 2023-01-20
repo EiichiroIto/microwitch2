@@ -2,16 +2,13 @@ Class {
 	#name : #SpMicrowitchFrame,
 	#superclass : #SpScratchFrame,
 	#instVars : [
-		'logo',
-		'menu',
 		'buttonSave',
 		'buttonOpen',
 		'buttonConnect',
 		'buttonDisconnect',
 		'buttonRestart',
 		'buttonBreak',
-		'buttonSend',
-		'modifiedText'
+		'buttonSend'
 	],
 	#category : #'Microwitch-Spec2'
 }
@@ -37,9 +34,9 @@ SpMicrowitchFrame class >> defaultLayout [
 						    positionOfSlider: 0.7;
 						    add: (SpBoxLayout newVertical
 								     add: (SpBoxLayout newHorizontal
-										      add: #modifiedText
+										      add: #modifiedProjectLabel
 										      withConstraints: [ :c | c expand: false ];
-										      add: #titlePane;
+										      add: #projectNameLabel;
 										      yourself)
 								     withConstraints: [ :c | c expand: false ];
 								     add: (SpBoxLayout newHorizontal
@@ -110,15 +107,6 @@ SpMicrowitchFrame >> connectPresenters [
 	buttonBreak action: [ application break ].
 	buttonSend action: [ application startProgram ].
 	stageFrame whenInputClicked: [ application input ]
-]
-
-{ #category : #private }
-SpMicrowitchFrame >> createEditor [
-
-	^ ScrollFrameMorph new
-		  growthFraction: 0.1;
-		  color: ScratchTheme scriptsPaneColor;
-		  yourself
 ]
 
 { #category : #private }
@@ -241,9 +229,7 @@ SpMicrowitchFrame >> importMenu [
 { #category : #initialization }
 SpMicrowitchFrame >> initializePresenters [
 
-	logo := self newImage
-		        image: (ScratchTheme formAt: #logo);
-		        yourself.
+	super initializePresenters.
 	buttonOpen := self newButton
 		              icon: (ScratchTheme formAt: #openButton);
 		              help: 'Open project';
@@ -275,19 +261,6 @@ SpMicrowitchFrame >> initializePresenters [
 		              help: 'Start program';
 		              label: 'Start' localized;
 		              icon: (ScratchTheme formAt: #goButton).
-	menu := self newMenuBar.
-	self setupMenu.
-	viewerPane := self instantiate: SpScratchListViewer.
-	editorPane := self newMorph
-		              morph: self createEditor;
-		              yourself.
-	titlePane := self newLabel
-		             label: 'New Project';
-		             yourself.
-	stageFrame := self instantiate: SpMicrowitchStage.
-	modifiedText  := self newLabel
-		             label: '[modified]';
-		             yourself.
 	self focusOrder
 		add: buttonSend;
 		add: buttonConnect;
@@ -303,33 +276,15 @@ SpMicrowitchFrame >> message: aString [
 	stageFrame message: aString
 ]
 
-{ #category : #accessing }
-SpMicrowitchFrame >> modifiedText [
+{ #category : #initialization }
+SpMicrowitchFrame >> newStage [
 
-	^ modifiedText label
-]
-
-{ #category : #accessing }
-SpMicrowitchFrame >> modifiedText: aString [
-
-	modifiedText label: aString
+	^ self instantiate: SpMicrowitchStage
 ]
 
 { #category : #accessing }
 SpMicrowitchFrame >> plotter [
 	^ stageFrame plotter
-]
-
-{ #category : #accessing }
-SpMicrowitchFrame >> projectName [
-
-	^ titlePane label
-]
-
-{ #category : #accessing }
-SpMicrowitchFrame >> projectName: aString [
-
-	titlePane label: aString
 ]
 
 { #category : #accessing }

@@ -247,14 +247,6 @@ MicroPythonProject >> isInternalBlock: aSymbol [
 ]
 
 { #category : #accessing }
-MicroPythonProject >> modified: aBoolean [
-
-	modified = aBoolean ifTrue: [ ^ self ].
-	super modified: aBoolean.
-	self application modifiedChanged
-]
-
-{ #category : #accessing }
 MicroPythonProject >> moduleFileFor: aString [
 	| file |
 	file := self class moduleDirectory / (aString , '.' , application pyExtension).

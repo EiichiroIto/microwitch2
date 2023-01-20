@@ -464,14 +464,6 @@ Microwitch >> lastInput: anObject [
 	lastInput := anObject
 ]
 
-{ #category : #accessing }
-Microwitch >> modifiedChanged [
-
-	presenter modifiedText: (project modified
-			 ifTrue: [ '[modified]' localized ]
-			 ifFalse: [ '' ])
-]
-
 { #category : #testing }
 Microwitch >> moduleInUse: aString [
 	^ project ifNil: [ false ] ifNotNil: [ project moduleInUse: aString ]
