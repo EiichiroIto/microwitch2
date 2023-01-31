@@ -25,6 +25,12 @@ MicroPythonBlockDef >> isCategory [
 ]
 
 { #category : #testing }
+MicroPythonBlockDef >> isChoiceArg [
+
+	^ false
+]
+
+{ #category : #testing }
 MicroPythonBlockDef >> isReporter [
 	^ false
 ]

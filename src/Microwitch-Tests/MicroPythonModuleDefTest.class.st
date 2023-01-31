@@ -18,6 +18,12 @@ MicroPythonModuleDefTest >> newCategory [
 ]
 
 { #category : #private }
+MicroPythonModuleDefTest >> newChoiceArgDef [
+
+	^ StaticChoiceArgDef new
+]
+
+{ #category : #private }
 MicroPythonModuleDefTest >> newDef [
 	^ MicroPythonModuleDef new
 ]
@@ -130,6 +136,32 @@ MicroPythonModuleDefTest >> testBlocks [
 		equals:
 			'xyz' , String lf , 'abc' , String lf , 'def' , String lf , '-'
 				, String lf , 'ghi'
+]
+
+{ #category : #test }
+MicroPythonModuleDefTest >> testChoiceArgs [
+
+	| d b1 b2 b3 ret |
+	d := self newDef.
+	b1 := self newBlockDef
+		      block: 'set oled w %n h %n';
+		      id: 1;
+		      defaultArgs: #( 64 128 ).
+	b2 := self newChoiceArgDef arg: $x.
+	b3 := self newBlockDef
+		      block: 'vl read';
+		      id: 2;
+		      return: 'r';
+		      defaultArgs: #(  ).
+	d
+		blockDefs: { 
+				b1.
+				b2.
+				b3 };
+		setup.
+	ret := d choiceArgs.
+	self assert: ret size equals: 1.
+	self assert: (ret first isKindOf: StaticChoiceArgDef)
 ]
 
 { #category : #test }

@@ -11,11 +11,3 @@ Class {
 MicrobitBlockSpecsTest >> newSpecs [
 	^ MicrobitBlockSpecs new
 ]
-
-{ #category : #test }
-MicrobitBlockSpecsTest >> testTouchPinNames [
-	| s r |
-	s := self newSpecs.
-	r := s touchPinNames.
-	self assertCollection: r equals: #(pin_logo pin0 pin1 pin2)
-]

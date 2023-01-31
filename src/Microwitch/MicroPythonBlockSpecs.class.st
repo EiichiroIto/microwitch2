@@ -9,12 +9,9 @@ Class {
 
 { #category : #'argument menus' }
 MicroPythonBlockSpecs >> addArgBuilderTo: anArgBuilder [
+	intModuleDef choiceArgs do: [ :each | each addTo: anArgBuilder ].
 	anArgBuilder
 		addChoiceArg: $a selector: #allSubNames;
-		addChoiceArg: $d
-			selector: #digits
-			target: self
-			initialChoice: '0';
 		addNumberExpressArg: $i
 			selector: #listIndexNames
 			target: self
@@ -65,11 +62,6 @@ MicroPythonBlockSpecs >> controlBlocks [
 			('if %b'						c	doIf)
 			('if %b'						c	doIfElse)
 	)
-]
-
-{ #category : #'argument menus' }
-MicroPythonBlockSpecs >> digits [
-	^ (0 to: 9) collect: [ :each | each asString ]
 ]
 
 { #category : #'block specs' }

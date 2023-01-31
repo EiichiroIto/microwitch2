@@ -24,6 +24,15 @@ ModuleImporter >> category: aString [
 		yourself
 ]
 
+{ #category : #private }
+ModuleImporter >> choiceArg: aString options: aCollection [
+
+	^ StaticChoiceArgDef new
+		arg: aString first;
+		options: aCollection;
+		yourself
+]
+
 { #category : #api }
 ModuleImporter >> commandBlock: aString1 args: anArray1 code: aString2 imports: anArray2 [
 	^ self

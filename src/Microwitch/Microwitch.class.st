@@ -23,6 +23,20 @@ All rights reserved.
 '
 ]
 
+{ #category : #adding }
+Microwitch class >> addBlockDefsTo: aSet [
+
+	| list project |
+	MicroPythonProject initialize.
+	project := MicroPythonProject new blockSpecs: MicrobitBlockSpecs new.
+	list := ScratchScript allSubclasses collect: [ :each | each new ].
+	list do: [ :each | each project: project ].
+	ScratchTranslator addBlockDefs: list to: aSet.
+	aSet addAll: MicroPythonProject availableModuleNames.
+	aSet addAll: self allBlockDefs.
+	aSet addAll: self allProxyStates
+]
+
 { #category : #utilities }
 Microwitch class >> allBlockDefs [
 
@@ -65,25 +79,6 @@ Microwitch class >> appVersion [
 { #category : #constants }
 Microwitch class >> extension [
 	^ 'mw2'
-]
-
-{ #category : #utilities }
-Microwitch class >> generatePOTFile [
-
-	"Microwitch generatePOTFile."
-
-	| project list strings |
-	MicroPythonProject initialize.
-	project := MicroPythonProject new blockSpecs: MicrobitBlockSpecs new.
-	list := ScratchScript allSubclasses collect: [ :each | each new ].
-	list do: [ :each | each project: project ].
-	strings := Set new.
-	ScratchTranslator addBlockDefs: list to: strings.
-	ScratchTranslator addLocalizedTextsTo: strings.
-	strings addAll: MicroPythonProject availableModuleNames.
-	strings addAll: self allBlockDefs.
-	strings addAll: self allProxyStates.
-	ScratchTranslator writePOT: strings fileNamed: 'microwitch2.pot'
 ]
 
 { #category : #accessing }

@@ -23,6 +23,12 @@ MicroPythonBlockDefTest >> testIsCategory [
 ]
 
 { #category : #test }
+MicroPythonBlockDefTest >> testIsChoiceArg [
+
+	self deny: self newDef isChoiceArg
+]
+
+{ #category : #test }
 MicroPythonBlockDefTest >> testIsReporter [
 	self deny: self newDef isReporter
 ]

@@ -45,6 +45,14 @@ MicroPythonModuleDef >> blocks [
 	^ (blockDefs collect: #block) joinUsing: String lf
 ]
 
+{ #category : #api }
+MicroPythonModuleDef >> choiceArgs [
+
+	blockDict
+		ifNil: [ self error: 'need to setup' ].
+	^ blockDefs select: #isChoiceArg
+]
+
 { #category : #testing }
 MicroPythonModuleDef >> includes: aSymbol [
 	^ self blockDict includesKey: aSymbol
