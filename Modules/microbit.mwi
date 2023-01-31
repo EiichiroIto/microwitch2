@@ -3,6 +3,23 @@
   "Microbit"
   (
 
+   (choiceArg:options: "A" ("ARROW_N" "ARROW_NE" "ARROW_E" "ARROW_SE" "ARROW_S" "ARROW_SW" "ARROW_W" "ARROW_NW"))
+   (choiceArg:options: "c" ("CLOCK12" "CLOCK1" "CLOCK2" "CLOCK3" "CLOCK4" "CLOCK5" "CLOCK6" "CLOCK7" "CLOCK8" "CLOCK9" "CLOCK10" "CLOCK11"))
+   (choiceArg:options: "F" (0 1 2 3 4 10))
+   (choiceArg:options: "G" (0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 19 20))
+   (choiceArg:options: "g" ("up" "down" "left" "right" "face up" "face down" "freefall" "3g" "6g" "8g" "shake"))
+   (choiceArg:options: "H" ("TRIANGLE TRIANGLE_LEFT" "CHESSBOARD" "DIAMOND" "DIAMOND_SMALL" "SQUARE" "SQUARE_SMALL"))
+   (choiceArg:options: "I" ("RABBIT" "COW" "MUSIC_CROTCHET" "MUSIC_QUAVER MUSIC_QUAVERS"
+			   "PITCHFORK" "XMAS" "PACMAN" "TARGET" "TSHIRT" "ROLLERSKATE" "DUCK" "HOUSE" "TORTOISE"
+			   "BUTTERFLY" "STICKFIGURE" "GHOST" "SWORD" "GIRAFFE" "SKULL" "UMBRELLA" "SNAKE"))
+   (choiceArg:options: "M" ("HEART" "HEART_SMALL HAPPY" "SMILE" "SAD" "CONFUSED" "ANGRY" "ASLEEP" "SURPRISED"
+			   "SILLY" "FABULOUS" "MEH" "YES" "NO"	))
+   (choiceArg:options: "P" ("DADADADUM" "ENTERTAINER" "PRELUDE" "ODE" "NYAN" "RINGTONE" "FUNK" "BLUES" "BIRTHDAY"
+			   "WEDDING" "FUNERAL" "PUNCHLINE" "PYTHON" "BADDY" "CHASE" "BA_DING" "WAWAWAWAA"
+			   "JUMP_UP" "JUMP_DOWN" "POWER_UP" "POWER_DOWN"))
+   (choiceArg:options: "U" ("QUIET" "LOUD"))
+   (choiceArg:options: "u" ("PULL_UP" "PULL_DOWN" "NO_PULL"))
+
    (category: "control")
    (separator)
    (commandBlock:args:code:imports:selector:
@@ -383,12 +400,33 @@
     "microbit.pin%G.read_digital()"
     (microbit)
     readDigital:)
+   (reporterBlock:args:return:code:imports:selector:
+    "digital pin %G is High"
+    (0)
+    b
+    "microbit.pin%G.read_digital()>0"
+    (microbit)
+    digitalIsHigh:)
+   (reporterBlock:args:return:code:imports:selector:
+    "digital pin %G is Low"
+    (0)
+    b
+    "microbit.pin%G.read_digital()==0"
+    (microbit)
+    digitalIsLow:)
    (commandBlock:args:code:imports:selector:
     "digital write pin %G to %n"
     (0 0)
     "microbit.pin%G.write_digital(%n)"
     (microbit)
     writeDigital:to:)
+   (commandBlock:args:code:imports:selector:
+    "set pin %G to %u"
+    (0 "PULL_UP")
+    "microbit.pin%G.set_pull(microbit.pin%G.%u)"
+    (microbit)
+    setPull:to:)
+   (separator)
    (reporterBlock:args:return:code:imports:selector:
     "analog read pin %F"
     (0)
