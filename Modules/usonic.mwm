@@ -1,20 +1,20 @@
 (Microwitch
- (module:var:headers:blocks:
-  "usonic"
-  ""
-  ("import usonic")
-  ((category: "usonic")
+ (name:blocks:
+  "HC-SR04 ultrasonic distance sensor module"
+  (
+
+   (category: "usonic")
    (commandBlock:args:code:imports:selector:
     "init usonic trig %G echo %G"
     (1 2)
     "usonic.init(trigger=pin%G1,echo=pin%G2)"
-    ((microbit "*"))
+    (usonic (microbit "*"))
     usonicInitTrigger:echo:)
-   (reporterBlock:args:return:code:imports:selector:
+   (reporterBlock:args:return:code:selector:
     "usonic distance"
     ()
     r
     "usonic.distance()"
-    ()
     usonicDistance)
+
 )))

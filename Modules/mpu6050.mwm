@@ -1,19 +1,21 @@
 (Microwitch
- (module:var:headers:blocks:
-  "mpu6050"
-  "_mpu"
-  ("import mpu6050")
-  ((category: "mpu6050")
-   (commandBlock:args:code:imports:
+ (name:blocks:
+  "InvenSense mpu6050 module"
+  (
+
+   (category: "mpu6050")
+   (commandBlock:args:code:var:imports:selector:
     "init MPU"
     ()
     "_mpu=mpu6050.accel(_i2c)"
-    ())
-   (reporterBlock:args:return:code:imports:
+    "_mpu"
+    ("mpu6050")
+    mpuInit)
+   (reporterBlock:args:return:code:selector:
     "MPU values"
     ()
     r
     "_mpu.get_values()"
-    ())
+    mpuGetValue)
 
 )))

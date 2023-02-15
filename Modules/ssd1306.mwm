@@ -1,50 +1,45 @@
 (Microwitch
- (module:var:headers:blocks:
-  "ssd1306"
-  "_oled"
-  ("from ssd1306 import SSD1306_I2C")
-  ((category: "ssd1306")
-   (commandBlock:args:code:imports:id:
+ (name:blocks:
+  "ssd1306 OLED module"
+
+  (
+   (category: "ssd1306")
+   (commandBlock:args:code:var:imports:selector:
     "set OLED w %n h %n"
     (128 64)
     "_oled=SSD1306_I2C(%n,%n,_i2c)"
-    ()
-    1)
-   (commandBlock:args:code:imports:id:
+    "_oled"
+    ((ssd1306 SSD1306_I2C))
+    oledSetW:h:)
+   (commandBlock:args:code:selector:
     "OLED show"
     ()
     "_oled.show()"
-    ()
-    2)
-   (commandBlock:args:code:imports:id:
+    oledShow)
+   (commandBlock:args:code:selector:
     "OLED text %s x %n y %n"
     (hello 0 0)
     "_oled.text(%s,%n,%n)"
-    ()
-    3)
-   (commandBlock:args:code:imports:id:
+    oledText:x:y:)
+   (commandBlock:args:code:selector:
     "OLED fill %n"
     (0)
     "_oled.fill(%n)"
-    ()
-    4)
-   (commandBlock:args:code:imports:id:
+    oledFill:)
+   (commandBlock:args:code:selector:
     "OLED line %n , %n to %n , %n color %n"
     (0 0 100 10 1)
     "_oled.line(%n,%n,%n,%n,%n)"
-    ()
-    5)
-   (commandBlock:args:code:imports:id:
+    oledLineX:y:toX:y:color:)
+   (commandBlock:args:code:selector:
     "OLED rect %n , %n to %n , %n color %n"
     (0 0 100 10 1)
     "_oled.rect(%n,%n,%n,%n,%n)"
-    ()
-    6)
-   (commandBlock:args:code:imports:id:
+    oledFrameX:y:toX:y:color:)
+   (commandBlock:args:code:selector:
     "OLED fill rect %n , %n to %n , %n color %n"
     (0 0 100 10 1)
     "_oled.fill_rect(%n,%n,%n,%n,%n)"
-    ()
-    7)
+    oledRectX:y:toX:y:color:)
 
 )))

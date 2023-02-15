@@ -1,5 +1,5 @@
 (Microwitch
- (proxy:blocks:
+ (name:blocks:
   "Microbit"
   (
 
@@ -245,10 +245,12 @@
     accelerometerZ)
 
    (category: "radio")
-   (commandBlock:args:code:imports:selector:
+   (commandBlock:args:code:var:imports:selector:
     "radio on"
     ()
-    "radio.on()"
+    "radio.on()
+_rm=None"
+    "_rm"
     (radio)
     radioOn)
    (commandBlock:args:code:imports:selector:
@@ -263,18 +265,26 @@
     "radio.config(group=%n)"
     (radio)
     radioGroup:)
+   (separator)
    (commandBlock:args:code:imports:selector:
     "send a radio message %s"
     ("Hello!")
     "radio.send(str(%s))"
     (radio)
     radioSend:)
+   (commandBlock:args:code:var:imports:selector:
+    "receive a radio message"
+    ()
+    "_rm=radio.receive()"
+    "_rm"
+    (radio)
+    radioReceiveMessage)
    (reporterBlock:args:return:code:imports:selector:
-    "received radio message"
+    "received message"
     ()
     r
-    "radio.receive()"
-    (radio)
+    "_rm"
+    ()
     radioReceive)
    (commandBlock:args:code:imports:selector:
     "radio reset"
@@ -367,7 +377,7 @@
     (1234)
     "random.seed(%n)"
     (random)
-    randomSeed:)
+    setRandomSeed:)
    (reporterBlock:args:return:code:imports:selector:
     "file names"
     ()
@@ -377,10 +387,10 @@
     fileNames)
    (separator)
    (reporterBlock:args:return:code:imports:selector:
-    "count of %s"
-    ("")
+    "count %s of %s"
+    ("l" "hello")
     r
-    "%s.count()"
+    "%s2.count(%s1)"
     ()
     countOf:)
    (reporterBlock:args:return:code:imports:selector:
@@ -750,6 +760,259 @@
     clearList:)
 
    (category: "operators")
+   (reporterBlock:args:return:code:imports:selector:
+    "%n + %n"
+    (1 2)
+    r
+    "(%n + %n)"
+    ()
+    plus:and:)
+   (reporterBlock:args:return:code:imports:selector:
+    "%n - %n"
+    (1 2)
+    r
+    "(%n - %n)"
+    ()
+    minus:with:)
+   (reporterBlock:args:return:code:imports:selector:
+    "%n * %n"
+    (1 2)
+    r
+    "(%n * %n)"
+    ()
+    multiply:and:)
+   (reporterBlock:args:return:code:imports:selector:
+    "%n / %n"
+    (1 2)
+    r
+    "(%n / %n)"
+    ()
+    divide:by:)
+   (reporterBlock:args:return:code:imports:selector:
+    "%n div %n"
+    (1 2)
+    r
+    "(%n // %n)"
+    ()
+    div:by:)
+   (reporterBlock:args:return:code:imports:selector:
+    "%n mod %n"
+    (1 2)
+    r
+    "(%n % %n)"
+    ()
+    mod:by:)
+   (reporterBlock:args:return:code:imports:selector:
+    "- %n"
+    (1)
+    r
+    "(- %n)"
+    ()
+    negated:)
+   (separator)
+   (reporterBlock:args:return:code:imports:selector:
+    "pick random %n to %n"
+    (1 10)
+    r
+    "random.randint(%n,%n)"
+    (random)
+    randomFrom:to:)
+   (separator)
+   (reporterBlock:args:return:code:imports:selector:
+    "%s < %s"
+    ("" "")
+    b
+    "(%s < %s)"
+    ()
+    less:than:)
+   (reporterBlock:args:return:code:imports:selector:
+    "%s = %s"
+    ("" "")
+    b
+    "(%s == %s)"
+    ()
+    equal:to:)
+   (reporterBlock:args:return:code:imports:selector:
+    "%s > %s"
+    ("" "")
+    b
+    "(%s > %s)"
+    ()
+    more:than:)
+   (reporterBlock:args:return:code:imports:selector:
+    "%n between %n and %n"
+    (20 10 30)
+    b
+    "(%n2)<=(%n1)<=(%n3)"
+    ()
+    is:between:and:)
+   (reporterBlock:args:return:code:imports:selector:
+    "%s is None"
+    ("")
+    b
+    "(%s is None)"
+    ()
+    isNone:)
+   (separator)
+   (reporterBlock:args:return:code:imports:selector:
+    "%b and %b"
+    ("" "")
+    b
+    "(%b and %b)"
+    ()
+    and:with:)
+   (reporterBlock:args:return:code:imports:selector:
+    "%b or %b"
+    ("" "")
+    b
+    "(%b or %b)"
+    ()
+    or:with:)
+   (reporterBlock:args:return:code:imports:selector:
+    "not %b"
+    ("")
+    b
+    "(not %b)"
+    ()
+    not:)
+   (reporterBlock:args:return:code:imports:selector:
+    "true"
+    ()
+    b
+    "True"
+    ()
+    getTrue)
+   (reporterBlock:args:return:code:imports:selector:
+    "false"
+    ()
+    b
+    "False"
+    ()
+    getFalse)
+   (separator)
+   (reporterBlock:args:return:code:imports:selector:
+    "%n bitand %n"
+    (2 6)
+    r
+    "(int(%n) & int(%n))"
+    ()
+    bit:and:)
+   (reporterBlock:args:return:code:imports:selector:
+    "%n bitor %n"
+    (2 6)
+    r
+    "(int(%n) | int(%n))"
+    ()
+    bit:or:)
+   (reporterBlock:args:return:code:imports:selector:
+    "%n bitxor %n"
+    (2 6)
+    r
+    "(int(%n) ^ int(%n))"
+    ()
+    bit:xor:)
+   (reporterBlock:args:return:code:imports:selector:
+    "%n bit shift left %n"
+    (1 5)
+    r
+    "(int(%n) << int(%n))"
+    ()
+    bit:shiftLeft:)
+   (reporterBlock:args:return:code:imports:selector:
+    "%n bit shift right %n"
+    (256 6)
+    r
+    "(int(%n) >> int(%n))"
+    ()
+    bit:shiftRight:)
+   (separator)
+
+   (reporterBlock:args:return:code:imports:selector:
+    "string of %n"
+    (0)
+    r
+    "str(%n)"
+    ()
+    stringOf:)
+   (reporterBlock:args:return:code:imports:selector:
+    "number of %s"
+    ("123")
+    r
+    "int(%s)"
+    ()
+    numberOf:)
+   (reporterBlock:args:return:code:imports:selector:
+    "join %s %s"
+    ("hello " "world")
+    r
+    "str(%s)+str(%s)"
+    ()
+    concatenate:with:)
+   (reporterBlock:args:return:code:imports:selector:
+    "item %n of %s"
+    (0 "world")
+    r
+    "(%s)[%n]"
+    ()
+    letter:of:)
+   (reporterBlock:args:return:code:imports:selector:
+    "length of %s"
+    ("world")
+    r
+    "len(%s)"
+    ()
+    stringLength:)
+   (reporterBlock:args:return:code:imports:selector:
+    "any of %s"
+    ("hello")
+    r
+    "random.choice(%s)"
+    (random)
+    anyOf:)
+   (separator)
+   (reporterBlock:args:return:code:imports:selector:
+    "round %n"
+    (1.5)
+    r
+    "round(%n)"
+    ()
+    rounded:)
+   (reporterBlock:args:return:code:imports:selector:
+    "truncate %n"
+    (1.5)
+    r
+    "math.trunc(%n)"
+    (math)
+    truncated:)
+   (reporterBlock:args:return:code:imports:selector:
+    "abs %n"
+    (-5)
+    r
+    "abs(%n)"
+    ()
+    abs:)
+   (reporterBlock:args:return:code:imports:selector:
+    "abs %n sign %n"
+    (5 -1)
+    r
+    "math.copysign(%n,%n)"
+    (math)
+    abs:sign:)
+   (separator)
+   (reporterBlock:args:return:code:imports:selector:
+    "string from %s encoding %s"
+    ("" "utf8")
+    r
+    "str(%s,%s)"
+    ()
+    stringFrom:encoding:)
+   (reporterBlock:args:return:code:imports:selector:
+    "bytes from %s encoding %s"
+    ("abc" "utf8")
+    r
+    "bytes(%s,%s)"
+    ()
+    bytesFrom:encoding:)
    (separator)
    (reporterBlock:args:return:code:imports:selector:
     "%s starts with %s"

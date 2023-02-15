@@ -1,35 +1,32 @@
 (Microwitch
- (module:var:headers:blocks:
-  "huskylens"
-  ""
-  ()
-  ((category: "huskylens")
+ (name:blocks:
+  "DFRobot huskylens module"
+  (
+
+   (category: "huskylens")
    (commandBlock:args:code:imports:selector:
     "select algorithm %n"
     (0)
     "huskylens.select_algorithm(%n)"
-    (huskylens)
-    selectHuskyAlgorithm:)
-   (reporterBlock:args:return:code:imports:selector:
+    ("huskylens")
+    huskySelectAlgorithm:)
+   (reporterBlock:args:return:code:selector:
     "get data count"
     ()
     r
     "huskylens.get_size()"
-    (huskylens)
     huskyGetCount)
-   (reporterBlock:args:return:code:imports:selector:
+   (reporterBlock:args:return:code:selector:
     "get data"
     ()
     r
     "huskylens.get_data()"
-    (huskylens)
     huskyGetData)
-   (reporterBlock:args:return:code:imports:selector:
+   (reporterBlock:args:return:code:selector:
     "get data %n at %n"
     (0 0)
     r
     "huskylens.get_property(%n,%n)"
-    (huskylens)
     huskyGetData:at:)
 
 )))

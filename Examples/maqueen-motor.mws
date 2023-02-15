@@ -1,4 +1,4 @@
-(Microwitch (main) (exboard)
+(Microwitch (main) ()
  ((for main ( )
    (
    (when start

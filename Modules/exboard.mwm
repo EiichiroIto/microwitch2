@@ -1,26 +1,24 @@
 (Microwitch
- (module:var:headers:blocks:
-  "exboard"
-  ""
-  ("import exboard")
-  ((category: "exboard")
+ (name:blocks:
+  "DFRobot exboard module"
+  (
+
+   (category: "exboard")
    (commandBlock:args:code:imports:selector:
     "init ExBoard"
     ()
     "exboard.init()"
-    ()
-    debInit:)
-   (commandBlock:args:code:imports:selector:
+    ("exboard")
+    exbInit)
+   (commandBlock:args:code:selector:
     "servo %n degrees %n"
     (1 90)
     "exboard.servo(%n,%n)"
-    ()
-    debServoCh:degrees:)
-   (commandBlock:args:code:imports:selector:
+    exbServoCh:degrees:)
+   (commandBlock:args:code:selector:
     "motor %n speed %n"
     (1 100)
     "exboard.motor(%n,%n)"
-    ()
-    debMotorCh:speed:)
+    exbMotorCh:speed:)
 
 )))

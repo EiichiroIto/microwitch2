@@ -2,13 +2,13 @@
  ((for main ( )
    (
    (when start
-    ((debInit: 64)
+    ((exbInit)
      (doForever
-      ((debServoCh:degrees: 1 90)
+      ((exbServoCh:degrees: 1 90)
        (mwait:elapsed:from: 1000)
-       (debServoCh:degrees: 1 180)
+       (exbServoCh:degrees: 1 180)
        (mwait:elapsed:from: 1000)
-       (debServoCh:degrees: 1 90)
+       (exbServoCh:degrees: 1 90)
        (mwait:elapsed:from: 1000)
-       (debServoCh:degrees: 1 0)
+       (exbServoCh:degrees: 1 0)
        (mwait:elapsed:from: 1000)))))))))

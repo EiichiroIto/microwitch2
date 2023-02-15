@@ -388,9 +388,6 @@ msgstr "そのサブ名は既に使われています!"
 msgid "That variable name is already in use!"
 msgstr "その変数名は既に使われています!"
 
-msgid "The following modules are not installed:"
-msgstr "モジュールがインストールされていません:"
-
 msgid "ToF read"
 msgstr "ToF読み込み"
 
@@ -496,9 +493,6 @@ msgstr "%s のASCIIコード"
 msgid "break"
 msgstr "繰り返しを抜ける"
 
-msgid "broadcast %e"
-msgstr "%e をブロードキャストする"
-
 msgid "button %B is pressed"
 msgstr "ボタン %B が押されている"
 
@@ -580,8 +574,8 @@ msgstr "コピー"
 msgid "copy of %s"
 msgstr "%s のコピー"
 
-msgid "count of %s"
-msgstr "%s の個数"
+msgid "count %s of %s"
+msgstr "%s2 の %s1 を数える"
 
 msgid "count of button %B pressed"
 msgstr "ボタン %B が押された回数"
@@ -607,6 +601,12 @@ msgstr "details.txtが見つかりません"
 msgid "device is not ready"
 msgstr "デバイスの準備ができていません"
 
+msgid "digital pin %G is High"
+msgstr "デジタルピン %G を高にする"
+
+msgid "digital pin %G is Low"
+msgstr "デジタルピン %G を低にする"
+
 msgid "digital read pin %G"
 msgstr "デジタルピン %G の値"
 
@@ -627,6 +627,9 @@ msgstr "リスト %s の項目を %l に格納する"
 
 msgid "done"
 msgstr "完了"
+
+msgid "dummy"
+msgstr "dummy"
 
 msgid "duplicate"
 msgstr "複製"
@@ -754,9 +757,6 @@ msgstr "プロットの最小値?"
 msgid "misc"
 msgstr "その他"
 
-msgid "modules"
-msgstr "モジュール"
-
 msgid "motor %n speed %n"
 msgstr "モーター %n の速度を %n にする"
 
@@ -781,8 +781,8 @@ msgstr "対象なし"
 msgid "not %b"
 msgstr "%b ではない"
 
-msgid "not available module: "
-msgstr "モジュールが使えません: "
+msgid "not available modules: "
+msgstr "以下のモジュールが使用できません: "
 
 msgid "number of %s"
 msgstr "%s の数値"
@@ -841,11 +841,11 @@ msgstr "無線リセット"
 msgid "range %n to %n step %n"
 msgstr "%n から %n までステップ %n のリスト"
 
-msgid "received radio message"
-msgstr "無線メッセージ"
+msgid "receive a radio message"
+msgstr "無線メッセージを受信する"
 
-msgid "repeat %n"
-msgstr "%n 回繰り返す"
+msgid "received message"
+msgstr "受信したメッセージ"
 
 msgid "repeat %n each %l"
 msgstr "%n 回繰り返し、各回を %l に格納する"
@@ -910,6 +910,9 @@ msgstr "%v を %n にする"
 msgid "set OLED w %n h %n"
 msgstr "OLEDを幅 %n 高さ %n で初期化する"
 
+msgid "set pin %G to %u"
+msgstr "デジタルピン %G を %u にする"
+
 msgid "set random seed to %n"
 msgstr "乱数を %n で初期化する"
 
@@ -958,14 +961,8 @@ msgstr "ssd1306"
 msgid "start"
 msgstr "実行"
 
-msgid "stop all"
-msgstr "全て止める"
-
 msgid "stop music"
 msgstr "音楽の演奏を止める"
-
-msgid "stop script"
-msgstr "スクリプトを止める"
 
 msgid "stopped"
 msgstr "停止しました"
@@ -1015,6 +1012,9 @@ msgstr "シリアルに %s を書き込む"
 msgid "unable to find the appropriate firmware"
 msgstr "適切なファームウェアが見つかりません"
 
+msgid "unknown %s"
+msgstr "不明なブロック %s"
+
 msgid "update plot period? (in milliseconds)"
 msgstr "更新間隔を設定する? (ミリ秒単位で入力)"
 
@@ -1036,18 +1036,8 @@ msgstr "%n ミリ秒待つ"
 msgid "was gesture %g ?"
 msgstr "ジェスチャ %g だった?"
 
-msgid "when %m clicked"
-msgstr "%m がクリックされたとき"
-
 msgid "when I receive"
 msgstr "受け取った時"
 
-msgid "when I receive %e"
-msgstr "%e を受け取ったとき"
-
-msgid "when loop"
-msgstr "ループする時"
-
 msgid "while %b"
 msgstr "%b の間繰り返す"
-

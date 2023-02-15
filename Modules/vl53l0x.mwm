@@ -1,25 +1,26 @@
 (Microwitch
- (module:var:headers:blocks:
-  "vl53l0x"
-  "_vl"
-  ("from vl53l0x import VL53L0X")
-  ((category: "vl53l0x")
-   (commandBlock:args:code:imports:id:
+ (name:blocks:
+  "vl53l0x ToF sensor module"
+  (
+
+   (category: "vl53l0x")
+   (commandBlock:args:code:var:imports:selector:
     "init ToF"
     ()
     "_vl=VL53L0X(i2c)"
-    ((microbit i2c))
-    1)
-   (commandBlock:args:code:imports:id:
+    "_vl"
+    ((vl53l0x VL53L0X) (microbit i2c))
+    vlInit)
+   (commandBlock:args:code:selector:
     "ToF start"
     ()
     "_vl.start()"
-    ()
-    2)
-   (reporterBlock:args:return:code:imports:id:
+    vlStart)
+   (reporterBlock:args:return:code:selector:
     "ToF read"
     ()
     r
     "_vl.read()"
-    ()
-    3))))
+    vlRead)
+
+)))
