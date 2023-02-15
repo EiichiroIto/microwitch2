@@ -124,11 +124,6 @@ MicroPythonCode >> generateEmptySubBody [
 ]
 
 { #category : #'code generator' }
-MicroPythonCode >> generateGlobalVars: aCollection [
-	generator generateGlobalVars: aCollection
-]
-
-{ #category : #'code generator' }
 MicroPythonCode >> generateIndent: anInteger [
 	generator indent: anInteger
 ]
@@ -156,7 +151,15 @@ MicroPythonCode >> generateReporter: aSymbol morph: aMorph [
 
 { #category : #'code generator' }
 MicroPythonCode >> generateSubHeader: aString [
-	generator def: aString
+
+	generator
+		indent: 0;
+		def: aString
+]
+
+{ #category : #'code generator' }
+MicroPythonCode >> generateSubVars: aCollection [
+	generator generateSubVars: aCollection
 ]
 
 { #category : #'variable ops' }
@@ -200,22 +203,36 @@ MicroPythonCode >> parseHats: aCollection [
 
 { #category : #'code generator' }
 MicroPythonCode >> rawGenerateCode: aSymbol morph: aMorph [
-	| args script |
-	script := aMorph script.
+
+	| args script blockSpec |
+	script := aMorph receiver.
 	args := self argsOf: aMorph.
-	(script isExternalBlock: aSymbol)
-		ifTrue: [ ^ generator
-				generateExtCode: aSymbol asSymbol
-				arguments: args
-				for: script ].
-	(script isInternalBlock: aSymbol)
-		ifTrue: [ ^ generator
-				generateIntCode: aSymbol asSymbol
-				arguments: args
-				for: script ].
-	aSymbol = #getVar:
-		ifTrue: [ ^ aMorph variable ].
-	^ generator perform: aSymbol asSymbol withArguments: args
+	blockSpec := script blockSpecAt: aSymbol.
+	blockSpec isNativeBlock ifTrue: [ 
+		aSymbol = #getVar: ifTrue: [ ^ aMorph variable ].
+		^ generator perform: aSymbol asSymbol withArguments: args ].
+	^ generator
+		  generateCode: aSymbol asSymbol
+		  arguments: args
+		  for: script
+]
+
+{ #category : #'code generator' }
+MicroPythonCode >> varNamesUsedIn: aMorph [
+
+	| varNames blocks block blockSpec |
+	varNames := Set new.
+	blocks := OrderedCollection new.
+	blocks add: aMorph.
+	[ blocks notEmpty ] whileTrue: [ 
+		block := blocks removeFirst.
+		block isSetterBlock ifTrue: [ varNames add: block variable ].
+		block isCommandBlock ifTrue: [ 
+			blockSpec := block blockSpec.
+			(blockSpec isBlockSpec and: [ blockSpec isNativeBlock not ]) 
+				ifTrue: [ blockSpec var ifNotNil: [ :v | varNames add: v ] ] ].
+		blocks addAll: block nextOrInnerBlocks ].
+	^ varNames asArray sorted
 ]
 
 { #category : #private }

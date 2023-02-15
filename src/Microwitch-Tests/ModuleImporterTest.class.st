@@ -13,180 +13,182 @@ ModuleImporterTest >> newImporter [
 ]
 
 { #category : #test }
-ModuleImporterTest >> testBlockDefClass [
-	| i |
-	i := self newImporter.
-	self assert: i blockDefClass isNil.
-	i blockDefClass: ExtBlockDef.
-	self assert: i blockDefClass equals: ExtBlockDef.
-	i blockDefClass: BlockDef.
-	self assert: i blockDefClass equals: BlockDef
-]
-
-{ #category : #test }
 ModuleImporterTest >> testCategory [
 	| i out |
 	i := self newImporter.
 	out := i category: 'sensing'.
-	self assert: (out isKindOf: BlockCategory).
+	self assert: (out isKindOf: ScratchBlockCategory).
 	self assert: out categoryName equals: 'sensing'
 ]
 
 { #category : #test }
-ModuleImporterTest >> testCommandBlockArgsCodeImports [
+ModuleImporterTest >> testCommandBlockArgsCodeImportsSelector [
+
 	| i out |
 	i := self newImporter.
-	i blockDefClass: ExtBlockDef.
 	out := i
-		commandBlock: 'set oled w %n h %n'
-		args: #(64 128)
-		code: 'oled=SSD1306_I2C(%n,%n,i2c)'
-		imports: #(i2c)
-		id: 5.
-	self assert: (out isKindOf: ExtBlockDef).
-	self assert: out block equals: 'set oled w %n h %n'.
-	self assertCollection: out defaultArgs equals: #(64 128).
+		       commandBlock: 'set oled w %n h %n'
+		       args: #( 64 128 )
+		       code: 'oled=SSD1306_I2C(%n,%n,i2c)'
+		       imports: #( i2c #( microbit * ) )
+		       selector: #abc:def:.
+	self assert: (out isKindOf: MicroPythonBlockSpec).
+	self assert: out label equals: 'set oled w %n h %n'.
+	self assertCollection: out arguments equals: #( 64 128 ).
 	self assert: out code equals: 'oled=SSD1306_I2C(%n,%n,i2c)'.
-	self assertCollection: out imports equals: #(i2c).
-	self assert: out id equals: 5
+	self assertCollection: out imports equals: #( i2c #( microbit
+	      * ) ).
+	self assert: out selector equals: #abc:def:
 ]
 
 { #category : #test }
-ModuleImporterTest >> testCommandBlockArgsCodeImportsId [
+ModuleImporterTest >> testCommandBlockArgsCodeSelector [
+
 	| i out |
 	i := self newImporter.
-	i blockDefClass: ExtBlockDef.
 	out := i
-		commandBlock: 'set oled w %n h %n'
-		args: #(64 128)
-		code: 'oled=SSD1306_I2C(%n,%n,i2c)'
-		imports: #(i2c).
-	self assert: (out isKindOf: ExtBlockDef).
-	self assert: out block equals: 'set oled w %n h %n'.
-	self assertCollection: out defaultArgs equals: #(64 128).
+		       commandBlock: 'set oled w %n h %n'
+		       args: #( 64 128 )
+		       code: 'oled=SSD1306_I2C(%n,%n,i2c)'
+		       selector: #abc:def:.
+	self assert: (out isKindOf: MicroPythonBlockSpec).
+	self assert: out label equals: 'set oled w %n h %n'.
+	self assertCollection: out arguments equals: #( 64 128 ).
 	self assert: out code equals: 'oled=SSD1306_I2C(%n,%n,i2c)'.
-	self assertCollection: out imports equals: #(i2c).
-	self assert: out id equals: out block hash
+	self assert: out selector equals: #abc:def:
+]
+
+{ #category : #test }
+ModuleImporterTest >> testCommandBlockArgsCodeVarImportsSelector [
+
+	| i out |
+	i := self newImporter.
+	out := i
+		       commandBlock: 'set oled w %n h %n'
+		       args: #( 64 128 )
+		       code: 'oled=SSD1306_I2C(%n,%n,i2c)'
+		       var: 'oled'
+		       imports: #( i2c )
+		       selector: #abc:def:.
+	self assert: (out isKindOf: MicroPythonBlockSpec).
+	self assert: out label equals: 'set oled w %n h %n'.
+	self assertCollection: out arguments equals: #( 64 128 ).
+	self assert: out code equals: 'oled=SSD1306_I2C(%n,%n,i2c)'.
+	self assert: out var equals: 'oled'.
+	self assertCollection: out imports equals: #( i2c ).
+	self assert: out selector equals: #abc:def:
 ]
 
 { #category : #test }
 ModuleImporterTest >> testImport [
+
 	| i in out |
 	i := self newImporter.
-	in := '(Microwitch (module:var:headers:blocks: "oled" "oled" ("from ssd1306 import SSD1306_I2C") ()))'.
+	in := '(Microwitch (name:blocks: oled ()))'.
 	out := i import: in.
-	self assert: (out isKindOf: ExtModuleDef).
-	self assert: out moduleName equals: 'oled'.
-	self assert: out varName equals: 'oled'.
-	self assert: out header equals: 'from ssd1306 import SSD1306_I2C'.
-	self assert: out blockDefs isEmpty
+	self assert: (out isKindOf: MicroPythonModule).
+	self assert: out name equals: 'oled'.
+	self assert: out blockSpecs isEmpty
 ]
 
 { #category : #test }
 ModuleImporterTest >> testImportBlockDef [
 	| i in out |
 	i := self newImporter.
-	i blockDefClass: ExtBlockDef.
-	in := #('commandBlock:args:code:imports:' 'set oled w %n h %n' (64 128) 'oled=SSD1306_I2C(%n,%n,i2c)' #(i2c)).
+	in := #('commandBlock:args:code:imports:selector:' 'set oled w %n h %n' (64 128) 'oled=SSD1306_I2C(%n,%n,i2c)' #(i2c) #w:h:).
 	out := i importBlockDef: in.
-	self assert: (out isKindOf: ExtBlockDef).
-	in := #('reporterBlock:args:return:code:imports:' 'vl read' () 'r' 'vl.read()' #()).
+	self assert: (out isKindOf: MicroPythonBlockSpec).
+	in := #('reporterBlock:args:return:code:imports:selector:' 'vl read' () 'r' 'vl.read()' #() #vlread).
 	out := i importBlockDef: in.
-	self assert: (out isKindOf: ExtBlockDef).
+	self assert: (out isKindOf: MicroPythonBlockSpec).
 	in := #('category:' 'sensing').
 	out := i importBlockDef: in.
-	self assert: (out isKindOf: BlockCategory).
+	self assert: (out isKindOf: ScratchBlockCategory).
 	self assert: out categoryName equals: 'sensing'.
 	in := #('separator').
 	out := i importBlockDef: in.
-	self assert: (out isKindOf: BlockSeparator)
-]
-
-{ #category : #test }
-ModuleImporterTest >> testImportBlockDefsInto [
-	| i in out |
-	i := self newImporter.
-	i blockDefClass: ExtBlockDef.
-	in := #(#('commandBlock:args:code:imports:' 'set oled w %n h %n' (64 128) 'oled=SSD1306_I2C(%n,%n,i2c)' #(i2c)) #('reporterBlock:args:return:code:imports:' 'vl read' () 'r' 'vl.read()' #())).
-	out := OrderedCollection new.
-	i importBlockDefs: in into: out.
-	self assert: out size equals: 2.
-	self assert: (out first isKindOf: ExtBlockDef).
-	self assert: (out second isKindOf: ExtBlockDef)
+	self assert: (out isKindOf: ScratchBlockSeparator)
 ]
 
 { #category : #test }
 ModuleImporterTest >> testImportFrom [
 	| i in out |
 	i := self newImporter.
-	in := #('Microwitch' #('module:var:headers:blocks:' 'oled' 'abc' #('aaa' 'bbb') #())).
+	in := #('Microwitch' #('name:blocks:' 'oled' #())).
 	out := i importFrom: in.
-	self assert: (out isKindOf: ExtModuleDef)
+	self assert: (out isKindOf: MicroPythonModule)
 ]
 
 { #category : #test }
-ModuleImporterTest >> testModuleVarHeadersBlocks [
+ModuleImporterTest >> testModuleName [
+
+	| obj |
+	obj := self newImporter.
+	self assert: obj moduleName isNil.
+	obj moduleName: 'abc'.
+	self assert: obj moduleName equals: 'abc'.
+	obj moduleName: 'def'.
+	self assert: obj moduleName equals: 'def'
+]
+
+{ #category : #test }
+ModuleImporterTest >> testNameBlocks [
+
+	| i out |
+	i := self newImporter.
+	out := i name: 'microbit' blocks: #().
+	self assert: (out isKindOf: MicroPythonModule).
+	self assert: out name equals: 'microbit'.
+	self assert: out blockSpecs isEmpty
+]
+
+{ #category : #test }
+ModuleImporterTest >> testNewBlockSpec [
+
+	| obj r |
+	obj := self newImporter.
+	obj moduleName: 'abc'.
+	r := obj newBlockSpec.
+	self assert: (r isKindOf: MicroPythonBlockSpec).
+	self assert: r moduleName equals: 'abc'
+]
+
+{ #category : #test }
+ModuleImporterTest >> testReporterBlockArgsReturnCodeImportsSelector [
+
 	| i out |
 	i := self newImporter.
 	out := i
-		module: 'oled'
-		var: 'abc'
-		headers: #('aaa' 'bbb')
-		blocks: #().
-	self assert: (out isKindOf: ExtModuleDef).
-	self assert: out moduleName equals: 'oled'.
-	self assert: out varName equals: 'abc'.
-	self assert: out header equals: 'aaa' , String lf , 'bbb'.
-	self assert: out blockDefs isEmpty
-]
-
-{ #category : #test }
-ModuleImporterTest >> testProxyBlocks [
-	| i out |
-	i := self newImporter.
-	out := i proxy: 'microbit' blocks: #().
-	self assert: (out isKindOf: IntModuleDef).
-	self assert: out proxyName equals: 'microbit'.
-	self assert: out blockDefs isEmpty
-]
-
-{ #category : #test }
-ModuleImporterTest >> testReporterBlockArgsReturnCodeImports [
-	| i out |
-	i := self newImporter.
-	i blockDefClass: ExtBlockDef.
-	out := i
-		reporterBlock: 'vl read'
-		args: #()
-		return: 'r'
-		code: 'vl.read()'
-		imports: #().
-	self assert: (out isKindOf: ExtBlockDef).
-	self assert: out block equals: 'vl read'.
-	self assert: out defaultArgs isEmpty.
+		       reporterBlock: 'vl read'
+		       args: #(  )
+		       return: 'r'
+		       code: 'vl.read()'
+		       imports: #(  )
+		       selector: #vlread.
+	self assert: (out isKindOf: MicroPythonBlockSpec).
+	self assert: out label equals: 'vl read'.
+	self assert: out arguments isEmpty.
 	self assert: out code equals: 'vl.read()'.
 	self assert: out imports isEmpty.
-	self assert: out id equals: out block hash
+	self assert: out selector equals: #vlread
 ]
 
 { #category : #test }
-ModuleImporterTest >> testReporterBlockArgsReturnCodeImportsId [
+ModuleImporterTest >> testReporterBlockArgsReturnCodeSelector [
+
 	| i out |
 	i := self newImporter.
-	i blockDefClass: ExtBlockDef.
 	out := i
-		reporterBlock: 'vl read'
-		args: #()
-		return: 'r'
-		code: 'vl.read()'
-		imports: #()
-		id: 9.
-	self assert: (out isKindOf: ExtBlockDef).
-	self assert: out block equals: 'vl read'.
-	self assert: out defaultArgs isEmpty.
+		       reporterBlock: 'vl read'
+		       args: #(  )
+		       return: 'r'
+		       code: 'vl.read()'
+		       selector: #vlread.
+	self assert: (out isKindOf: MicroPythonBlockSpec).
+	self assert: out label equals: 'vl read'.
+	self assert: out arguments isEmpty.
 	self assert: out code equals: 'vl.read()'.
-	self assert: out imports isEmpty.
-	self assert: out id equals: 9
+	self assert: out selector equals: #vlread
 ]
 
 { #category : #test }
@@ -194,5 +196,5 @@ ModuleImporterTest >> testSeparator [
 	| i out |
 	i := self newImporter.
 	out := i separator.
-	self assert: (out isKindOf: BlockSeparator)
+	self assert: (out isKindOf: ScratchBlockSeparator)
 ]

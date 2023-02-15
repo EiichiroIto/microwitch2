@@ -13,51 +13,6 @@ MicroPythonGeneratorTest >> newGenerator [
 ]
 
 { #category : #test }
-MicroPythonGeneratorTest >> testAbs [
-	| g |
-	g := self newGenerator.
-	self assert: (g abs: 10) equals: 'abs(10)'.
-	self assert: (g abs: 1.5) equals: 'abs(1.5)'
-]
-
-{ #category : #test }
-MicroPythonGeneratorTest >> testAbsSign [
-	| g |
-	g := self newGenerator.
-	self assert: (g abs: 6 sign: -5) equals: 'math.copysign(6,-5)'
-]
-
-{ #category : #test }
-MicroPythonGeneratorTest >> testAddExtModule [
-	| g |
-	g := self newGenerator.
-	self assert: g extModules isCollection.
-	self assert: g extModules isEmpty.
-	g addExtModule: 'abc'.
-	self assert: (g extModules includes: 'abc').
-	self deny: (g extModules includes: 'def').
-	g addExtModule: 'def'.
-	self assert: (g extModules includes: 'abc').
-	self assert: (g extModules includes: 'def')
-]
-
-{ #category : #test }
-MicroPythonGeneratorTest >> testAndWith [
-	| g |
-	g := self newGenerator.
-	self
-		assert: (g and: [ g getTrue ] with: [ g getFalse ])
-		equals: '(True and False)'
-]
-
-{ #category : #test }
-MicroPythonGeneratorTest >> testAnyOf [
-	| g |
-	g := self newGenerator.
-	self assert: (g anyOf: 'x') equals: 'random.choice(x)'
-]
-
-{ #category : #test }
 MicroPythonGeneratorTest >> testAppendWithNewline [
 	| g |
 	g := self newGenerator.
@@ -91,60 +46,6 @@ MicroPythonGeneratorTest >> testBinaryOperatorArg1Arg2 [
 	self
 		assert: (g binaryOperator: '+' arg1: [ 10 ] arg2: [ 1 + 2 ])
 		equals: '(10+3)'
-]
-
-{ #category : #test }
-MicroPythonGeneratorTest >> testBitAnd [
-	| g |
-	g := self newGenerator.
-	self
-		assert: (g bit: 1 and: 2)
-		equals: '(int(1) & int(2))'
-]
-
-{ #category : #test }
-MicroPythonGeneratorTest >> testBitOr [
-	| g |
-	g := self newGenerator.
-	self
-		assert: (g bit: 1 or: 2)
-		equals: '(int(1) | int(2))'
-]
-
-{ #category : #test }
-MicroPythonGeneratorTest >> testBitShiftLeft [
-	| g |
-	g := self newGenerator.
-	self
-		assert: (g bit: 1 shiftLeft: 2)
-		equals: '(int(1) << int(2))'
-]
-
-{ #category : #test }
-MicroPythonGeneratorTest >> testBitShiftRight [
-	| g |
-	g := self newGenerator.
-	self
-		assert: (g bit: 1 shiftRight: 2)
-		equals: '(int(1) >> int(2))'
-]
-
-{ #category : #test }
-MicroPythonGeneratorTest >> testBitXor [
-	| g |
-	g := self newGenerator.
-	self
-		assert: (g bit: 1 xor: 2)
-		equals: '(int(1) ^ int(2))'
-]
-
-{ #category : #test }
-MicroPythonGeneratorTest >> testBytesFromEncoding [
-	| g |
-	g := self newGenerator.
-	self
-		assert: (g bytesFrom: '''abc''' encoding: '''utf8''')
-		equals: 'bytes(''abc'',''utf8'')'
 ]
 
 { #category : #test }
@@ -182,33 +83,11 @@ MicroPythonGeneratorTest >> testComputeFunctionOf [
 ]
 
 { #category : #test }
-MicroPythonGeneratorTest >> testConcatenateWith [
-	| g |
-	g := self newGenerator.
-	self assert: (g concatenate: 'x' with: 'y') equals: 'str(x)+str(y)'
-]
-
-{ #category : #test }
 MicroPythonGeneratorTest >> testDef [
 	| g |
 	g := self newGenerator.
 	g def: 'abc'.
 	self assert: g code equals: 'def abc():' , String lf
-]
-
-{ #category : #test }
-MicroPythonGeneratorTest >> testDivBy [
-
-	| g |
-	g := self newGenerator.
-	self assert: (g div: 10 by: 2) equals: '(10 // 2)'
-]
-
-{ #category : #test }
-MicroPythonGeneratorTest >> testDivideBy [
-	| g |
-	g := self newGenerator.
-	self assert: (g divide: 1 by: 2) equals: '(1 / 2)'
 ]
 
 { #category : #test }
@@ -316,36 +195,6 @@ MicroPythonGeneratorTest >> testDoWhileEnd [
 ]
 
 { #category : #test }
-MicroPythonGeneratorTest >> testEqualTo [
-	| g |
-	g := self newGenerator.
-	self assert: (g equal: 1 to: 2) equals: '(1 == 2)'
-]
-
-{ #category : #test }
-MicroPythonGeneratorTest >> testEvaluateOf [
-	| g |
-	g := self newGenerator.
-	self assert: (g evaluate: 'a' of: 'b') equals: 'b.a()'
-]
-
-{ #category : #test }
-MicroPythonGeneratorTest >> testExecuteOf [
-	| g |
-	g := self newGenerator.
-	g execute: 'a' of: 'b'.
-	self assert: g code equals: 'b.a()' , String lf
-]
-
-{ #category : #test }
-MicroPythonGeneratorTest >> testExtModules [
-	| g |
-	g := self newGenerator.
-	self assert: g extModules isCollection.
-	self assert: g extModules isEmpty
-]
-
-{ #category : #test }
 MicroPythonGeneratorTest >> testFalseString [
 	| g |
 	g := self newGenerator.
@@ -362,22 +211,25 @@ MicroPythonGeneratorTest >> testFromImport [
 ]
 
 { #category : #test }
-MicroPythonGeneratorTest >> testGenerateFromImport [
-	| g |
-	g := self newGenerator.
-	g generateFrom: 'abc' import: 'def'.
-	self assert: g code equals: 'from abc import def' , String lf
-]
+MicroPythonGeneratorTest >> testGenerateFromImports [
 
-{ #category : #test }
-MicroPythonGeneratorTest >> testGenerateGlobalVars [
 	| g |
 	g := self newGenerator.
-	g generateGlobalVars: #(a b c).
-	self assert: g code equals: 'global a,b,c' , String lf.
+	g generateFrom: 'abc' imports: #(  ).
+	self assert: g code isEmpty.
 	g := self newGenerator.
-	g generateGlobalVars: #().
-	self assert: g code isEmpty
+	g generateFrom: 'abc' imports: #( def ).
+	self assert: g code equals: 'from abc import def' , String lf.
+	g := self newGenerator.
+	g generateFrom: 'abc' imports: #( def ghi ).
+	self assert: g code equals: 'from abc import def,ghi' , String lf.
+	g := self newGenerator.
+	g generateFrom: 'abc' imports: #( def ghi '*' ).
+	self assert: g code equals: 'from abc import *' , String lf.
+	g := self newGenerator.
+	g indent: 1.
+	g generateFrom: 'abc' imports: #( def ghi ).
+	self assert: g code equals: '    from abc import def,ghi' , String lf
 ]
 
 { #category : #test }
@@ -398,11 +250,22 @@ MicroPythonGeneratorTest >> testGenerateHeader [
 ]
 
 { #category : #test }
-MicroPythonGeneratorTest >> testGenerateImport [
+MicroPythonGeneratorTest >> testGenerateImports [
+
 	| g |
 	g := self newGenerator.
-	g generateImport: 'abc'.
-	self assert: g code equals: 'import abc' , String lf
+	g generateImports: #(  ).
+	self assert: g code isEmpty.
+	g := self newGenerator.
+	g generateImports: #( abc ).
+	self assert: g code equals: 'import abc' , String lf.
+	g := self newGenerator.
+	g generateImports: #( abc def ).
+	self assert: g code equals: 'import abc,def' , String lf.
+	g := self newGenerator.
+	g indent: 1.
+	g generateImports: #( abc def ).
+	self assert: g code equals: '    import abc,def' , String lf
 ]
 
 { #category : #test }
@@ -415,18 +278,20 @@ MicroPythonGeneratorTest >> testGenerateIndent [
 
 { #category : #test }
 MicroPythonGeneratorTest >> testGenerateInitModules [
+
 	| g |
 	g := self newGenerator.
 	g import: 'abc'.
 	g import: 'def'.
 	g from: 'a' import: 'b'.
 	g from: 'c' import: 'd'.
+	g from: 'a' import: 'e'.
 	g generateInitModules.
 	self
 		assert: g code
 		equals:
-			'import abc' , String lf , 'import def' , String lf
-				, 'from a import b' , String lf , 'from c import d' , String lf
+			'import abc,def' , String lf , 'from a import b,e' , String lf
+			, 'from c import d' , String lf
 ]
 
 { #category : #test }
@@ -438,17 +303,14 @@ MicroPythonGeneratorTest >> testGeneratePass [
 ]
 
 { #category : #test }
-MicroPythonGeneratorTest >> testGetFalse [
+MicroPythonGeneratorTest >> testGenerateSubVars [
 	| g |
 	g := self newGenerator.
-	self assert: g getFalse equals: 'False'
-]
-
-{ #category : #test }
-MicroPythonGeneratorTest >> testGetTrue [
-	| g |
+	g generateSubVars: #(a b c).
+	self assert: g code equals: 'global a,b,c' , String lf.
 	g := self newGenerator.
-	self assert: g getTrue equals: 'True'
+	g generateSubVars: #().
+	self assert: g code isEmpty
 ]
 
 { #category : #test }
@@ -505,34 +367,6 @@ MicroPythonGeneratorTest >> testInitialize [
 ]
 
 { #category : #test }
-MicroPythonGeneratorTest >> testIsBetweenAnd [
-	| g |
-	g := self newGenerator.
-	self assert: (g is: 2 between: 3 and: 4) equals: '(3)<=(2)<=(4)'
-]
-
-{ #category : #test }
-MicroPythonGeneratorTest >> testIsNone [
-	| g |
-	g := self newGenerator.
-	self assert: (g isNone: 'x') equals: 'x is None'
-]
-
-{ #category : #test }
-MicroPythonGeneratorTest >> testLessThan [
-	| g |
-	g := self newGenerator.
-	self assert: (g less: 1 than: 2) equals: '(1 < 2)'
-]
-
-{ #category : #test }
-MicroPythonGeneratorTest >> testLetterOf [
-	| g |
-	g := self newGenerator.
-	self assert: (g letter: 6 of: 'x') equals: '(x)[6]'
-]
-
-{ #category : #test }
 MicroPythonGeneratorTest >> testListVars [
 	| g |
 	g := self newGenerator.
@@ -566,46 +400,11 @@ MicroPythonGeneratorTest >> testMath [
 ]
 
 { #category : #test }
-MicroPythonGeneratorTest >> testMinusWith [
-	| g |
-	g := self newGenerator.
-	self assert: (g minus: 1 with: 2) equals: '(1 - 2)'
-]
-
-{ #category : #test }
-MicroPythonGeneratorTest >> testModBy [
-	| g |
-	g := self newGenerator.
-	self assert: (g mod: 1 by: 2) equals: '(1 % 2)'
-]
-
-{ #category : #test }
 MicroPythonGeneratorTest >> testModules [
 	| g |
 	g := self newGenerator.
 	self assert: g modules isDictionary.
 	self assert: g modules isEmpty
-]
-
-{ #category : #test }
-MicroPythonGeneratorTest >> testMoreThan [
-	| g |
-	g := self newGenerator.
-	self assert: (g more: 1 than: 2) equals: '(1 > 2)'
-]
-
-{ #category : #test }
-MicroPythonGeneratorTest >> testMultiplyAnd [
-	| g |
-	g := self newGenerator.
-	self assert: (g multiply: 1 and: 2) equals: '(1 * 2)'
-]
-
-{ #category : #test }
-MicroPythonGeneratorTest >> testNegated [
-	| g |
-	g := self newGenerator.
-	self assert: (g negated: 5) equals: '(0 - 5)'
 ]
 
 { #category : #test }
@@ -652,42 +451,12 @@ MicroPythonGeneratorTest >> testNewlineString [
 ]
 
 { #category : #test }
-MicroPythonGeneratorTest >> testNot [
-	| g |
-	g := self newGenerator.
-	self assert: (g not: g getFalse) equals: 'not(False)'
-]
-
-{ #category : #test }
 MicroPythonGeneratorTest >> testNullaryFunction [
 	| g |
 	g := self newGenerator.
 	self
 		assert: (g nullaryFunction: 'abc')
 		equals: 'abc()'
-]
-
-{ #category : #test }
-MicroPythonGeneratorTest >> testNumberOf [
-	| g |
-	g := self newGenerator.
-	self assert: (g numberOf: '''123''') equals: 'int(''123'')'
-]
-
-{ #category : #test }
-MicroPythonGeneratorTest >> testOrWith [
-	| g |
-	g := self newGenerator.
-	self
-		assert: (g or: [ g getTrue ] with: [ g getFalse ])
-		equals: '(True or False)'
-]
-
-{ #category : #test }
-MicroPythonGeneratorTest >> testPlusAnd [
-	| g |
-	g := self newGenerator.
-	self assert: (g plus: 1 and: 2) equals: '(1 + 2)'
 ]
 
 { #category : #test }
@@ -708,33 +477,11 @@ MicroPythonGeneratorTest >> testRandom [
 ]
 
 { #category : #test }
-MicroPythonGeneratorTest >> testRandomFromTo [
-	| g |
-	g := self newGenerator.
-	self assert: (g randomFrom: 1 to: 10) equals: 'random.randint(1,10)'
-]
-
-{ #category : #test }
-MicroPythonGeneratorTest >> testRounded [
-	| g |
-	g := self newGenerator.
-	self assert: (g rounded: 'x') equals: 'round(x)'
-]
-
-{ #category : #test }
 MicroPythonGeneratorTest >> testSetVarTo [
 	| g |
 	g := self newGenerator.
 	g setVar: 'x' to: '1+2'.
 	self assert: g code equals: 'x = 1+2' , String lf
-]
-
-{ #category : #test }
-MicroPythonGeneratorTest >> testSplitByLimit [
-	| g r |
-	g := self newGenerator.
-	r := g split: '''a,b,c''' by: ''',''' limit: 3.
-	self assert: r equals: '''a,b,c''.split('','',3)'
 ]
 
 { #category : #test }
@@ -746,42 +493,12 @@ MicroPythonGeneratorTest >> testStopThread [
 ]
 
 { #category : #test }
-MicroPythonGeneratorTest >> testStringFromEncoding [
-	| g |
-	g := self newGenerator.
-	self
-		assert: (g stringFrom: 'b''abc''' encoding: '''utf8''')
-		equals: 'str(b''abc'',''utf8'')'
-]
-
-{ #category : #test }
-MicroPythonGeneratorTest >> testStringLength [
-	| g |
-	g := self newGenerator.
-	self assert: (g stringLength: '''abc''') equals: 'len(''abc'')'
-]
-
-{ #category : #test }
-MicroPythonGeneratorTest >> testStringOf [
-	| g |
-	g := self newGenerator.
-	self assert: (g stringOf: '123') equals: 'str(123)'
-]
-
-{ #category : #test }
 MicroPythonGeneratorTest >> testTernaryFunctionArg1Arg2Arg3 [
 	| g |
 	g := self newGenerator.
 	self
 		assert: (g ternaryFunction: 'abc' arg1: [ 10 ] arg2: [ 1 + 2 ] arg3: [ 4 ])
 		equals: 'abc(10,3,4)'
-]
-
-{ #category : #test }
-MicroPythonGeneratorTest >> testTruncated [
-	| g |
-	g := self newGenerator.
-	self assert: (g truncated: 'x') equals: 'math.trunc(x)'
 ]
 
 { #category : #test }

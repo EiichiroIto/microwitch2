@@ -1,57 +1,45 @@
 Class {
-	#name : #StaticChoiceArgDef,
-	#superclass : #MicroPythonBlockDef,
+	#name : #ScratchChoiceArgDef,
+	#superclass : #AbstractBlockSpec,
 	#instVars : [
 		'arg',
 		'options'
 	],
-	#category : #'Microwitch-Modules'
+	#category : #'FromScratch-Project'
 }
 
-{ #category : #api }
-StaticChoiceArgDef >> addTo: argBuilder [
-
-	argBuilder addChoiceArg: arg options: options initialChoice: ''
-]
-
 { #category : #accessing }
-StaticChoiceArgDef >> arg [
+ScratchChoiceArgDef >> arg [
 
 	^ arg
 ]
 
 { #category : #accessing }
-StaticChoiceArgDef >> arg: anObject [
+ScratchChoiceArgDef >> arg: anObject [
 
 	arg := anObject
 ]
 
-{ #category : #accessing }
-StaticChoiceArgDef >> block [
-
-	^ ''
-]
-
 { #category : #testing }
-StaticChoiceArgDef >> isChoiceArg [
+ScratchChoiceArgDef >> isChoiceArg [
 
 	^ true
 ]
 
 { #category : #accessing }
-StaticChoiceArgDef >> options [
+ScratchChoiceArgDef >> options [
 
 	^ options
 ]
 
 { #category : #accessing }
-StaticChoiceArgDef >> options: anObject [
+ScratchChoiceArgDef >> options: anObject [
 
 	options := anObject
 ]
 
 { #category : #printing }
-StaticChoiceArgDef >> printOn: aStream [
+ScratchChoiceArgDef >> printOn: aStream [
 
 	aStream
 		nextPutAll: self class name;

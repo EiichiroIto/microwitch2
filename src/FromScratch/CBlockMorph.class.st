@@ -368,9 +368,16 @@ CBlockMorph >> localVars [
 	^ list collect: [ :each | each varName ]
 ]
 
-{ #category : #'code generation' }
+{ #category : #accessing }
 CBlockMorph >> nestedBlock [
+
 	^ nestedBlock
+]
+
+{ #category : #accessing }
+CBlockMorph >> nestedBlock: aMorph [
+
+	nestedBlock := aMorph
 ]
 
 { #category : #accessing }
@@ -396,6 +403,16 @@ CBlockMorph >> nextBlock: aBlockMorph [
 	nextBlock := aBlockMorph.
 	aBlockMorph ifNotNil: [self addMorph: aBlockMorph].
 
+]
+
+{ #category : #'block enumerating' }
+CBlockMorph >> nextOrInnerBlocks [
+
+	| set |
+	set := Set new.
+	nextBlock ifNotNil: [ set add: nextBlock ].
+	nestedBlock ifNotNil: [ set add: nestedBlock ].
+	^ set asArray
 ]
 
 { #category : #private }

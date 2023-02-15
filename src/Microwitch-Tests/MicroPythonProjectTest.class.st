@@ -53,9 +53,13 @@ MicroPythonProjectTest >> testFileVersionString [
 
 { #category : #test }
 MicroPythonProjectTest >> testModules [
-	| p |
+
+	| p a |
 	p := self newProject.
-	self assert: p modules isEmpty
+	self assert: p modules isEmpty.
+	a := #( a b c ).
+	p modules: a.
+	self assert: p modules identicalTo: a
 ]
 
 { #category : #test }

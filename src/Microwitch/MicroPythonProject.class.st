@@ -2,34 +2,24 @@ Class {
 	#name : #MicroPythonProject,
 	#superclass : #ScratchProject,
 	#instVars : [
-		'blockSpecs',
 		'modules'
 	],
 	#classVars : [
-		'AvailableModules',
-		'IntModules'
+		'LoadedModules'
 	],
 	#category : #'Microwitch-Project'
 }
 
 { #category : #accessing }
 MicroPythonProject class >> availableModuleNames [
-	^ self availableModules keys
+
+	^ LoadedModules keys \ self mainModuleNames
 ]
 
 { #category : #accessing }
-MicroPythonProject class >> availableModules [
-	^ AvailableModules ifNil: [ #() ]
-]
+MicroPythonProject class >> blockSpecsFor: aString [
 
-{ #category : #accessing }
-MicroPythonProject class >> availableModules: aDictionary [
-	AvailableModules := aDictionary
-]
-
-{ #category : #constants }
-MicroPythonProject class >> extModExtension [
-	^ 'mwm'
+	^ LoadedModules at: aString
 ]
 
 { #category : #constants }
@@ -47,28 +37,7 @@ MicroPythonProject class >> initialize [
 
 	"self initialize"
 
-	self loadIntModules.
-	self loadAvailableModules
-]
-
-{ #category : #constants }
-MicroPythonProject class >> intModExtension [
-	^ 'mwi'
-]
-
-{ #category : #accessing }
-MicroPythonProject class >> intModuleAt: aString [
-	^ self intModules at: aString ifAbsent: [ nil ]
-]
-
-{ #category : #accessing }
-MicroPythonProject class >> intModules [
-	^ IntModules ifNil: [ Dictionary new ]
-]
-
-{ #category : #accessing }
-MicroPythonProject class >> intModules: aDictionary [
-	IntModules := aDictionary
+	self loadModules
 ]
 
 { #category : #testing }
@@ -77,31 +46,42 @@ MicroPythonProject class >> isAvailableModule: aString [
 ]
 
 { #category : #private }
-MicroPythonProject class >> loadAvailableModules [
-	| dict |
-	dict := Dictionary new.
-	self loadModuleExtension: self extModExtension into: dict.
-	self availableModules: dict
-]
-
-{ #category : #private }
-MicroPythonProject class >> loadIntModules [
-	"self loadIntModules"
-	| dict |
-	dict := Dictionary new.
-	self loadModuleExtension: self intModExtension into: dict.
-	self intModules: dict
-]
-
-{ #category : #private }
 MicroPythonProject class >> loadModuleExtension: ext into: aDictionary [
-	(self moduleDirectory filesMatching: '*.' , ext)
-		do: [ :each | 
-			each
-				readStreamDo: [ :stream | 
-					aDictionary
-						at: each base
-						put: (ModuleImporter new import: stream contents) setup ] ]
+
+	(self moduleDirectory filesMatching: '*.' , ext) do: [ :each | 
+		each readStreamDo: [ :stream | 
+			| importer |
+			importer := ModuleImporter new
+				            moduleName: each base;
+				            yourself.
+			aDictionary at: each base put: (importer import: stream contents) ] ]
+]
+
+{ #category : #private }
+MicroPythonProject class >> loadModules [
+
+	| dict |
+	dict := Dictionary new.
+	self loadModuleExtension: self moduleExtension into: dict.
+	LoadedModules := dict
+]
+
+{ #category : #accessing }
+MicroPythonProject class >> loadedModules [
+
+	^ LoadedModules
+]
+
+{ #category : #accessing }
+MicroPythonProject class >> loadedModules: aDictionary [
+
+	LoadedModules := aDictionary
+]
+
+{ #category : #constants }
+MicroPythonProject class >> mainModuleNames [
+
+	^ #( microbit )
 ]
 
 { #category : #private }
@@ -114,6 +94,12 @@ MicroPythonProject class >> moduleDirectory [
 ]
 
 { #category : #constants }
+MicroPythonProject class >> moduleExtension [
+
+	^ 'mw*'
+]
+
+{ #category : #constants }
 MicroPythonProject class >> objStreamClass [
 	^ STONObjStream
 ]
@@ -123,10 +109,18 @@ MicroPythonProject class >> stonAllInstVarNames [
 	^ super stonAllInstVarNames , #(modules)
 ]
 
+{ #category : #'block specs' }
+MicroPythonProject >> addBlockSpecsTo: aBlockMorphBuilder [
+
+	self class mainModuleNames , modules do: [ :name | 
+		(self class blockSpecsFor: name) blockSpecs do: [ :each | 
+			aBlockMorphBuilder addBlockSpec: each ] ]
+]
+
 { #category : #accessing }
 MicroPythonProject >> addModule: aSymbol [
 	modules := modules copyWith: aSymbol.
-	self updateBlockDefs
+	self setupBlockSpecs
 ]
 
 { #category : #private }
@@ -141,12 +135,6 @@ MicroPythonProject >> addScriptNamed: aString [
 ]
 
 { #category : #accessing }
-MicroPythonProject >> application: anApplication [
-	super application: anApplication.
-	scripts isEmpty ifTrue: [ self addScriptNamed: 'main' ]
-]
-
-{ #category : #accessing }
 MicroPythonProject >> assureExistsBreed: each [
 	((self scripts collect: #objName) includes: each)
 		ifTrue: [ ^ self ].
@@ -154,55 +142,25 @@ MicroPythonProject >> assureExistsBreed: each [
 ]
 
 { #category : #accessing }
-MicroPythonProject >> assureImportModule: aString [
-	(self class isAvailableModule: aString)
-		ifFalse: [ self error: 'not available module: ' localized, aString ].
-	(self moduleInUse: aString)
-		ifTrue: [ ^ self ].
-	self addModule: aString
-]
+MicroPythonProject >> assureImportModules: aCollection [
 
-{ #category : #'block specs' }
-MicroPythonProject >> blockSpecs [
-	^ blockSpecs
-]
-
-{ #category : #accessing }
-MicroPythonProject >> blockSpecs: anObject [
-
-	blockSpecs := anObject
-]
-
-{ #category : #'block specs' }
-MicroPythonProject >> blocks [
-	^ self blockSpecs blocks, self extBlockTuples
+	| list |
+	list := aCollection \ self class availableModuleNames.
+	list isEmpty ifFalse: [ 
+		self error: 'not available modules: ' localized , list asString ].
+	modules := aCollection copy asArray.
+	self setupBlockSpecs
 ]
 
 { #category : #accessing }
 MicroPythonProject >> deleteModule: aSymbol [
 	modules := modules copyWithout: aSymbol.
-	self updateBlockDefs
+	self setupBlockSpecs
 ]
 
-{ #category : #private }
-MicroPythonProject >> evaluateFor: aTopBlock [
-	^ application evaluateFor: aTopBlock
-]
-
-{ #category : #'block specs' }
-MicroPythonProject >> extBlockTuples [
-
-	| st |
-	st := WriteStream on: Array new.
-	st nextPut: 'modules'.
-	modules
-		do: [ :each | 
-			st nextPutAll: (self class availableModules at: each ifAbsent: [ 
-					 self error:
-						 'The following modules are not installed:' localized , each ])
-					blockTuples ]
-		separatedBy: [ st nextPut: '-' ].
-	^ st contents
+{ #category : #evaluation }
+MicroPythonProject >> evaluateBlock: aTopBlock [
+	^ application evaluateBlock: aTopBlock
 ]
 
 { #category : #'object i/o' }
@@ -232,18 +190,7 @@ MicroPythonProject >> initFieldsFrom: anObjStream version: classVersion [
 MicroPythonProject >> initialize [
 
 	super initialize.
-	modules := Array new.
-	blockSpecs := MicrobitBlockSpecs new
-]
-
-{ #category : #'block specs' }
-MicroPythonProject >> intBlockDefOf: aSymbol [
-	^ blockSpecs intBlockDefOf: aSymbol
-]
-
-{ #category : #'block specs' }
-MicroPythonProject >> isInternalBlock: aSymbol [
-	^ blockSpecs isInternalBlock: aSymbol
+	modules := Array new
 ]
 
 { #category : #accessing }
@@ -273,6 +220,12 @@ MicroPythonProject >> modules [
 ]
 
 { #category : #accessing }
+MicroPythonProject >> modules: anObject [
+
+	modules := anObject
+]
+
+{ #category : #accessing }
 MicroPythonProject >> startHatBlock [
 	self scripts
 		do: [ :each | 
@@ -293,11 +246,10 @@ MicroPythonProject >> storeFieldsOn: anObjStream [
 	super storeFieldsOn: anObjStream
 ]
 
-{ #category : #'file read/write' }
-MicroPythonProject >> storeProjectInfoOn: aBinaryStream [
-	info removeKey: 'thumbnail'.
-	info at: 'proxy' put: application proxyClass.
-	super storeProjectInfoOn: aBinaryStream
+{ #category : #accessing }
+MicroPythonProject >> thumbnailForm: aForm [
+
+	"do nothing"
 ]
 
 { #category : #accessing }
@@ -305,9 +257,4 @@ MicroPythonProject >> toggleModule: aString [
 	(self moduleInUse: aString)
 		ifTrue: [ self deleteModule: aString ]
 		ifFalse: [ self addModule: aString ]
-]
-
-{ #category : #accessing }
-MicroPythonProject >> updateBlockDefs [
-	scripts do: #setupBlockDef
 ]

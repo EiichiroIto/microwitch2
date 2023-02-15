@@ -297,9 +297,9 @@ SpMicrowitchFrame >> scriptForm [
 SpMicrowitchFrame >> selectModules [
 
 	| choices selectedItems result toBeRemoved toBeAdded |
-	choices := application availableModuleNames.
+	choices := application availableModuleNames sorted.
 	selectedItems := application enabledModuleNames asSet.
-	result := SpScratchApp
+	result := self
 		          multiSelect: 'Select Modules' localized
 		          chooseFrom: choices
 		          selectedItems: selectedItems.

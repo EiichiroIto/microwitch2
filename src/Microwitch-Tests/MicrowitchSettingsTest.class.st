@@ -67,3 +67,13 @@ MicrowitchSettingsTest >> testOutputFlowControlType [
 	obj outputFlowControlType: 1.
 	self assert: obj outputFlowControlType equals: 1
 ]
+
+{ #category : #test }
+MicrowitchSettingsTest >> testUnusedPortNames [
+
+	| obj |
+	obj := self newObj.
+	self assert: obj unusedPortNames isEmpty.
+	obj unusedPortNames: 'abc def'.
+	self assert: obj unusedPortNames equals: 'abc def'
+]

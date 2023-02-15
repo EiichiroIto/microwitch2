@@ -33,39 +33,33 @@ Class {
 
 { #category : #utilities }
 CommandBlockMorph class >> argPermutationForSpec: spec withTranslation: translatedSpec [
-	"CommandBlockMorph argPermutationForSpec: '%a of %m of %m of %t' withTranslation: '%a de %m de %m de %t'"
-	"CommandBlockMorph argPermutationForSpec: '%a of %m of %m of %t' withTranslation: '%t de %m2 de %m1 de %a'"
 
-	| parsedSpec parsedTranslatedSpec parsedSpecArgs parsedTranslatedSpecArgs permutation a copiesSize n originalPermutation |
-
-	parsedSpec := CommandBlockMorph parseCommandSpec: spec.
-	parsedSpecArgs := parsedSpec select: [:s | CommandBlockMorph isArgSpec: s].
-	parsedTranslatedSpec := CommandBlockMorph parseCommandSpec: translatedSpec.
-	parsedTranslatedSpecArgs := parsedTranslatedSpec select: [:s | CommandBlockMorph isArgSpec: s].
-
-	permutation := #().
-	1 to: parsedSpecArgs size do: [:i | permutation := permutation copyWith: i].
+	| parsedSpec parsedTranslatedSpec parsedSpecArgs parsedTranslatedSpecArgs permutation copiesSize n originalPermutation |
+	parsedSpec := self parseCommandSpec: spec.
+	parsedSpecArgs := parsedSpec select: [ :s | self isArgSpec: s ].
+	parsedTranslatedSpec := self parseCommandSpec: translatedSpec.
+	parsedTranslatedSpecArgs := parsedTranslatedSpec select: [ :s | 
+		                            self isArgSpec: s ].
+	permutation := #(  ).
+	1 to: parsedSpecArgs size do: [ :i | 
+	permutation := permutation copyWith: i ].
 	originalPermutation := permutation.
-
-	"no change"
-	(parsedSpecArgs = parsedTranslatedSpecArgs) ifTrue: [
-			^ originalPermutation].
-
-	"otherwise, calculate permutation"
-	1 to: parsedSpecArgs size do: [:i |
-		a := parsedSpecArgs at: i.
-		copiesSize := (parsedSpecArgs select: [:s | (s = a)]) size.
-		(copiesSize = 1)
-			ifTrue:[permutation at: i put: (parsedTranslatedSpecArgs indexOf: a
-				ifAbsent: [Transcript show: 'Permutation failed: ', spec.
-						^ originalPermutation])]
-			ifFalse:["count copies until now"
-				n := ((parsedSpecArgs copyFrom: 1 to: i) select: [:s | (s = a)]) size.
-				permutation at: i put: (parsedTranslatedSpecArgs indexOf: (a,n asString)
-					ifAbsent: [Transcript show: 'Permutation failed: ', spec.
-						^ originalPermutation])]].
+	parsedSpecArgs = parsedTranslatedSpecArgs ifTrue: [ 
+		^ originalPermutation ].
+	parsedSpecArgs withIndexDo: [ :a :i | 
+		copiesSize := (parsedSpecArgs select: [ :s | s = a ]) size.
+		copiesSize = 1
+			ifTrue: [ 
+				permutation at: i put: (parsedTranslatedSpecArgs
+						 indexOf: a
+						 ifAbsent: [ self error: 'Permutation failed: ' , spec ]) ]
+			ifFalse: [ 
+				n := ((parsedSpecArgs copyFrom: 1 to: i) select: [ :s | s = a ])
+					     size.
+				permutation at: i put: (parsedTranslatedSpecArgs
+						 indexOf: a , n asString
+						 ifAbsent: [ self error: 'Permutation failed: ' , spec ]) ] ].
 	^ permutation
-
 ]
 
 { #category : #utilities }
@@ -188,7 +182,7 @@ CommandBlockMorph >> argMorphFor: specString [
 	"Answer an argument morph for the given argument specification string. Set it's color appropriately."
 
 	| m |
-	m := self script uncoloredArgMorphFor: specString.
+	m := receiver argMorphFor: specString second.
 	(m isKindOf: ColorArgMorph)
 		ifTrue: [m color: Color random].
 	^ m
@@ -207,7 +201,7 @@ CommandBlockMorph >> argMorphToReplace: aMorph [
 	argM := self argMorphFor: (argSpecs at: i).
 	(#setVar:to: = selector and: [ (argSpecs at: i) = '%n' ])
 		ifTrue: [ ^ argM stringExpression: '0' ].
-	spec := self script blockSpecAt: selector.
+	spec := receiver blockSpecAt: selector.
 	spec ifNil: [ ^ argM ].
 	defaults := receiver defaultArgsFor: spec.
 	i <= defaults size
@@ -288,6 +282,12 @@ CommandBlockMorph >> blockArgs [
 
 ]
 
+{ #category : #'code generation' }
+CommandBlockMorph >> blockSpec [
+
+	^ receiver blockSpecAt: selector
+]
+
 { #category : #evaluation }
 CommandBlockMorph >> coerceArgs [
 	^ self coerceArgs: self args
@@ -299,7 +299,7 @@ CommandBlockMorph >> coerceArgs: argList [
 
 	| args specialCommands |
 	args := argList asArray.
-	(self script specialCommands includes: selector)
+	(receiver specialCommands includes: selector)
 		ifFalse: [ "ensure args are numbers where numbers are expected"
 			args := argList asArray
 				with: self numberArgFlags
@@ -356,24 +356,13 @@ CommandBlockMorph >> evaluate [
 ]
 
 { #category : #evaluation }
-CommandBlockMorph >> evaluateFunctionWithArgs: args [
-	^ receiver evaluateFunction: selector withArgs: args
-]
-
-{ #category : #evaluation }
-CommandBlockMorph >> evaluateInfixWithArgs: rawArgs [
-	^ receiver evaluateInfix: selector withArgs: rawArgs
-]
-
-{ #category : #evaluation }
 CommandBlockMorph >> evaluateWithArgs: rawArgs [
+
 	"Evalue this block with the given argument list."
 
 	| args |
-	^ selector isInfix
-		ifTrue: [ self evaluateInfixWithArgs: rawArgs ]
-		ifFalse: [ args := self coerceArgs: rawArgs.
-			self evaluateFunctionWithArgs: args ]
+	args := self coerceArgs: rawArgs.
+	^ receiver evaluateFunction: selector withArgs: args
 ]
 
 { #category : #private }
@@ -435,10 +424,7 @@ CommandBlockMorph >> initialize [
 	super initialize.
 	commandSpec := ''.
 	argMorphs := OrderedCollection new.
-	receiver := nil.
-	selector := nil.
-	isTimed := false.
-
+	isTimed := false
 ]
 
 { #category : #testing }
@@ -449,8 +435,7 @@ CommandBlockMorph >> isCommandBlock [
 { #category : #testing }
 CommandBlockMorph >> isForever [
 
-	^ (selector = #doForever) | (selector = #doForeverIf)
-
+	^ receiver foreverBlocks includes: selector
 ]
 
 { #category : #testing }
@@ -529,7 +514,7 @@ CommandBlockMorph >> numberArgFlags [
 	argSpecs := self organizeArgs: argSpecs.
 	numberArgFlags := argSpecs
 		collect:
-			[ :spec | (self script uncoloredArgMorphFor: spec) isNumberExpression ].
+			[ :spec | (receiver uncoloredArgMorphFor: spec) isNumberExpression ].
 	^ numberArgFlags
 ]
 
@@ -570,11 +555,6 @@ CommandBlockMorph >> replaceArgMorph: oldMorph by: newMorph [
 ]
 
 { #category : #accessing }
-CommandBlockMorph >> script [
-	^ receiver
-]
-
-{ #category : #accessing }
 CommandBlockMorph >> selector [
 
 	^ selector
@@ -591,7 +571,7 @@ CommandBlockMorph >> selector: aSymbol [
 { #category : #processes }
 CommandBlockMorph >> startProcess [
 	self stopProcess.
-	self receiver ifNil: [ ^ self ].
+	receiver ifNil: [ ^ self ].
 	self applicationDo: [ :app | app startProcessFor: self ].
 	self changed
 ]

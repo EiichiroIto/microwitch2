@@ -14,7 +14,7 @@ Class {
 Microwitch class >> aboutAppString [
 
 	^ self appName , ' ' , self appVersion , '
-Copyright © 2022 Eiichiro Ito (ghc02331@nifty.com)
+Copyright © 2022-2023 Eiichiro Ito (eiichiro.ito@gmail.com)
 All rights reserved.
 
 Based on Scratch from the MIT Media Lab, v' , self basedVersion , '
@@ -26,28 +26,17 @@ All rights reserved.
 { #category : #adding }
 Microwitch class >> addBlockDefsTo: aSet [
 
-	| list project |
+	| project script |
 	MicroPythonProject initialize.
-	project := MicroPythonProject new blockSpecs: MicrobitBlockSpecs new.
-	list := ScratchScript allSubclasses collect: [ :each | each new ].
-	list do: [ :each | each project: project ].
-	ScratchTranslator addBlockDefs: list to: aSet.
+	project := MicroPythonProject new.
+	project modules: MicroPythonProject availableModuleNames.
+	script := MicroPythonScript new.
+	script project: project.
+	script setupBlockSpecs.
 	aSet addAll: MicroPythonProject availableModuleNames.
-	aSet addAll: self allBlockDefs.
+	aSet addAll: script blockMorphBuilder blockCategories.
+	aSet addAll: (script blockMorphBuilder blockSpecs collect: #label).
 	aSet addAll: self allProxyStates
-]
-
-{ #category : #utilities }
-Microwitch class >> allBlockDefs [
-
-	"MicroPythonProject initialize.
-	FileSystem workingDirectory / 'blocks.txt' writeStreamDo: [ :s | 
-		s nextPutAll:
-			(Microwitch allBlockDefs sorted joinUsing: Character cr) ]."
-
-	^ (({ MicrobitBlockSpecs new intModuleDef }
-	    , MicroPythonProject availableModules values collect: #blockDict) 
-		   collect: #values) flattened collect: #block
 ]
 
 { #category : #utilities }
@@ -73,7 +62,24 @@ Microwitch class >> appName [
 
 { #category : #constants }
 Microwitch class >> appVersion [
-	^ '2.0.4'
+
+	^ '2.1.0'
+]
+
+{ #category : #utilities }
+Microwitch class >> exportModuleDefs [
+
+	"self exportModuleDefs"
+
+	| list file |
+	list := MicroPythonProject loadedModules values.
+	list := list flatCollect: #blockSpecs.
+	list := list select: #isBlockSpec.
+	list := list collect: [ :each | each selector -> each label ].
+	list := list asDictionary.
+	file := BlockMorphBuilder compatibleFile withExtension: 'new'.
+	file writeStreamDo: [ :s | 
+		s nextPutAll: (STON toString: list asDictionary) ]
 ]
 
 { #category : #constants }
@@ -190,11 +196,11 @@ Microwitch >> autoConnectIfFail: aBlock [
 Microwitch >> autoSelectPortName [
 
 	| list ret |
-	list := proxy portNames sorted.
+	list := self availablePortNames.
 	list isEmpty ifTrue: [ ^ self ].
 	ret := list first.
 	list size > 1 ifTrue: [ 
-		ret := self
+		ret := presenter
 			       select: 'Select port' localized
 			       chooseFrom: list.
 		ret ifNil: [ ^ self ] ].
@@ -204,6 +210,12 @@ Microwitch >> autoSelectPortName [
 { #category : #accessing }
 Microwitch >> availableModuleNames [
 	^ MicroPythonProject availableModuleNames
+]
+
+{ #category : #proxy }
+Microwitch >> availablePortNames [
+
+	^ (proxy portNames \ (settings unusedPortNames splitOn: $,)) sorted
 ]
 
 { #category : #proxy }
@@ -218,14 +230,6 @@ Microwitch >> break [
 	proxy break.
 	presenter disableConnect.
 	presenter message: 'stopped' localized
-]
-
-{ #category : #private }
-Microwitch >> confirmCode: aString title: aTitleString [
-	^ UIManager default
-		multiLineRequest: aTitleString
-		initialAnswer: aString
-		answerHeight: 450
 ]
 
 { #category : #proxy }
@@ -313,7 +317,9 @@ Microwitch >> downloadFile [
 	code := self downloadFileNamed: file.
 	(code isNil or: [ code isEmpty ]) ifTrue: [ ^ self ].
 	code := MicroPythonParser new parse: code.
-	code := self confirmCode: code title: 'OK to save, or cancel' localized.
+	code := presenter
+		        multiLineRequest: 'OK to save, or cancel' localized
+		        initialAnswer: code.
 	code ifNil: [ ^ self ].
 	self exportString: code extension: self pyExtension isBinary: false
 ]
@@ -351,8 +357,8 @@ Microwitch >> evaluate: aString [
 	^ ret
 ]
 
-{ #category : #processes }
-Microwitch >> evaluateFor: aTopBlock [
+{ #category : #evaluation }
+Microwitch >> evaluateBlock: aTopBlock [
 
 	| code |
 	self stopAllProcesses.
@@ -372,12 +378,12 @@ Microwitch >> execute: aString [
 
 { #category : #'menu actions' }
 Microwitch >> exportMicroPython [
-	self export: MicroPythonExporter new extension: self pyExtension
+	self export: MicroPythonExporter new extension: self pyExtension isBinary: false
 ]
 
 { #category : #'menu actions' }
 Microwitch >> exportSexpCode [
-	self export: (MicroPythonSexpExporter appName: self appName) extension: self class sexpExtension
+	self export: (MicroPythonSexpExporter appName: self appName) extension: self class sexpExtension isBinary: false
 ]
 
 { #category : #proxy }
@@ -397,7 +403,7 @@ Microwitch >> getDirectory [
 
 { #category : #'menu actions' }
 Microwitch >> importSexpCode [
-	self import: (MicroPythonSexpImporter appName: self appName) extension: self class sexpExtension
+	self import: (MicroPythonSexpImporter appName: self appName) extension: self class sexpExtension isBinary: false
 ]
 
 { #category : #initialization }
@@ -413,7 +419,7 @@ Microwitch >> input [
 
 	| ret |
 	self autoConnectIfFail: [ :msg | ^ presenter message: msg ].
-	ret := self
+	ret := presenter
 		       multiLineRequest: 'Enter expression' localized
 		       initialAnswer: lastInput.
 	ret ifNil: [ ^ self ].
@@ -429,12 +435,13 @@ Microwitch >> installNewProject: aProject [
 	self stopAllProcesses.
 	project := aProject.
 	project application: self.
+	project assureExistsBreed: 'main'.
 	proxy2 := self createProxy.
 	comm := self createComm.
 	comm baudRate: proxy2 defaultBaudRate.
 	proxy2 comm: comm.
 	self proxy: proxy2.
-	project updateBlockDefs.
+	project setupBlockSpecs.
 	"project fixVars.
 	project updateLabels."
 	self setupView.
@@ -502,8 +509,8 @@ Microwitch >> normalizeVariableName: aString [
 
 { #category : #private }
 Microwitch >> prepareForOpening [
-	MicroPythonProject loadIntModules.
-	MicroPythonProject loadAvailableModules
+
+	MicroPythonProject loadModules
 ]
 
 { #category : #accessing }
@@ -560,7 +567,8 @@ Microwitch >> restartAfterUpload [
 
 { #category : #private }
 Microwitch >> restoreProject [
-	"do nothing"
+
+	presenter updateViewer
 ]
 
 { #category : #micropython }
@@ -569,14 +577,14 @@ Microwitch >> selectRemoteFile [
 	| choices |
 	choices := self getDirectory.
 	(choices isNil or: [ choices isEmpty ]) ifTrue: [ ^ nil ].
-	^ self select: 'Select file' localized chooseFrom: choices
+	^ presenter select: 'Select file' localized chooseFrom: choices
 ]
 
 { #category : #private }
 Microwitch >> showCode: aString title: aTitleString [
 
 	self closeMediaEditorsAndDialogs.
-	UIManager default longMessage: aString title: aTitleString
+	presenter longMessage: aString title: aTitleString
 ]
 
 { #category : #'menu actions' }
@@ -631,7 +639,7 @@ Microwitch >> startProgram [
 
 	project scripts do: [ :each | 
 		each eventBlocks size = 1 ifFalse: [ 
-			self alert: 'Start script only needs one' localized.
+			presenter alert: 'Start script only needs one' localized.
 			^ self ] ].
 	self autoConnect ifFalse: [ ^ self ].
 	self uploadModuleFiles.
@@ -709,19 +717,21 @@ Microwitch >> uploadFirmware [
 	| dir file firmware |
 	MicrobitFirmware default readFirmwares.
 	dir := MicrobitFirmware default firmwarePathIfFail: [ :msg | 
-		       ^ self alert: msg ].
+		       ^ presenter alert: msg ].
 	dir ifNil: [ 
-		dir := UIManager default chooseDirectory:
+		dir := presenter chooseDirectory:
 			       'select micro:bit device' localized ].
 	dir ifNil: [ ^ self ].
 	file := dir / 'DETAILS.TXT'.
 	file isFile ifFalse: [ 
-		^ self alert: 'details.txt is not found' localized ].
+		^ presenter alert: 'details.txt is not found' localized ].
 	firmware := MicrobitFirmware default firmwareFor: file.
 	firmware ifNil: [ 
-		^ self alert: 'unable to find the appropriate firmware' localized ].
-	(self confirm: 'initialize micro:bit?' localized) ifFalse: [ ^ self ].
-	(dir / 'firmware.hex') writeStreamDo: [ :stream | 
+		^ presenter alert:
+			  'unable to find the appropriate firmware' localized ].
+	(presenter confirm: 'initialize micro:bit?' localized) ifFalse: [ 
+		^ self ].
+	dir / 'firmware.hex' writeStreamDo: [ :stream | 
 		stream nextPutAll: firmware ]
 ]
 

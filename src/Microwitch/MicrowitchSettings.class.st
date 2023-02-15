@@ -43,6 +43,7 @@ MicrowitchSettings >> optionsFor: aSymbol [
 	aSymbol = #inputFlowControlType ifTrue: [ ^ #( 0 1 2 ) ].
 	aSymbol = #outputFlowControlType ifTrue: [ ^ #( 0 1 2 ) ].
 	aSymbol = #defaultModules ifTrue: [ ^ #string ].
+	aSymbol = #unusedPortNames ifTrue: [ ^ #string ].
 	^ super optionsFor: aSymbol
 ]
 
@@ -56,4 +57,16 @@ MicrowitchSettings >> outputFlowControlType [
 MicrowitchSettings >> outputFlowControlType: aNumber [
 
 	dictionary at: #outputFlowControlType put: aNumber
+]
+
+{ #category : #settings }
+MicrowitchSettings >> unusedPortNames [
+
+	^ dictionary at: #unusedPortNames ifAbsentPut: [ '' ]
+]
+
+{ #category : #settings }
+MicrowitchSettings >> unusedPortNames: aString [
+
+	dictionary at: #unusedPortNames put: aString
 ]

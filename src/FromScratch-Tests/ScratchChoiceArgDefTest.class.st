@@ -1,20 +1,26 @@
 "
-A StaticChoiceArgDefTest is a test class for testing the behavior of StaticChoiceArgDef
+A ScratchChoiceArgDefTest is a test class for testing the behavior of ScratchChoiceArgDef
 "
 Class {
-	#name : #StaticChoiceArgDefTest,
+	#name : #ScratchChoiceArgDefTest,
 	#superclass : #TestCase,
-	#category : #'Microwitch-Tests'
+	#category : #'FromScratch-Tests'
 }
 
 { #category : #private }
-StaticChoiceArgDefTest >> newObj [
+ScratchChoiceArgDefTest >> newArgMorphBuilder [
 
-	^ StaticChoiceArgDef new
+	^ ArgMorphBuilder new
+]
+
+{ #category : #private }
+ScratchChoiceArgDefTest >> newObj [
+
+	^ ScratchChoiceArgDef new
 ]
 
 { #category : #test }
-StaticChoiceArgDefTest >> testArg [
+ScratchChoiceArgDefTest >> testArg [
 
 	| obj |
 	obj := self newObj.
@@ -26,13 +32,13 @@ StaticChoiceArgDefTest >> testArg [
 ]
 
 { #category : #test }
-StaticChoiceArgDefTest >> testIsChoiceArg [
+ScratchChoiceArgDefTest >> testIsChoiceArg [
 
 	self assert: self newObj isChoiceArg
 ]
 
 { #category : #test }
-StaticChoiceArgDefTest >> testOptions [
+ScratchChoiceArgDefTest >> testOptions [
 
 	| obj a |
 	obj := self newObj.
@@ -43,19 +49,19 @@ StaticChoiceArgDefTest >> testOptions [
 ]
 
 { #category : #test }
-StaticChoiceArgDefTest >> testPrintOn [
+ScratchChoiceArgDefTest >> testPrintOn [
 
 	| obj s |
 	obj := self newObj.
 	s := WriteStream on: String new.
 	obj printOn: s.
-	self assert: s contents equals: 'StaticChoiceArgDef()'.
+	self assert: s contents equals: 'ScratchChoiceArgDef()'.
 	obj arg: $a.
 	s := WriteStream on: String new.
 	obj printOn: s.
-	self assert: s contents equals: 'StaticChoiceArgDef(%a)'.
+	self assert: s contents equals: 'ScratchChoiceArgDef(%a)'.
 	obj options: #( a b c ).
 	s := WriteStream on: String new.
 	obj printOn: s.
-	self assert: s contents equals: 'StaticChoiceArgDef(%a,3)'
+	self assert: s contents equals: 'ScratchChoiceArgDef(%a,3)'
 ]
