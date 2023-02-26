@@ -1,6 +1,6 @@
 Class {
-	#name : #SpMicrowitchFrame,
-	#superclass : #SpScratchFrame,
+	#name : #SpMicrowitchPresenter,
+	#superclass : #SpScratchPresenter,
 	#instVars : [
 		'buttonSave',
 		'buttonOpen',
@@ -14,7 +14,7 @@ Class {
 }
 
 { #category : #specs }
-SpMicrowitchFrame class >> defaultLayout [
+SpMicrowitchPresenter class >> defaultLayout [
 
 	^ SpBoxLayout newVertical
 		  add: (SpBoxLayout newHorizontal
@@ -56,29 +56,29 @@ SpMicrowitchFrame class >> defaultLayout [
 ]
 
 { #category : #private }
-SpMicrowitchFrame class >> libraryPaneHeight [
+SpMicrowitchPresenter class >> libraryPaneHeight [
 	^ self buttonHeight + 10
 ]
 
 { #category : #private }
-SpMicrowitchFrame class >> viewerPaneWidth [
+SpMicrowitchPresenter class >> viewerPaneWidth [
 	^ 250
 ]
 
 { #category : #accessing }
-SpMicrowitchFrame >> addPlots: aCollection [
+SpMicrowitchPresenter >> addPlots: aCollection [
 
 	stageFrame addPlots: aCollection
 ]
 
 { #category : #api }
-SpMicrowitchFrame >> addText: aString [
+SpMicrowitchPresenter >> addText: aString [
 
 	stageFrame addText: aString
 ]
 
 { #category : #'menu building' }
-SpMicrowitchFrame >> blockMenuFor: aBlockMorph inScriptEditor: aBoolean [
+SpMicrowitchPresenter >> blockMenuFor: aBlockMorph inScriptEditor: aBoolean [
 	| m |
 	m := self newMenu.
 	m
@@ -98,7 +98,7 @@ SpMicrowitchFrame >> blockMenuFor: aBlockMorph inScriptEditor: aBoolean [
 ]
 
 { #category : #initialization }
-SpMicrowitchFrame >> connectPresenters [
+SpMicrowitchPresenter >> connectPresenters [
 	buttonOpen action: [ application openProject ].
 	buttonSave action: [ application saveProject ].
 	buttonConnect action: [ application connect ].
@@ -110,24 +110,24 @@ SpMicrowitchFrame >> connectPresenters [
 ]
 
 { #category : #private }
-SpMicrowitchFrame >> defaultExtent [
+SpMicrowitchPresenter >> defaultExtent [
 	^ 1024 @ 768
 ]
 
 { #category : #private }
-SpMicrowitchFrame >> disableConnect [
+SpMicrowitchPresenter >> disableConnect [
 	buttonConnect disable.
 	buttonDisconnect enable
 ]
 
 { #category : #private }
-SpMicrowitchFrame >> enableConnect [
+SpMicrowitchPresenter >> enableConnect [
 	buttonConnect enable.
 	buttonDisconnect disable
 ]
 
 { #category : #'menu building' }
-SpMicrowitchFrame >> exportMenu [
+SpMicrowitchPresenter >> exportMenu [
 	^ self newMenu
 		addItem: [ :item | 
 			item
@@ -145,7 +145,7 @@ SpMicrowitchFrame >> exportMenu [
 ]
 
 { #category : #'menu building' }
-SpMicrowitchFrame >> fileMenu [
+SpMicrowitchPresenter >> fileMenu [
 
 	| m |
 	m := self newMenu.
@@ -217,7 +217,7 @@ SpMicrowitchFrame >> fileMenu [
 ]
 
 { #category : #'menu building' }
-SpMicrowitchFrame >> importMenu [
+SpMicrowitchPresenter >> importMenu [
 	^ self newMenu
 		addItem: [ :item | 
 			item
@@ -227,7 +227,7 @@ SpMicrowitchFrame >> importMenu [
 ]
 
 { #category : #initialization }
-SpMicrowitchFrame >> initializePresenters [
+SpMicrowitchPresenter >> initializePresenters [
 
 	super initializePresenters.
 	buttonOpen := self newButton
@@ -271,33 +271,33 @@ SpMicrowitchFrame >> initializePresenters [
 ]
 
 { #category : #api }
-SpMicrowitchFrame >> message: aString [
+SpMicrowitchPresenter >> message: aString [
 
 	stageFrame message: aString
 ]
 
 { #category : #initialization }
-SpMicrowitchFrame >> newStage [
+SpMicrowitchPresenter >> newStage [
 
 	^ self instantiate: SpMicrowitchStage
 ]
 
 { #category : #accessing }
-SpMicrowitchFrame >> plotter [
+SpMicrowitchPresenter >> plotter [
 	^ stageFrame plotter
 ]
 
 { #category : #accessing }
-SpMicrowitchFrame >> scriptForm [
+SpMicrowitchPresenter >> scriptForm [
 
 	^ editorPane morph contents screenshot
 ]
 
 { #category : #'menu actions' }
-SpMicrowitchFrame >> selectModules [
+SpMicrowitchPresenter >> selectModules [
 
 	| choices selectedItems result toBeRemoved toBeAdded |
-	choices := application availableModuleNames sorted.
+	choices := Microwitch availableModuleNames sorted.
 	selectedItems := application enabledModuleNames asSet.
 	result := self
 		          multiSelect: 'Select Modules' localized
@@ -311,7 +311,7 @@ SpMicrowitchFrame >> selectModules [
 ]
 
 { #category : #'menu building' }
-SpMicrowitchFrame >> setupMenu [
+SpMicrowitchPresenter >> setupMenu [
 	menu
 		addItem: [ :item | 
 			item
@@ -328,18 +328,18 @@ SpMicrowitchFrame >> setupMenu [
 ]
 
 { #category : #private }
-SpMicrowitchFrame >> stageShotExtent: size [
+SpMicrowitchPresenter >> stageShotExtent: size [
 	^ nil
 ]
 
 { #category : #api }
-SpMicrowitchFrame >> status: aString [
+SpMicrowitchPresenter >> status: aString [
 
 	stageFrame status: aString
 ]
 
 { #category : #accessing }
-SpMicrowitchFrame >> target: aScript [
+SpMicrowitchPresenter >> target: aScript [
 
 	viewerPane target: aScript.
 	editorPane morph contents: aScript blocksBin.
@@ -347,7 +347,7 @@ SpMicrowitchFrame >> target: aScript [
 ]
 
 { #category : #'menu building' }
-SpMicrowitchFrame >> toolsMenu [
+SpMicrowitchPresenter >> toolsMenu [
 
 	^ self newMenu
 		  addGroup: [ :grp | 
@@ -393,16 +393,16 @@ SpMicrowitchFrame >> toolsMenu [
 ]
 
 { #category : #accessing }
-SpMicrowitchFrame >> updateDisplay [
+SpMicrowitchPresenter >> updateDisplay [
 	"do nothing"
 ]
 
 { #category : #accessing }
-SpMicrowitchFrame >> updateViewer [
+SpMicrowitchPresenter >> updateViewer [
 	viewerPane target: viewerPane target
 ]
 
 { #category : #accessing }
-SpMicrowitchFrame >> whenStepsDo: aBlock [
+SpMicrowitchPresenter >> whenStepsDo: aBlock [
 	stageFrame whenStepsDo: aBlock
 ]

@@ -5,7 +5,7 @@ Class {
 		'buttons',
 		'whenValueChangedDo'
 	],
-	#category : #'Microwitch-Microbit'
+	#category : #'MicroPythonBlocks-Microbit'
 }
 
 { #category : #private }

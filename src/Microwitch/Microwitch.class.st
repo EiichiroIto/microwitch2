@@ -7,6 +7,10 @@ Class {
 		'showOutput',
 		'lastInput'
 	],
+	#classVars : [
+		'Firmware',
+		'LoadedModules'
+	],
 	#category : #'Microwitch-Spec2'
 }
 
@@ -27,13 +31,13 @@ All rights reserved.
 Microwitch class >> addBlockDefsTo: aSet [
 
 	| project script |
-	MicroPythonProject initialize.
-	project := MicroPythonProject new.
-	project modules: MicroPythonProject availableModuleNames.
+	self loadModules.
+	project := MicroPythonModule new.
+	project modules: self availableModuleNames.
 	script := MicroPythonScript new.
 	script project: project.
 	script setupBlockSpecs.
-	aSet addAll: MicroPythonProject availableModuleNames.
+	aSet addAll: self availableModuleNames.
 	aSet addAll: script blockMorphBuilder blockCategories.
 	aSet addAll: (script blockMorphBuilder blockSpecs collect: #label).
 	aSet addAll: self allProxyStates
@@ -66,13 +70,25 @@ Microwitch class >> appVersion [
 	^ '2.1.0'
 ]
 
+{ #category : #accessing }
+Microwitch class >> availableModuleNames [
+
+	^ LoadedModules keys \ self mainModuleNames
+]
+
+{ #category : #accessing }
+Microwitch class >> blockSpecsFor: aString [
+
+	^ LoadedModules at: aString
+]
+
 { #category : #utilities }
 Microwitch class >> exportModuleDefs [
 
 	"self exportModuleDefs"
 
 	| list file |
-	list := MicroPythonProject loadedModules values.
+	list := LoadedModules values.
 	list := list flatCollect: #blockSpecs.
 	list := list select: #isBlockSpec.
 	list := list collect: [ :each | each selector -> each label ].
@@ -85,6 +101,12 @@ Microwitch class >> exportModuleDefs [
 { #category : #constants }
 Microwitch class >> extension [
 	^ 'mw2'
+]
+
+{ #category : #accessing }
+Microwitch class >> firmware [
+
+	^ Firmware
 ]
 
 { #category : #accessing }
@@ -130,11 +152,51 @@ Microwitch class >> initialize [
 
 	"self initialize"
 
+	self loadModules.
+	Firmware := MicrobitFirmware new.
 	ScratchTheme
 		themesURL: self themesURL;
 		setupThemeNamed: self appFolderName.
 	"workaround for travis test errors"
 	ObjStream setupVariables
+]
+
+{ #category : #testing }
+Microwitch class >> isAvailableModule: aString [
+	^ self availableModuleNames includes: aString
+]
+
+{ #category : #private }
+Microwitch class >> loadModuleExtension: ext into: aDictionary [
+
+	(self moduleDirectory filesMatching: '*.' , ext) do: [ :each | 
+		each readStreamDo: [ :stream | 
+			| importer |
+			importer := self newModuleImporter
+				            moduleName: each base;
+				            yourself.
+			aDictionary at: each base put: (importer import: stream contents) ] ]
+]
+
+{ #category : #utilities }
+Microwitch class >> loadModules [
+
+	| dict |
+	dict := Dictionary new.
+	self loadModuleExtension: self moduleExtension into: dict.
+	LoadedModules := dict
+]
+
+{ #category : #accessing }
+Microwitch class >> loadedModules: aDictionary [
+
+	LoadedModules := aDictionary
+]
+
+{ #category : #constants }
+Microwitch class >> mainModuleNames [
+
+	^ #( microbit )
 ]
 
 { #category : #'world menu' }
@@ -148,9 +210,32 @@ Microwitch class >> menuCommandOn: aBuilder [
 		icon: self icon
 ]
 
+{ #category : #private }
+Microwitch class >> moduleDirectory [
+	| dir |
+	dir := FileSystem workingDirectory / 'Modules'.
+	dir isDirectory
+		ifFalse: [ dir createDirectory ].
+	^ dir
+]
+
+{ #category : #constants }
+Microwitch class >> moduleExtension [
+
+	^ 'mw*'
+]
+
+{ #category : #private }
+Microwitch class >> newModuleImporter [
+
+	^ ModuleImporter new
+		  appName: self appName;
+		  yourself
+]
+
 { #category : #constants }
 Microwitch class >> presentationClass [
-	^ SpMicrowitchFrame
+	^ SpMicrowitchPresenter
 ]
 
 { #category : #constants }
@@ -207,15 +292,16 @@ Microwitch >> autoSelectPortName [
 	proxy portName: ret
 ]
 
-{ #category : #accessing }
-Microwitch >> availableModuleNames [
-	^ MicroPythonProject availableModuleNames
-]
-
 { #category : #proxy }
 Microwitch >> availablePortNames [
 
 	^ (proxy portNames \ (settings unusedPortNames splitOn: $,)) sorted
+]
+
+{ #category : #private }
+Microwitch >> backupProject [
+
+	self shouldNotImplement
 ]
 
 { #category : #proxy }
@@ -230,6 +316,15 @@ Microwitch >> break [
 	proxy break.
 	presenter disableConnect.
 	presenter message: 'stopped' localized
+]
+
+{ #category : #private }
+Microwitch >> checkScriptIfFail: aBlock [
+
+	project scripts do: [ :each | 
+		each startHatBlocks size = 1 ifFalse: [ 
+			presenter alert: 'Start script only needs one' localized.
+			^ aBlock value ] ]
 ]
 
 { #category : #proxy }
@@ -268,7 +363,7 @@ Microwitch >> createProject [
 	| proj modules |
 	proj := super createProject.
 	modules := settings defaultModules splitOn: Character space.
-	modules := modules intersection: self availableModuleNames.
+	modules := modules intersection: self class availableModuleNames.
 	modules do: [ :each | proj addModule: each ].
 	^ proj
 ]
@@ -378,7 +473,10 @@ Microwitch >> execute: aString [
 
 { #category : #'menu actions' }
 Microwitch >> exportMicroPython [
-	self export: MicroPythonExporter new extension: self pyExtension isBinary: false
+
+	| str |
+	str := self newCode parseHats: self target hatBlocks.
+	self exportString: str extension: self pyExtension isBinary: false
 ]
 
 { #category : #'menu actions' }
@@ -431,16 +529,11 @@ Microwitch >> input [
 { #category : #private }
 Microwitch >> installNewProject: aProject [
 
-	| proxy2 comm |
 	self stopAllProcesses.
 	project := aProject.
 	project application: self.
 	project assureExistsBreed: 'main'.
-	proxy2 := self createProxy.
-	comm := self createComm.
-	comm baudRate: proxy2 defaultBaudRate.
-	proxy2 comm: comm.
-	self proxy: proxy2.
+	self setupProxy.
 	project setupBlockSpecs.
 	"project fixVars.
 	project updateLabels."
@@ -482,9 +575,10 @@ Microwitch >> modulesNeedToUpload [
 
 { #category : #private }
 Microwitch >> newCode [
-	^ MicroPythonCode new
-		generator: MicrobitGenerator new;
-		yourself
+
+	^ MicrobitGenerator new
+		  parser: ScratchBlockParser new;
+		  yourself
 ]
 
 { #category : #private }
@@ -508,9 +602,17 @@ Microwitch >> normalizeVariableName: aString [
 ]
 
 { #category : #private }
+Microwitch >> partialCodeFor: aBlockMorph [
+
+	^ self newCode
+		  withHeader: true;
+		  parseBlock: aBlockMorph
+]
+
+{ #category : #private }
 Microwitch >> prepareForOpening [
 
-	MicroPythonProject loadModules
+	self class loadModules
 ]
 
 { #category : #accessing }
@@ -529,14 +631,7 @@ Microwitch >> proxy [
 { #category : #accessing }
 Microwitch >> proxy: aProxy [
 
-	| comm |
-	comm := nil.
-	proxy ifNotNil: [ 
-		proxy close.
-		comm := proxy comm ].
-	proxy := aProxy.
-	comm ifNotNil: [ proxy comm: comm ].
-	presenter updateViewer
+	proxy := aProxy
 ]
 
 { #category : #accessing }
@@ -580,6 +675,18 @@ Microwitch >> selectRemoteFile [
 	^ presenter select: 'Select file' localized chooseFrom: choices
 ]
 
+{ #category : #proxy }
+Microwitch >> setupProxy [
+
+	| comm |
+	proxy ifNotNil: [ proxy close ].
+	proxy := self createProxy.
+	comm := self createComm.
+	comm baudRate: proxy defaultBaudRate.
+	proxy comm: comm.
+	presenter updateViewer
+]
+
 { #category : #private }
 Microwitch >> showCode: aString title: aTitleString [
 
@@ -589,8 +696,9 @@ Microwitch >> showCode: aString title: aTitleString [
 
 { #category : #'menu actions' }
 Microwitch >> showCodeOf: aBlockMorph [
+
 	| code |
-	code := self newCode parse: aBlockMorph withHeader: true.
+	code := self partialCodeFor: aBlockMorph.
 	self showCode: code title: 'show code' localized
 ]
 
@@ -598,7 +706,8 @@ Microwitch >> showCodeOf: aBlockMorph [
 Microwitch >> showMicroPythonCode [
 
 	| str lines |
-	str := MicroPythonExporter new exportFrom: self isBinary: false.
+	self checkScriptIfFail: [ ^ self ].
+	str := self newCode parseScript: self target.
 	lines := self proxy linesWithoutComments: str.
 	lines := self proxy lines: lines withDelimiterEvery: 10.
 	str := lines joinUsing: Character cr.
@@ -623,10 +732,10 @@ Microwitch >> startProcessFor: aTopBlock [
 
 	| code |
 	self stopAllProcesses.
-	code := self newCode parse: aTopBlock withHeader: true.
+	code := self partialCodeFor: aTopBlock.
 	code isEmpty ifTrue: [ ^ nil ].
 	process := self createProcess
-		           proxy: self proxy;
+		           proxy: proxy;
 		           topBlock: aTopBlock;
 		           yourself.
 	aTopBlock scratchProc: process.
@@ -637,10 +746,7 @@ Microwitch >> startProcessFor: aTopBlock [
 { #category : #'menu actions' }
 Microwitch >> startProgram [
 
-	project scripts do: [ :each | 
-		each eventBlocks size = 1 ifFalse: [ 
-			presenter alert: 'Start script only needs one' localized.
-			^ self ] ].
+	self checkScriptIfFail: [ ^ self ].
 	self autoConnect ifFalse: [ ^ self ].
 	self uploadModuleFiles.
 	self uploadProgram.
@@ -703,7 +809,7 @@ Microwitch >> uploadFile [
 		        importFileWithExtension: self pyExtension
 		        isBinary: false.
 	pair ifNil: [ ^ self ].
-	filename := self
+	filename := presenter
 		            request: 'Upload file name?' localized
 		            initialAnswer: pair second basename.
 	(filename isNil or: [ filename isEmpty ]) ifTrue: [ ^ self ].
@@ -715,8 +821,8 @@ Microwitch >> uploadFile [
 Microwitch >> uploadFirmware [
 
 	| dir file firmware |
-	MicrobitFirmware default readFirmwares.
-	dir := MicrobitFirmware default firmwarePathIfFail: [ :msg | 
+	Firmware readFirmwares.
+	dir := Firmware firmwarePathIfFail: [ :msg | 
 		       ^ presenter alert: msg ].
 	dir ifNil: [ 
 		dir := presenter chooseDirectory:
@@ -725,7 +831,7 @@ Microwitch >> uploadFirmware [
 	file := dir / 'DETAILS.TXT'.
 	file isFile ifFalse: [ 
 		^ presenter alert: 'details.txt is not found' localized ].
-	firmware := MicrobitFirmware default firmwareFor: file.
+	firmware := Firmware firmwareFor: file.
 	firmware ifNil: [ 
 		^ presenter alert:
 			  'unable to find the appropriate firmware' localized ].
@@ -750,7 +856,7 @@ Microwitch >> uploadProgram [
 
 	project scripts do: [ :each | 
 		| code |
-		code := self newCode parseHats: each hatBlocks.
+		code := self newCode parseScript: each.
 		code isEmpty ifFalse: [ 
 			self
 				upload: code

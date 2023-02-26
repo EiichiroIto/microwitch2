@@ -7,7 +7,7 @@ Class {
 		'var',
 		'moduleName'
 	],
-	#category : #'Microwitch-Project'
+	#category : #'MicroPythonBlocks-Module'
 }
 
 { #category : #private }

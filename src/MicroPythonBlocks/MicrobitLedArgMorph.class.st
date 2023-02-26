@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'image'
 	],
-	#category : #'Microwitch-Microbit'
+	#category : #'MicroPythonBlocks-Microbit'
 }
 
 { #category : #accessing }

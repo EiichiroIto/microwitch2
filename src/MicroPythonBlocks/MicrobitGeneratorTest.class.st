@@ -4,7 +4,7 @@ A MicrobitGeneratorTest is a test class for testing the behavior of MicrobitGene
 Class {
 	#name : #MicrobitGeneratorTest,
 	#superclass : #TestCase,
-	#category : #'Microwitch-Tests'
+	#category : #'MicroPythonBlocks-Tests'
 }
 
 { #category : #private }

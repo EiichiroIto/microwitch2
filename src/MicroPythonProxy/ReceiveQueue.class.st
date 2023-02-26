@@ -3,10 +3,7 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'queue',
-		'lastMSec',
-		'pending',
-		'timeout',
-		'delimiters'
+		'pending'
 	],
 	#category : #'MicroPythonProxy-Comm'
 }

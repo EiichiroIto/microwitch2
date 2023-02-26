@@ -18,16 +18,15 @@ Class {
 
 { #category : #private }
 CBlockMorph >> addCommandIcons [
+
 	"Add additional icons to certain blocks. Do nothing if this isn't one of those blocks."
 
 	| f |
 	super addCommandIcons.
-
-	(#(doForever doForeverIf doRepeat doUntil) includes: selector) ifTrue: [
+	(receiver loopBlockSelectors includes: selector) ifTrue: [ 
 		f := ScratchTheme formAt: #loopIcon.
 		loopMorph := ImageMorph new form: f.
-		self addMorphBack: loopMorph].
-
+		self addMorphBack: loopMorph ]
 ]
 
 { #category : #private }
@@ -189,14 +188,13 @@ CBlockMorph >> drawInnerTopY: y on: aCanvas [
 ]
 
 { #category : #drawing }
-CBlockMorph >> drawOn: aCanvas [ 
+CBlockMorph >> drawOn: aCanvas [
 
 	| c |
 	topBarBottom := self top + self topBarHeight.
-	self isForever
-		ifTrue: [blockBottom := self bottom - 3]
-		ifFalse: [blockBottom := self bottom - 7].
-
+	blockBottom := self bottom - (self isForever
+		                ifTrue: [ 3 ]
+		                ifFalse: [ 7 ]).
 	self computeHighlightColors.
 	c := FormCanvas extent: self extent depth: 32.
 	c := c copyOffset: self topLeft negated.
@@ -204,9 +202,7 @@ CBlockMorph >> drawOn: aCanvas [
 	self drawTopBarOn: c.
 	self drawVerticalBarOn: c.
 	self drawBottomBarOn: c.
-
-	self drawFinalOn: aCanvas fromCanvas: c.
-
+	self drawFinalOn: aCanvas fromCanvas: c
 ]
 
 { #category : #drawing }

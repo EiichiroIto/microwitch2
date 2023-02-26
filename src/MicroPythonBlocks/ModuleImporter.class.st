@@ -2,10 +2,23 @@ Class {
 	#name : #ModuleImporter,
 	#superclass : #Object,
 	#instVars : [
-		'moduleName'
+		'moduleName',
+		'appName'
 	],
-	#category : #'Microwitch-Converter'
+	#category : #'MicroPythonBlocks-Converter'
 }
+
+{ #category : #accessing }
+ModuleImporter >> appName [
+
+	^ appName
+]
+
+{ #category : #accessing }
+ModuleImporter >> appName: anObject [
+
+	appName := anObject
+]
 
 { #category : #importing }
 ModuleImporter >> category: aString [
@@ -28,7 +41,7 @@ ModuleImporter >> choiceArg: aString options: aCollection [
 ModuleImporter >> commandBlock: aString args: aCollection code: aString3 imports: aCollection4 selector: aString5 [
 
 	^ self newBlockSpec
-		  type: #-;
+		  type: #isCommandBlock;
 		  label: aString;
 		  arguments: aCollection;
 		  code: aString3;
@@ -41,7 +54,7 @@ ModuleImporter >> commandBlock: aString args: aCollection code: aString3 imports
 ModuleImporter >> commandBlock: aString args: aCollection code: aString3 selector: aString4 [
 
 	^ self newBlockSpec
-		  type: #-;
+		  type: #isCommandBlock;
 		  label: aString;
 		  arguments: aCollection;
 		  code: aString3;
@@ -53,7 +66,7 @@ ModuleImporter >> commandBlock: aString args: aCollection code: aString3 selecto
 ModuleImporter >> commandBlock: aString args: aCollection code: aString3 var: aString4 imports: aCollection5 selector: aString6 [
 
 	^ self newBlockSpec
-		  type: #-;
+		  type: #isCommandBlock;
 		  label: aString;
 		  arguments: aCollection;
 		  code: aString3;
@@ -81,11 +94,11 @@ ModuleImporter >> importBlockDef: anArray [
 
 { #category : #private }
 ModuleImporter >> importFrom: anArray [
-	anArray first = Microwitch appName
-		ifFalse: [ self error: 'invalid appName' ].
+
+	anArray first = appName ifFalse: [ self error: 'invalid appName' ].
 	^ self
-		perform: anArray second first asSymbol
-		withArguments: anArray second allButFirst
+		  perform: anArray second first asSymbol
+		  withArguments: anArray second allButFirst
 ]
 
 { #category : #accessing }
@@ -122,7 +135,7 @@ ModuleImporter >> newBlockSpec [
 ModuleImporter >> reporterBlock: aString args: aCollection return: aString3 code: aString4 imports: aCollection5 selector: aString6 [
 
 	^ self newBlockSpec
-		  type: aString3 asSymbol;
+		  type: (self typeOf: aString3);
 		  label: aString;
 		  arguments: aCollection;
 		  code: aString4;
@@ -135,7 +148,7 @@ ModuleImporter >> reporterBlock: aString args: aCollection return: aString3 code
 ModuleImporter >> reporterBlock: aString args: aCollection return: aString3 code: aString4 selector: aString5 [
 
 	^ self newBlockSpec
-		  type: aString3 asSymbol;
+		  type: (self typeOf: aString3);
 		  label: aString;
 		  arguments: aCollection;
 		  code: aString4;
@@ -152,7 +165,7 @@ ModuleImporter >> separator [
 ModuleImporter >> specialCommandBlock: aString args: aCollection code: aString3 imports: aCollection4 selector: aString5 [
 
 	^ self newBlockSpec
-		  type: #s;
+		  type: #isSpecialForm;
 		  label: aString;
 		  arguments: aCollection;
 		  code: aString3;
@@ -165,11 +178,22 @@ ModuleImporter >> specialCommandBlock: aString args: aCollection code: aString3 
 ModuleImporter >> timedCommandBlock: aString args: aCollection code: aString3 imports: aCollection4 selector: aString5 [
 
 	^ self newBlockSpec
-		  type: #t;
+		  type: #isTimedBlock;
 		  label: aString;
 		  arguments: aCollection;
 		  code: aString3;
 		  imports: aCollection4;
 		  selector: aString5 asSymbol;
 		  yourself
+]
+
+{ #category : #private }
+ModuleImporter >> typeOf: aString [
+
+	aString = '-' ifTrue: [ ^ #isCommandBlock ].
+	aString = 'r' ifTrue: [ ^ #isReporterBlock ].
+	aString = 'b' ifTrue: [ ^ #isBooleanReporter ].
+	aString = 's' ifTrue: [ ^ #isSpecialForm ].
+	aString = 't' ifTrue: [ ^ #isTimedBlock ].
+	self error
 ]

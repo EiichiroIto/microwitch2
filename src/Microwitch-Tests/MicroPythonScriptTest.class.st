@@ -37,6 +37,19 @@ MicroPythonScriptTest >> testCompareHatBlockAnd [
 ]
 
 { #category : #test }
+MicroPythonScriptTest >> testConvertEventHatTuple [
+
+	| obj tuple r |
+	obj := self newScript.
+	tuple := Array with: #EventHatMorph with: #start.
+	r := obj convertEventHatTuple: tuple.
+	self assertCollection: r equals: #( start ).
+	tuple := Array with: #start: with: 'abc'.
+	r := obj convertEventHatTuple: tuple.
+	self assert: r identicalTo: tuple
+]
+
+{ #category : #test }
 MicroPythonScriptTest >> testDeleteVariable [
 	| s |
 	s := self newScript.

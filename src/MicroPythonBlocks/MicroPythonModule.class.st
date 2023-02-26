@@ -5,7 +5,10 @@ Class {
 		'name',
 		'blockSpecs'
 	],
-	#category : #'Microwitch-Project'
+	#classVars : [
+		'LoadedModules'
+	],
+	#category : #'MicroPythonBlocks-Module'
 }
 
 { #category : #accessing }

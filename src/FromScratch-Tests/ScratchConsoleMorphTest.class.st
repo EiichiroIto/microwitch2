@@ -4,7 +4,7 @@ A ScratchConsoleMorphTest is a test class for testing the behavior of ScratchCon
 Class {
 	#name : #ScratchConsoleMorphTest,
 	#superclass : #TestCase,
-	#category : #'Microwitch-Tests'
+	#category : #'FromScratch-Tests'
 }
 
 { #category : #private }

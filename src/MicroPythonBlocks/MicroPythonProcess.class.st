@@ -5,7 +5,7 @@ Class {
 		'topBlock',
 		'proxy'
 	],
-	#category : #'Microwitch-MPython'
+	#category : #'MicroPythonBlocks-Process'
 }
 
 { #category : #testing }

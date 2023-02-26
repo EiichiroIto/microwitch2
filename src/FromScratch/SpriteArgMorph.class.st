@@ -115,7 +115,7 @@ SpriteArgMorph >> presentMenu [
 
 	"Let the user select a Scratch object or the special value #mouse."
 
-	| project objList ret |
+	| project objList |
 	project := self project.
 	project ifNil: [ ^ self ].
 	objList := project scriptsForMenu.

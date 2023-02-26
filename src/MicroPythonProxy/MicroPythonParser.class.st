@@ -34,7 +34,7 @@ MicroPythonParser >> parseItem: aStream [
 	token = $( ifTrue: [ 
 		^ (self parseItems: aStream delimiter: $)) asArray ].
 	token = $[ ifTrue: [ ^ self parseItems: aStream delimiter: $] ].
-	(token = $" or: [ token = $' ]) ifTrue: [ 
+	('"''' includes: token) ifTrue: [ 
 		^ self parseString: aStream delimiter: token ].
 	token isDigit ifTrue: [ 
 		aStream back.

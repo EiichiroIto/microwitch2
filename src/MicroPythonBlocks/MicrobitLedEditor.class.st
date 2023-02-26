@@ -5,7 +5,7 @@ Class {
 		'intensitySlider',
 		'ledMorph'
 	],
-	#category : #'Microwitch-Microbit'
+	#category : #'MicroPythonBlocks-Microbit'
 }
 
 { #category : #specs }

@@ -4,23 +4,8 @@ Class {
 	#instVars : [
 		'modules'
 	],
-	#classVars : [
-		'LoadedModules'
-	],
 	#category : #'Microwitch-Project'
 }
-
-{ #category : #accessing }
-MicroPythonProject class >> availableModuleNames [
-
-	^ LoadedModules keys \ self mainModuleNames
-]
-
-{ #category : #accessing }
-MicroPythonProject class >> blockSpecsFor: aString [
-
-	^ LoadedModules at: aString
-]
 
 { #category : #constants }
 MicroPythonProject class >> fileVersion [
@@ -30,73 +15,6 @@ MicroPythonProject class >> fileVersion [
 { #category : #constants }
 MicroPythonProject class >> fileVersionTag [
 	^ 'MicrowitchV'
-]
-
-{ #category : #initialization }
-MicroPythonProject class >> initialize [
-
-	"self initialize"
-
-	self loadModules
-]
-
-{ #category : #testing }
-MicroPythonProject class >> isAvailableModule: aString [
-	^ self availableModuleNames includes: aString
-]
-
-{ #category : #private }
-MicroPythonProject class >> loadModuleExtension: ext into: aDictionary [
-
-	(self moduleDirectory filesMatching: '*.' , ext) do: [ :each | 
-		each readStreamDo: [ :stream | 
-			| importer |
-			importer := ModuleImporter new
-				            moduleName: each base;
-				            yourself.
-			aDictionary at: each base put: (importer import: stream contents) ] ]
-]
-
-{ #category : #private }
-MicroPythonProject class >> loadModules [
-
-	| dict |
-	dict := Dictionary new.
-	self loadModuleExtension: self moduleExtension into: dict.
-	LoadedModules := dict
-]
-
-{ #category : #accessing }
-MicroPythonProject class >> loadedModules [
-
-	^ LoadedModules
-]
-
-{ #category : #accessing }
-MicroPythonProject class >> loadedModules: aDictionary [
-
-	LoadedModules := aDictionary
-]
-
-{ #category : #constants }
-MicroPythonProject class >> mainModuleNames [
-
-	^ #( microbit )
-]
-
-{ #category : #private }
-MicroPythonProject class >> moduleDirectory [
-	| dir |
-	dir := FileSystem workingDirectory / 'Modules'.
-	dir isDirectory
-		ifFalse: [ dir createDirectory ].
-	^ dir
-]
-
-{ #category : #constants }
-MicroPythonProject class >> moduleExtension [
-
-	^ 'mw*'
 ]
 
 { #category : #constants }
@@ -112,8 +30,8 @@ MicroPythonProject class >> stonAllInstVarNames [
 { #category : #'block specs' }
 MicroPythonProject >> addBlockSpecsTo: aBlockMorphBuilder [
 
-	self class mainModuleNames , modules do: [ :name | 
-		(self class blockSpecsFor: name) blockSpecs do: [ :each | 
+	Microwitch mainModuleNames , modules do: [ :name | 
+		(Microwitch blockSpecsFor: name) blockSpecs do: [ :each | 
 			aBlockMorphBuilder addBlockSpec: each ] ]
 ]
 
@@ -145,7 +63,7 @@ MicroPythonProject >> assureExistsBreed: each [
 MicroPythonProject >> assureImportModules: aCollection [
 
 	| list |
-	list := aCollection \ self class availableModuleNames.
+	list := aCollection \ Microwitch availableModuleNames.
 	list isEmpty ifFalse: [ 
 		self error: 'not available modules: ' localized , list asString ].
 	modules := aCollection copy asArray.
@@ -196,7 +114,7 @@ MicroPythonProject >> initialize [
 { #category : #accessing }
 MicroPythonProject >> moduleFileFor: aString [
 	| file |
-	file := self class moduleDirectory / (aString , '.' , application pyExtension).
+	file := Microwitch moduleDirectory / (aString , '.' , application pyExtension).
 	file isFile
 		ifFalse: [ ^ nil ].
 	^ file
@@ -230,7 +148,7 @@ MicroPythonProject >> startHatBlock [
 	self scripts
 		do: [ :each | 
 			| l |
-			l := each eventBlocks.
+			l := each startHatBlocks.
 			l ifNotEmpty: [ ^ l first ] ].
 	^ nil
 ]

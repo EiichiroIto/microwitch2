@@ -4,7 +4,7 @@ A MicroPythonProcessTest is a test class for testing the behavior of MicroPython
 Class {
 	#name : #MicroPythonProcessTest,
 	#superclass : #TestCase,
-	#category : #'Microwitch-Tests'
+	#category : #'MicroPythonBlocks-Tests'
 }
 
 { #category : #private }

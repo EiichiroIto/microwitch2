@@ -68,7 +68,7 @@ MicroPythonScript >> addControlBlockSpecs [
 
 	blockMorphBuilder
 		addCategory: 'control';
-		addHatBlock: 'when %m clicked' type: #G arguments: #(  );
+		addStartHatBlock: 'when start' selector: #start;
 		addSeparator;
 		addCBlock: 'forever' selector: #doForever arguments: #(  );
 		addCBlock: 'repeat %n each %l'
@@ -150,6 +150,15 @@ MicroPythonScript >> compareHatBlock: a and: b [
 	bIsSubHat
 		ifTrue: [ ^ false ].
 	^ a eventName < b eventName
+]
+
+{ #category : #'block building' }
+MicroPythonScript >> convertEventHatTuple: anArray [
+
+	anArray first = #EventHatMorph ifTrue: [ ^ Array with: #start ].
+	anArray first = #SubHatMorph ifTrue: [ 
+		^ Array with: #sub: with: anArray second ].
+	^ anArray
 ]
 
 { #category : #variables }
@@ -263,6 +272,12 @@ MicroPythonScript >> setupBlockCategory [
 		setCategory: 'neopixel' color: (Color h: 264 s: 0.62 v: 0.89)
 ]
 
+{ #category : #'block specs' }
+MicroPythonScript >> startHatBlockNames [
+
+	^ #( start )
+]
+
 { #category : #processes }
 MicroPythonScript >> stopAllProcesses [
 	blocksBin isArray
@@ -275,9 +290,9 @@ MicroPythonScript >> stopAllProcesses [
 ]
 
 { #category : #'block specs' }
-MicroPythonScript >> stopBlocks [
+MicroPythonScript >> stopBlockSelectors [
 
-	^ super stopBlocks , #(panic: reset)
+	^ super stopBlockSelectors , #(panic: reset)
 ]
 
 { #category : #'object i/o' }

@@ -1,7 +1,7 @@
 Class {
 	#name : #MicroPythonSexpExporter,
 	#superclass : #ScratchSexpExporter,
-	#category : #'Microwitch-Converter'
+	#category : #'MicroPythonBlocks-Converter'
 }
 
 { #category : #private }

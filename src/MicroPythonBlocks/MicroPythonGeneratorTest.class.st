@@ -4,7 +4,7 @@ A MicroPythonGeneratorTest is a test class for testing the behavior of MicroPyth
 Class {
 	#name : #MicroPythonGeneratorTest,
 	#superclass : #TestCase,
-	#category : #'Microwitch-Tests'
+	#category : #'MicroPythonBlocks-Tests'
 }
 
 { #category : #private }
@@ -120,14 +120,6 @@ MicroPythonGeneratorTest >> testDoIfElse [
 	g := self newGenerator.
 	g doIfElse.
 	self assert: g code equals: 'else:' , String lf
-]
-
-{ #category : #test }
-MicroPythonGeneratorTest >> testDoIfEnd [
-	| g |
-	g := self newGenerator.
-	g doIfEnd.
-	self assert: g code equals: ''
 ]
 
 { #category : #test }
@@ -270,10 +262,8 @@ MicroPythonGeneratorTest >> testGenerateImports [
 
 { #category : #test }
 MicroPythonGeneratorTest >> testGenerateIndent [
-	| g |
-	g := self newGenerator.
-	g generateIndent: 2.
-	self assert: g code equals: '        '
+
+	self testIndent
 ]
 
 { #category : #test }
@@ -460,6 +450,16 @@ MicroPythonGeneratorTest >> testNullaryFunction [
 ]
 
 { #category : #test }
+MicroPythonGeneratorTest >> testPrintIndent [
+
+	| g |
+	g := self newGenerator.
+	g indent: 2.
+	g printIndent.
+	self assert: g code equals: '        '
+]
+
+{ #category : #test }
 MicroPythonGeneratorTest >> testQuotedString [
 	| g |
 	g := self newGenerator.
@@ -560,4 +560,28 @@ MicroPythonGeneratorTest >> testVars [
 	g := self newGenerator.
 	self assert: g vars isCollection.
 	self assert: g vars isEmpty
+]
+
+{ #category : #test }
+MicroPythonGeneratorTest >> testWithDef [
+
+	| gen |
+	gen := self newGenerator.
+	self assert: gen withDef.
+	gen withDef: false.
+	self deny: gen withDef.
+	gen withDef: true.
+	self assert: gen withDef
+]
+
+{ #category : #test }
+MicroPythonGeneratorTest >> testWithHeader [
+
+	| gen |
+	gen := self newGenerator.
+	self deny: gen withHeader.
+	gen withHeader: true.
+	self assert: gen withHeader.
+	gen withHeader: false.
+	self deny: gen withHeader
 ]

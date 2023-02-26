@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'servos'
 	],
-	#category : #'Microwitch-Microbit'
+	#category : #'MicroPythonBlocks-Process'
 }
 
 { #category : #private }

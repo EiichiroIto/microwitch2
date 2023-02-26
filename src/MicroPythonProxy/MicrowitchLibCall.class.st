@@ -117,13 +117,16 @@ MicrowitchLibCall >> primSerialPortWrite: portNum buffer: bufPtr size: bufSize [
 
 { #category : #api }
 MicrowitchLibCall >> readPort: portNum into: buffer [
+
 	| ext count |
+	count := 0.
 	ext := FFIExternalArray externalNewType: 'byte' size: buffer size.
-	[ count := self
-		primSerialPortRead: portNum
-		buffer: ext
-		size: buffer size.
-	1 to: count do: [ :index | buffer at: index put: (ext at: index) ] ]
+	[ 
+	count := self
+		         primSerialPortRead: portNum
+		         buffer: ext
+		         size: buffer size.
+	1 to: count do: [ :index | buffer at: index put: (ext at: index) ] ] 
 		ensure: [ ext free ].
 	^ count
 ]

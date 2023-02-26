@@ -17,7 +17,7 @@ SpMicrowitchStageTest >> newApplication [
 
 { #category : #private }
 SpMicrowitchStageTest >> newStage [
-	^ SpMicrowitchFrame basicNew
+	^ SpMicrowitchPresenter basicNew
 		application: self newApplication;
 		initialize;
 		privStage

@@ -14,9 +14,11 @@ BaselineOfMicrowitch >> baseline: spec [
 			package: 'FromScratch-Tests'
 			with: [ spec requires: #( 'FromScratch' ) ];
 			package: 'MicroPythonProxy';
-			package: 'Microwitch'
+			package: 'MicroPythonBlocks'
 			with: [ spec requires: #( 'FromScratch' 'MicroPythonProxy' ) ];
+			package: 'Microwitch'
+			with: [ spec requires: #( 'FromScratch' 'MicroPythonProxy' 'MicroPythonBlocks' ) ];
 			package: 'Microwitch-Tests'
 			with: [ 
-				spec requires: #( 'FromScratch' 'Microwitch' 'MicroPythonProxy' ) ] ]
+				spec requires: #( 'FromScratch' 'Microwitch' 'MicroPythonProxy' 'MicroPythonBlocks' ) ] ]
 ]

@@ -6,7 +6,7 @@ Class {
 		'form',
 		'buttons'
 	],
-	#category : #'Microwitch-Microbit'
+	#category : #'MicroPythonBlocks-Microbit'
 }
 
 { #category : #private }

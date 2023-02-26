@@ -4,31 +4,8 @@ Class {
 	#instVars : [
 		'firmwares'
 	],
-	#classVars : [
-		'Default'
-	],
-	#category : #'Microwitch-Microbit'
+	#category : #'MicroPythonBlocks-Microbit'
 }
-
-{ #category : #accessing }
-MicrobitFirmware class >> default [
-
-	^ Default
-]
-
-{ #category : #accessing }
-MicrobitFirmware class >> default: anObject [
-
-	Default := anObject
-]
-
-{ #category : #initialization }
-MicrobitFirmware class >> initialize [
-
-	"MicrobitFirmware initialize"
-
-	Default := self new
-]
 
 { #category : #api }
 MicrobitFirmware >> firmwareFor: aFileReference [

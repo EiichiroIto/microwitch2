@@ -1,25 +1,32 @@
 Class {
 	#name : #MicroPythonGenerator,
-	#superclass : #Object,
+	#superclass : #ScratchGenerator,
 	#instVars : [
-		'newlineString',
 		'imports',
 		'modules',
 		'varNo',
 		'indent',
 		'listVars',
 		'stream',
-		'vars'
+		'vars',
+		'options'
 	],
-	#category : #'Microwitch-MPython'
+	#category : #'MicroPythonBlocks-Process'
 }
 
 { #category : #private }
 MicroPythonGenerator >> appendWithNewline: aString [
-	self generateIndent: indent.
+
+	self printIndent.
 	stream
 		nextPutAll: aString;
 		nextPutAll: self newlineString
+]
+
+{ #category : #private }
+MicroPythonGenerator >> argsOf: aMorph [
+
+	^ aMorph blockArgs collect: [ :each | each argOf: parser ]
 ]
 
 { #category : #private }
@@ -44,7 +51,7 @@ MicroPythonGenerator >> changeVar: var by: val [
 	self appendWithNewline: var , ' = ' , var , ' + ' , (self valueOf: val)
 ]
 
-{ #category : #accessing }
+{ #category : #private }
 MicroPythonGenerator >> code [
 	^ stream contents
 ]
@@ -93,11 +100,6 @@ MicroPythonGenerator >> doIfElse [
 ]
 
 { #category : #'control ops' }
-MicroPythonGenerator >> doIfEnd [
-	"do nothing"
-]
-
-{ #category : #'control ops' }
 MicroPythonGenerator >> doIterateBegin: list var: var [
 	self
 		appendWithNewline: 'for ' , (self valueOf: var) , ' in ' , (self valueOf: list) , ':'
@@ -139,7 +141,27 @@ MicroPythonGenerator >> doWhileEnd [
 	"do nothing"
 ]
 
-{ #category : #private }
+{ #category : #'arg generator' }
+MicroPythonGenerator >> eventTitleString: aString [
+
+	self shouldBeImplemented
+]
+
+{ #category : #'arg generator' }
+MicroPythonGenerator >> expressionArgWithMenuString: aMorph [
+
+	| v |
+	v := aMorph specialValue.
+	v ifNil: [ ^ self argString: aMorph ].
+	(#( #append:toList: #deleteLine:ofList: #insert:at:ofList:
+	    #setLine:ofList:to: #getLine:ofList: ) includes:
+		 aMorph ownerSelector) ifTrue: [ 
+		v = #all ifTrue: [ ^ ':' ].
+		v = #last ifTrue: [ ^ '-1' ] ].
+	^ v
+]
+
+{ #category : #'arg generator' }
 MicroPythonGenerator >> falseString [
 
 	^ 'False'
@@ -165,11 +187,139 @@ MicroPythonGenerator >> generateCode: aSymbol arguments: aCollection for: aScrip
 ]
 
 { #category : #'code generator' }
+MicroPythonGenerator >> generateCode: aSymbol morph: aMorph [
+
+	SpScratchApp
+		try: [ self rawGenerateCode: aSymbol morph: aMorph ]
+		onFailure: [ aMorph showBalloon: 'error' ]
+]
+
+{ #category : #'code generator' }
+MicroPythonGenerator >> generateDoForeverBegin: aMorph [
+
+	self doForeverBegin
+]
+
+{ #category : #'code generator' }
+MicroPythonGenerator >> generateDoForeverEnd: aMorph [
+
+	self doForeverEnd
+]
+
+{ #category : #'code generator' }
+MicroPythonGenerator >> generateDoIfBegin: aMorph [
+
+	| cond |
+	cond := aMorph blockArgs first argString: parser.
+	self doIfBegin: cond
+]
+
+{ #category : #'code generator' }
+MicroPythonGenerator >> generateDoIfElseBegin: aMorph [
+
+	self generateDoIfBegin: aMorph
+]
+
+{ #category : #'code generator' }
+MicroPythonGenerator >> generateDoIfElseCenter: aMorph [
+
+	self doIfElse
+]
+
+{ #category : #'code generator' }
+MicroPythonGenerator >> generateDoIfElseEnd: aMorph [
+
+	self generateDoIfEnd: aMorph
+]
+
+{ #category : #'code generator' }
+MicroPythonGenerator >> generateDoIfEnd: aMorph [
+
+	"do nothing"
+]
+
+{ #category : #'code generator' }
+MicroPythonGenerator >> generateDoIterateBegin: aMorph [
+
+	| list var |
+	list := aMorph blockArgs first argString: parser.
+	var := aMorph blockArgs second varName.
+	self doIterateBegin: list var: var
+]
+
+{ #category : #'code generator' }
+MicroPythonGenerator >> generateDoIterateEnd: aMorph [
+
+	self doIterateEnd
+]
+
+{ #category : #'code generator' }
+MicroPythonGenerator >> generateDoRepeatBegin: aMorph [
+
+	| num var |
+	num := aMorph blockArgs first argString: parser.
+	var := aMorph blockArgs second varName.
+	self doRepeatBegin: num var: var
+]
+
+{ #category : #'code generator' }
+MicroPythonGenerator >> generateDoRepeatEnd: aMorph [
+
+	self doRepeatEnd
+]
+
+{ #category : #'code generator' }
+MicroPythonGenerator >> generateDoUntilBegin: aMorph [
+
+	| cond |
+	cond := aMorph blockArgs first argString: parser.
+	self doUntilBegin: cond
+]
+
+{ #category : #'code generator' }
+MicroPythonGenerator >> generateDoUntilEnd: aMorph [
+
+	self doUntilEnd
+]
+
+{ #category : #'code generator' }
+MicroPythonGenerator >> generateDoWhileBegin: aMorph [
+
+	| cond |
+	cond := aMorph blockArgs first argString: parser.
+	self doWhileBegin: cond
+]
+
+{ #category : #'code generator' }
+MicroPythonGenerator >> generateDoWhileEnd: aMorph [
+
+	self doWhileEnd
+]
+
+{ #category : #'code generator' }
+MicroPythonGenerator >> generateEmptySubBody [
+
+	self generatePass
+]
+
+{ #category : #'code generator' }
+MicroPythonGenerator >> generateEventFooter: aString [ 
+
+	self stopThread
+]
+
+{ #category : #'code generator' }
+MicroPythonGenerator >> generateEventHeader: aString [
+
+	"do nothing"
+]
+
+{ #category : #'code generator' }
 MicroPythonGenerator >> generateFrom: aString imports: aCollection [
 
 	| list |
 	aCollection isEmpty ifTrue: [ ^ self ].
-	self generateIndent: indent.
+	self printIndent.
 	stream
 		nextPutAll: 'from ';
 		nextPutAll: aString;
@@ -195,7 +345,7 @@ MicroPythonGenerator >> generateHeader [
 MicroPythonGenerator >> generateImports: aCollection [
 
 	aCollection isEmpty ifTrue: [ ^ self ].
-	self generateIndent: indent.
+	self printIndent.
 	stream nextPutAll: 'import '.
 	aCollection asSet asArray sorted
 		do: [ :each | stream nextPutAll: each ]
@@ -205,7 +355,8 @@ MicroPythonGenerator >> generateImports: aCollection [
 
 { #category : #'code generator' }
 MicroPythonGenerator >> generateIndent: anInteger [
-	anInteger timesRepeat: [ stream nextPutAll: '    ' ]
+
+	self indent: anInteger
 ]
 
 { #category : #'code generator' }
@@ -222,6 +373,37 @@ MicroPythonGenerator >> generatePass [
 ]
 
 { #category : #'code generator' }
+MicroPythonGenerator >> generateReporter: aString [
+
+	self appendWithNewline: aString
+]
+
+{ #category : #'code generator' }
+MicroPythonGenerator >> generateReporter: aSymbol morph: aMorph [
+
+	| ret |
+	ret := 0.
+	SpScratchApp
+		try: [ ret := self rawGenerateCode: aSymbol morph: aMorph ]
+		onFailure: [ aMorph showBalloon: 'error' ].
+	^ ret
+]
+
+{ #category : #'code generator' }
+MicroPythonGenerator >> generateSubFooter: aString [
+
+	"do nothing"
+]
+
+{ #category : #'code generator' }
+MicroPythonGenerator >> generateSubHeader: aString [
+
+	self
+		indent: 0;
+		def: aString
+]
+
+{ #category : #'code generator' }
 MicroPythonGenerator >> generateSubVars: aCollection [
 	| st |
 	aCollection isEmpty
@@ -234,7 +416,7 @@ MicroPythonGenerator >> generateSubVars: aCollection [
 	self appendWithNewline: st contents
 ]
 
-{ #category : #accessing }
+{ #category : #private }
 MicroPythonGenerator >> header [
 	stream := WriteStream on: String new.
 	self generateHeader.
@@ -266,6 +448,14 @@ MicroPythonGenerator >> indent: anInteger [
 	indent := anInteger
 ]
 
+{ #category : #private }
+MicroPythonGenerator >> indentLevelFor: aMorph [
+
+	^ aMorph isSubHatMorph
+		  ifTrue: [ 1 ]
+		  ifFalse: [ 0 ]
+]
+
 { #category : #initialization }
 MicroPythonGenerator >> initialize [
 	super initialize.
@@ -276,7 +466,10 @@ MicroPythonGenerator >> initialize [
 	varNo := 0.
 	imports := Set new.
 	modules := Dictionary new.
-	self newlineLF
+	options := Dictionary new.
+	self newlineLF.
+	self withHeader: false.
+	self withDef: true
 ]
 
 { #category : #private }
@@ -284,15 +477,15 @@ MicroPythonGenerator >> listVars [
 	^ listVars
 ]
 
-{ #category : #'code generator' }
-MicroPythonGenerator >> literalStringFrom: anObject [ 
-	((anObject isString)
-		and: [anObject isNumberString not])
-		ifTrue: [^ self quotedString: anObject].
+{ #category : #private }
+MicroPythonGenerator >> literalStringFrom: anObject [
+
+	(anObject isString and: [ anObject isNumberString not ]) ifTrue: [ 
+		^ self quotedString: anObject ].
 	^ anObject asString
 ]
 
-{ #category : #private }
+{ #category : #'arg generator' }
 MicroPythonGenerator >> localVarArgString: aString [
 	^ aString
 ]
@@ -316,27 +509,53 @@ MicroPythonGenerator >> newVariable [
 
 { #category : #accessing }
 MicroPythonGenerator >> newlineCR [
-	newlineString := String cr
+
+	options at: #newlineString put: String cr
 ]
 
 { #category : #accessing }
 MicroPythonGenerator >> newlineCRLF [
-	newlineString := String crlf
+
+	options at: #newlineString put: String crlf
 ]
 
 { #category : #accessing }
 MicroPythonGenerator >> newlineLF [
-	newlineString := String lf
+
+	options at: #newlineString put: String lf
 ]
 
 { #category : #accessing }
 MicroPythonGenerator >> newlineString [
-	^ newlineString
+
+	^ options at: #newlineString
 ]
 
 { #category : #private }
 MicroPythonGenerator >> nullaryFunction: aSymbol [
 	^ aSymbol, '()'
+]
+
+{ #category : #api }
+MicroPythonGenerator >> parseBlock: aBlock [
+
+	| code |
+	code := super parseBlock: aBlock.
+	(code isEmpty or: [ self withHeader not ])
+		ifTrue: [ ^ code ].
+	^ self header , code
+]
+
+{ #category : #api }
+MicroPythonGenerator >> parseScript: aScript [
+
+	^ self parseHats: aScript hatBlocks
+]
+
+{ #category : #private }
+MicroPythonGenerator >> printIndent [
+
+	indent timesRepeat: [ stream nextPutAll: '    ' ]
 ]
 
 { #category : #private }
@@ -361,10 +580,32 @@ MicroPythonGenerator >> random [
 	^ 'random.'
 ]
 
+{ #category : #'code generator' }
+MicroPythonGenerator >> rawGenerateCode: aSymbol morph: aMorph [
+
+	| args script blockSpec |
+	script := aMorph receiver.
+	args := self argsOf: aMorph.
+	blockSpec := script blockSpecAt: aSymbol.
+	blockSpec isNativeBlock ifTrue: [ 
+		aSymbol = #getVar: ifTrue: [ ^ aMorph variable ].
+		^ self perform: aSymbol asSymbol withArguments: args ].
+	^ self
+		  generateCode: aSymbol asSymbol
+		  arguments: args
+		  for: script
+]
+
 { #category : #'variable ops' }
 MicroPythonGenerator >> setVar: var to: val [
 	self useVar: var.
 	self appendWithNewline: var , ' = ' , (self valueOf: val)
+]
+
+{ #category : #'arg generator' }
+MicroPythonGenerator >> spriteArgString: aMorph [
+
+	self shouldNotImplement
 ]
 
 { #category : #'code generator' }
@@ -404,12 +645,30 @@ MicroPythonGenerator >> valueOf: anObject [
 	^ anObject asString
 ]
 
+{ #category : #'code generator' }
+MicroPythonGenerator >> varNamesUsedIn: aMorph [
+
+	| varNames blocks block blockSpec |
+	varNames := Set new.
+	blocks := OrderedCollection new.
+	blocks add: aMorph.
+	[ blocks notEmpty ] whileTrue: [ 
+		block := blocks removeFirst.
+		block isSetterBlock ifTrue: [ varNames add: block variable ].
+		block isCommandBlock ifTrue: [ 
+			blockSpec := block blockSpec.
+			(blockSpec isBlockSpec and: [ blockSpec isNativeBlock not ]) 
+				ifTrue: [ blockSpec var ifNotNil: [ :v | varNames add: v ] ] ].
+		blocks addAll: block nextOrInnerBlocks ].
+	^ varNames asArray sorted
+]
+
 { #category : #private }
 MicroPythonGenerator >> varNo [
 	^ varNo
 ]
 
-{ #category : #private }
+{ #category : #'arg generator' }
 MicroPythonGenerator >> variableArgString: aString [
 	self useVar: aString.
 	^ aString
@@ -418,4 +677,28 @@ MicroPythonGenerator >> variableArgString: aString [
 { #category : #private }
 MicroPythonGenerator >> vars [
 	^ vars
+]
+
+{ #category : #accessing }
+MicroPythonGenerator >> withDef [
+
+	^ options at: #withDef
+]
+
+{ #category : #accessing }
+MicroPythonGenerator >> withDef: aBoolean [
+
+	options at: #withDef put: aBoolean
+]
+
+{ #category : #accessing }
+MicroPythonGenerator >> withHeader [
+
+	^ options at: #withHeader
+]
+
+{ #category : #accessing }
+MicroPythonGenerator >> withHeader: aBoolean [
+
+	options at: #withHeader put: aBoolean
 ]
