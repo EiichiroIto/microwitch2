@@ -298,12 +298,6 @@ Microwitch >> availablePortNames [
 	^ (proxy portNames \ (settings unusedPortNames splitOn: $,)) sorted
 ]
 
-{ #category : #private }
-Microwitch >> backupProject [
-
-	self shouldNotImplement
-]
-
 { #category : #proxy }
 Microwitch >> break [
 
