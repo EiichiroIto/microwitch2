@@ -101,13 +101,20 @@ MicroPythonScriptTest >> testIsValidSubName [
 
 { #category : #test }
 MicroPythonScriptTest >> testObjName [
-	| s |
-	s := self newScript.
-	self assert: s objName isNil.
-	s objName: 'abc'.
-	self assert: s objName equals: 'abc'.
-	s objName: 'def'.
-	self assert: s objName equals: 'def'
+
+	self assert: self newScript objName equals: 'main'
+]
+
+{ #category : #test }
+MicroPythonScriptTest >> testUseList [
+
+	self deny: self newScript useList
+]
+
+{ #category : #test }
+MicroPythonScriptTest >> testUseVariableWatcher [
+
+	self deny: self newScript useVariableWatcher
 ]
 
 { #category : #test }

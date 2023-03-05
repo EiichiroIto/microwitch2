@@ -35,31 +35,21 @@ MicroPythonProject >> addBlockSpecsTo: aBlockMorphBuilder [
 			aBlockMorphBuilder addBlockSpec: each ] ]
 ]
 
-{ #category : #accessing }
+{ #category : #api }
 MicroPythonProject >> addModule: aSymbol [
 	modules := modules copyWith: aSymbol.
 	self setupBlockSpecs
 ]
 
-{ #category : #private }
-MicroPythonProject >> addScriptNamed: aString [
-	| script |
-	script := MicroPythonScript new
-		project: self;
-		objName: aString;
-		yourself.
-	self addScript: script.
-	^ script
+{ #category : #api }
+MicroPythonProject >> assureExistsScriptNamed: each [
+
+	self assert: [ each = 'main' ].
+	scripts notEmpty ifTrue: [ ^ self ].
+	self addScript: self newScript
 ]
 
-{ #category : #accessing }
-MicroPythonProject >> assureExistsBreed: each [
-	((self scripts collect: #objName) includes: each)
-		ifTrue: [ ^ self ].
-	self addScriptNamed: each
-]
-
-{ #category : #accessing }
+{ #category : #api }
 MicroPythonProject >> assureImportModules: aCollection [
 
 	| list |
@@ -70,7 +60,7 @@ MicroPythonProject >> assureImportModules: aCollection [
 	self setupBlockSpecs
 ]
 
-{ #category : #accessing }
+{ #category : #api }
 MicroPythonProject >> deleteModule: aSymbol [
 	modules := modules copyWithout: aSymbol.
 	self setupBlockSpecs
@@ -84,16 +74,6 @@ MicroPythonProject >> evaluateBlock: aTopBlock [
 { #category : #'object i/o' }
 MicroPythonProject >> fieldsVersion [
 	^ 1
-]
-
-{ #category : #'file read/write' }
-MicroPythonProject >> getScratchInfoFrom: aFileReference [
-	| dict icon |
-	dict := super getScratchInfoFrom: aFileReference.
-	dict ifNil: [ ^ nil ].
-	icon := (Smalltalk at: (dict at: 'proxy')) new icon.
-	dict at: 'thumbnail' put: icon.
-	^ dict
 ]
 
 { #category : #'object i/o' }
@@ -143,13 +123,27 @@ MicroPythonProject >> modules: anObject [
 	modules := anObject
 ]
 
+{ #category : #'instance creation' }
+MicroPythonProject >> newScript [
+
+	^ MicroPythonScript new
+		  project: self;
+		  yourself
+]
+
+{ #category : #api }
+MicroPythonProject >> setupScripts [
+
+	self assureExistsScriptNamed: 'main'
+]
+
 { #category : #accessing }
 MicroPythonProject >> startHatBlock [
-	self scripts
-		do: [ :each | 
-			| l |
-			l := each startHatBlocks.
-			l ifNotEmpty: [ ^ l first ] ].
+
+	scripts do: [ :each | 
+		| l |
+		l := each startHatBlocks.
+		l ifNotEmpty: [ ^ l first ] ].
 	^ nil
 ]
 
@@ -164,13 +158,13 @@ MicroPythonProject >> storeFieldsOn: anObjStream [
 	super storeFieldsOn: anObjStream
 ]
 
-{ #category : #accessing }
+{ #category : #api }
 MicroPythonProject >> thumbnailForm: aForm [
 
 	"do nothing"
 ]
 
-{ #category : #accessing }
+{ #category : #api }
 MicroPythonProject >> toggleModule: aString [
 	(self moduleInUse: aString)
 		ifTrue: [ self deleteModule: aString ]

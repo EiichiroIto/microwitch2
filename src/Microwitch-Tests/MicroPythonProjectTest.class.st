@@ -27,6 +27,19 @@ MicroPythonProjectTest >> testAddModule [
 ]
 
 { #category : #test }
+MicroPythonProjectTest >> testAssureExistsScriptNamed [
+
+	| project |
+	project := self newProject.
+	self assert: project scripts isEmpty.
+	project assureExistsScriptNamed: 'main'.
+	self assert: project scripts size equals: 1.
+	self assert: (project scripts first isKindOf: MicroPythonScript).
+	project := self newProject.
+	self should: [ project assureExistsScriptNamed: 'abc' ] raise: Error
+]
+
+{ #category : #test }
 MicroPythonProjectTest >> testDeleteModule [
 	| p |
 	p := self newProject.
@@ -52,6 +65,25 @@ MicroPythonProjectTest >> testFileVersionString [
 ]
 
 { #category : #test }
+MicroPythonProjectTest >> testInitialize [
+
+	| project |
+	project := self newProject.
+	self assert: project modules isArray.
+	self assert: project modules isEmpty
+]
+
+{ #category : #test }
+MicroPythonProjectTest >> testModuleInUse [
+
+	| project |
+	project := self newProject.
+	self deny: (project moduleInUse: 'abc').
+	project modules: #( 'abc' ).
+	self assert: (project moduleInUse: 'abc')
+]
+
+{ #category : #test }
 MicroPythonProjectTest >> testModules [
 
 	| p a |
@@ -60,6 +92,22 @@ MicroPythonProjectTest >> testModules [
 	a := #( a b c ).
 	p modules: a.
 	self assert: p modules identicalTo: a
+]
+
+{ #category : #test }
+MicroPythonProjectTest >> testNewScript [
+
+	| project obj |
+	project := self newProject.
+	obj := project newScript.
+	self assert: (obj isKindOf: MicroPythonScript).
+	self assert: obj project identicalTo: project
+]
+
+{ #category : #test }
+MicroPythonProjectTest >> testSetupScripts [
+
+	self testAssureExistsScriptNamed
 ]
 
 { #category : #test }

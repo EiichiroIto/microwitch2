@@ -526,7 +526,7 @@ Microwitch >> installNewProject: aProject [
 	self stopAllProcesses.
 	project := aProject.
 	project application: self.
-	project assureExistsBreed: 'main'.
+	project setupScripts.
 	self setupProxy.
 	project setupBlockSpecs.
 	"project fixVars.

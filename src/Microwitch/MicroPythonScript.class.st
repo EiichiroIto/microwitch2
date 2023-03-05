@@ -2,7 +2,6 @@ Class {
 	#name : #MicroPythonScript,
 	#superclass : #ScratchScript,
 	#instVars : [
-		'objName',
 		'varNames'
 	],
 	#category : #'Microwitch-Project'
@@ -98,6 +97,12 @@ MicroPythonScript >> addIoBlockSpecs [
 		addCommand: 'servo write pin %G to %n degrees' selector: #writeServo:to: arguments: #( 0 180 )
 ]
 
+{ #category : #variables }
+MicroPythonScript >> addList: aString [
+
+	self shouldNotImplement
+]
+
 { #category : #'block specs' }
 MicroPythonScript >> addOperatorsBlockSpecs [
 
@@ -128,16 +133,6 @@ MicroPythonScript >> allSubNames [
 	^ project allSubNames
 ]
 
-{ #category : #accessing }
-MicroPythonScript >> application [
-	^ self project application
-]
-
-{ #category : #accessing }
-MicroPythonScript >> breedNo [
-	^ objName
-]
-
 { #category : #blocks }
 MicroPythonScript >> compareHatBlock: a and: b [
 	| aIsSubHat bIsSubHat |
@@ -159,6 +154,12 @@ MicroPythonScript >> convertEventHatTuple: anArray [
 	anArray first = #SubHatMorph ifTrue: [ 
 		^ Array with: #sub: with: anArray second ].
 	^ anArray
+]
+
+{ #category : #variables }
+MicroPythonScript >> deleteList: aString [
+
+	self shouldNotImplement
 ]
 
 { #category : #variables }
@@ -184,7 +185,7 @@ MicroPythonScript >> hatBlocks [
 	^ list
 ]
 
-{ #category : #private }
+{ #category : #testing }
 MicroPythonScript >> identifierInUse: aString [
 
 	^ (varNames includes: aString) or: [ super subNameInUse: aString ]
@@ -202,6 +203,14 @@ MicroPythonScript >> initFieldsFrom: anObjStream version: classVersion [
 MicroPythonScript >> initialize [
 	super initialize.
 	varNames := OrderedCollection new
+]
+
+{ #category : #introspection }
+MicroPythonScript >> instVarNamed: aString put: aValue [
+
+	[ super instVarNamed: aString put: aValue ]
+		on: InstanceVariableNotFound
+		do: [ :err | self inform: err instVarName ]
 ]
 
 { #category : #testing }
@@ -243,12 +252,8 @@ MicroPythonScript >> mwait: duration elapsed: elapsed from: ignored [
 
 { #category : #accessing }
 MicroPythonScript >> objName [
-	^ objName
-]
 
-{ #category : #accessing }
-MicroPythonScript >> objName: aString [
-	objName := aString
+	^ 'main'
 ]
 
 { #category : #'block specs' }
@@ -305,6 +310,18 @@ MicroPythonScript >> storeFieldsOn: anObjStream [
 MicroPythonScript >> subNameInUse: aString [
 
 	^ self identifierInUse: aString
+]
+
+{ #category : #accessing }
+MicroPythonScript >> toggleWatcher: aToggleButton for: aBlockMorph [
+
+	self shouldNotImplement
+]
+
+{ #category : #accessing }
+MicroPythonScript >> updateWatcher: aToggleButton for: aBlockMorph [
+
+	self shouldNotImplement
 ]
 
 { #category : #testing }
