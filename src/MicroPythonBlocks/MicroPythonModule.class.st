@@ -5,9 +5,6 @@ Class {
 		'name',
 		'blockSpecs'
 	],
-	#classVars : [
-		'LoadedModules'
-	],
 	#category : #'MicroPythonBlocks-Module'
 }
 

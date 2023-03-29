@@ -32,7 +32,7 @@ Microwitch class >> addBlockDefsTo: aSet [
 
 	| project script |
 	self loadModules.
-	project := MicroPythonModule new.
+	project := MicroPythonProject new.
 	project modules: self availableModuleNames.
 	script := MicroPythonScript new.
 	script project: project.
@@ -859,5 +859,7 @@ Microwitch >> uploadProgram [
 
 { #category : #private }
 Microwitch >> windowClosing [
+
+	super windowClosing.
 	self proxy close
 ]
