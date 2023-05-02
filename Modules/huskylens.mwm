@@ -10,18 +10,18 @@
     "huskylens.select_algorithm(%n)"
     ("huskylens")
     huskySelectAlgorithm:)
+   (commandBlock:args:code:imports:selector:
+    "get data"
+    ()
+    "huskylens.get_data()"
+    ("huskylens")
+    huskyGetData)
    (reporterBlock:args:return:code:selector:
     "get data count"
     ()
     r
     "huskylens.get_size()"
     huskyGetCount)
-   (reporterBlock:args:return:code:selector:
-    "get data"
-    ()
-    r
-    "huskylens.get_data()"
-    huskyGetData)
    (reporterBlock:args:return:code:selector:
     "get data %n at %n"
     (0 0)

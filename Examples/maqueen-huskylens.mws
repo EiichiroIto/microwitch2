@@ -1,0 +1,11 @@
+(Microwitch (main) (huskylens)
+ ((for main ( )
+   ((when start
+    ((huskySelectAlgorithm: 0)
+     (doForever
+      ((huskyGetData)
+       (doIfElse (more:than: (huskyGetCount) 0)
+        ((animateAndWait (symbolImageOf: "HEART"))
+         (mwait:elapsed:from: 500)
+         (scrollAndWait (huskyGetData:at: 5 0)))
+        ((ledClear)))))))))))

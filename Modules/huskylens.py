@@ -90,10 +90,10 @@ def process_return_data():
   h = i2c.read(50,((g[3]) + 1))
   a = split_command_to_parts(g + h)
   if (a[3]) == 46:
-	return [("knockReceived",)]
+    return [("knockReceived",)]
   k = a[4]
   if len(k)<2:
-        return []
+    return []
   f = ((k[1]) * 256) + (k[0])
   d = True
   j = []
@@ -109,7 +109,7 @@ def process_return_data():
       c = i[q + 1]
       l = e
       if c > 0:
-	l = e + 255 + c
+        l = e + 255 + c
       k.append(l)
     b.append(k)
   return convert_to_class_object_is_block(b, d)
