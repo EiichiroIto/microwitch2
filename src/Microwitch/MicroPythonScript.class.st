@@ -9,7 +9,7 @@ Class {
 
 { #category : #'ston-core' }
 MicroPythonScript class >> stonAllInstVarNames [
-	^ super stonAllInstVarNames , #(objName varNames)
+	^ super stonAllInstVarNames , #(varNames)
 ]
 
 { #category : #'argument menus' }

@@ -451,7 +451,7 @@ Microwitch >> evaluateBlock: aTopBlock [
 
 	| code |
 	self stopAllProcesses.
-	code := self newCode parse: aTopBlock withHeader: true.
+	code := self newCode parseBlock: aTopBlock.
 	code isEmpty ifTrue: [ ^ nil ].
 	^ self evaluate: code
 ]
