@@ -1,6 +1,6 @@
 Class {
-	#name : #WebRepl,
-	#superclass : #MWComm,
+	#name : 'WebRepl',
+	#superclass : 'MWComm',
 	#instVars : [
 		'address',
 		'buffer',
@@ -10,15 +10,17 @@ Class {
 	#classVars : [
 		'RecentAddresses'
 	],
-	#category : #'MicroPythonProxy-Comm'
+	#category : 'MicroPythonProxy-Comm',
+	#package : 'MicroPythonProxy',
+	#tag : 'Comm'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 WebRepl class >> addresses [
 	^ RecentAddresses
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 WebRepl class >> clientRequestHeader [
 	^ ('GET / HTTP/1.1
 Host: echo.websocket.org
@@ -29,33 +31,33 @@ Sec-WebSocket-Key: foo
 ' copyReplaceAll: String cr with: String crlf) asByteArray
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 WebRepl class >> initialize [
 	"self initialize"
 	RecentAddresses := OrderedCollection new
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 WebRepl >> address [
 	^ address
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 WebRepl >> address: aString [
 	address := aString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 WebRepl >> buffer [
 	^ buffer
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 WebRepl >> buffer: anObject [
 	^ buffer := anObject
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 WebRepl >> checkCanRetrieveData: aByteArray [
 	| size offset |
 	offset := 2.
@@ -72,18 +74,18 @@ WebRepl >> checkCanRetrieveData: aByteArray [
 	^ aByteArray size >= (size + offset)
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 WebRepl >> checkWebSocketHeader: aByteArray [
 	^ (aByteArray indexOfSubCollection: #[13 10 13 10] startingAt: 1) > 0
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 WebRepl >> clear [
 	buffer := ByteArray new.
 	headerReceived := false
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 WebRepl >> close [
 	socket ifNil: [ ^ self ].
 	socket closeAndDestroy.
@@ -91,7 +93,7 @@ WebRepl >> close [
 	self clear
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 WebRepl >> dataFromFrame: anArray [
 	anArray first = 16r82
 		ifTrue: [ ^ anArray second ].
@@ -100,7 +102,7 @@ WebRepl >> dataFromFrame: anArray [
 	^ nil
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 WebRepl >> get [
 	| triple |
 	self isConnected
@@ -122,7 +124,7 @@ WebRepl >> get [
 	^ (self dataFromFrame: triple) asByteArray
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 WebRepl >> headerOfPutFileNamed: aString1 contents: aString2 [
 	"<2sBBQLH64s"
 
@@ -145,32 +147,32 @@ WebRepl >> headerOfPutFileNamed: aString1 contents: aString2 [
 	^ stream contents
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 WebRepl >> headerReceived [
 	^ headerReceived
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 WebRepl >> headerReceived: anObject [
 	headerReceived := anObject
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 WebRepl >> initialize [
 	self clear
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 WebRepl >> isConnected [
 	^ socket notNil and: [ socket isConnected ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 WebRepl >> isWebRepl [
 	^ true
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 WebRepl >> makeHeaderOfSize: anInteger asText: aBoolean [
 	| op |
 	op := aBoolean ifTrue: [ 16r81 ] ifFalse: [ 16r82 ].
@@ -183,7 +185,7 @@ WebRepl >> makeHeaderOfSize: anInteger asText: aBoolean [
 				with: anInteger \\ 256 ]
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 WebRepl >> open [
 	| s |
 	self isConnected
@@ -201,7 +203,7 @@ WebRepl >> open [
 	^ true
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 WebRepl >> printOn: aStream [
 	aStream
 		nextPutAll: self class name;
@@ -213,12 +215,12 @@ WebRepl >> printOn: aStream [
 		nextPut: $)
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 WebRepl >> put: aByteArray [
 	self put: aByteArray asText: true
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 WebRepl >> put: aByteArray asText: aBoolean [
 	| header |
 	self isConnected
@@ -229,7 +231,7 @@ WebRepl >> put: aByteArray asText: aBoolean [
 		sendData: aByteArray
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 WebRepl >> putFileNamed: aString1 contents: aString2 [
 	| header stream buf |
 	header := self headerOfPutFileNamed: aString1 contents: aString2.
@@ -241,12 +243,12 @@ WebRepl >> putFileNamed: aString1 contents: aString2 [
 			self put: buf asText: false ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 WebRepl >> recentAddresses [
 	^ RecentAddresses
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 WebRepl >> retrieveDataFrom: aByteArray [
 	| opcode size pos |
 	aByteArray isEmpty
@@ -264,24 +266,24 @@ WebRepl >> retrieveDataFrom: aByteArray [
 	(aByteArray copyFrom: pos + size to: aByteArray size)}
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 WebRepl >> skipWebSocketHeader: aByteArray [
 	| i |
 	i := aByteArray indexOfSubCollection: #[13 10 13 10] startingAt: 1.
 	^ aByteArray copyFrom: i + 4 to: aByteArray size
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 WebRepl >> socket [
 	^ socket
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 WebRepl >> socket: anObject [
 	socket := anObject
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 WebRepl >> webReplPortNo [
 	^ 8266
 ]

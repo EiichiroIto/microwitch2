@@ -1,40 +1,42 @@
 Class {
-	#name : #MWComm,
-	#superclass : #Object,
-	#category : #'MicroPythonProxy-Comm'
+	#name : 'MWComm',
+	#superclass : 'Object',
+	#category : 'MicroPythonProxy-Comm',
+	#package : 'MicroPythonProxy',
+	#tag : 'Comm'
 }
 
-{ #category : #api }
+{ #category : 'api' }
 MWComm >> close [
 	self subclassResponsibility
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 MWComm >> get [
 	self subclassResponsibility
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 MWComm >> isConnected [
 	self subclassResponsibility
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MWComm >> isWebRepl [
 	^ false
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 MWComm >> name [
 	^ self class name
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 MWComm >> open [
 	self subclassResponsibility
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 MWComm >> put: aByteArray [
 	self subclassResponsibility
 ]

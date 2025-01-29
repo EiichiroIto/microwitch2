@@ -1,27 +1,29 @@
 Class {
-	#name : #MicroPythonAutoPilot,
-	#superclass : #Object,
+	#name : 'MicroPythonAutoPilot',
+	#superclass : 'Object',
 	#instVars : [
 		'proxy',
 		'selector',
 		'sendLines',
 		'mode'
 	],
-	#category : #'MicroPythonProxy-Core'
+	#category : 'MicroPythonProxy-Core',
+	#package : 'MicroPythonProxy',
+	#tag : 'Core'
 }
 
-{ #category : #api }
+{ #category : 'api' }
 MicroPythonAutoPilot >> clear [
 	sendLines := nil.
 	selector := nil
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MicroPythonAutoPilot >> doRestart [
 	proxy restart
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 MicroPythonAutoPilot >> execute: aCollection [
 
 	| lines |
@@ -32,80 +34,80 @@ MicroPythonAutoPilot >> execute: aCollection [
 		ifNotNil: [ sendLines addAll: lines ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MicroPythonAutoPilot >> isEmpty [
 	sendLines ifNil: [ ^ true ].
 	^ sendLines isEmpty
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MicroPythonAutoPilot >> mode [
 
 	^ mode
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MicroPythonAutoPilot >> mode: anObject [
 
 	mode := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MicroPythonAutoPilot >> proxy [
 
 	^ proxy
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MicroPythonAutoPilot >> proxy: anObject [
 
 	proxy := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MicroPythonAutoPilot >> selector [
 
 	^ selector
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MicroPythonAutoPilot >> selector: anObject [
 
 	selector := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MicroPythonAutoPilot >> sendLines [
 
 	^ sendLines
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MicroPythonAutoPilot >> sendLines: anObject [
 
 	sendLines := anObject asOrderedCollection
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 MicroPythonAutoPilot >> sendNormal [
 
 	mode := #stepNormal
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 MicroPythonAutoPilot >> sendPaste [
 
 	mode := #stepPaste
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 MicroPythonAutoPilot >> step [
 
 	mode ifNil: [ ^ self ].
 	self perform: mode
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MicroPythonAutoPilot >> stepNormal [
 
 	proxy isReady ifTrue: [ 
@@ -118,7 +120,7 @@ MicroPythonAutoPilot >> stepNormal [
 			ifFalse: [ proxy sendLine: sendLines removeFirst ] ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MicroPythonAutoPilot >> stepPaste [
 
 	proxy isReady ifTrue: [ 
@@ -136,7 +138,7 @@ MicroPythonAutoPilot >> stepPaste [
 		ifFalse: [ proxy sendPasteLine: sendLines removeFirst ]
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 MicroPythonAutoPilot >> thenRestart [
 	selector := #doRestart
 ]

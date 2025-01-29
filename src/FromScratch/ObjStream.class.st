@@ -24,8 +24,8 @@ Maximums:
 
 "
 Class {
-	#name : #ObjStream,
-	#superclass : #Object,
+	#name : 'ObjStream',
+	#superclass : 'Object',
 	#instVars : [
 		'objects',
 		'objectIndex',
@@ -42,20 +42,23 @@ Class {
 		'NameToClassEntry',
 		'ObjectReferenceID'
 	],
-	#category : #'FromScratch-Converter'
+	#category : 'FromScratch-Converter',
+	#package : 'FromScratch',
+	#tag : 'Converter'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ObjStream class >> arrayFor: id size: size [
 	| classSymbol |
 	classSymbol := (IDToClassEntry at: id) second.
 	classSymbol = #Array ifTrue: [ ^ Array new: size ].
-	classSymbol = #FloatArray ifTrue: [ ^ FloatArray new: size ].
+	classSymbol = #FloatArray ifTrue: [ ^ Float32Array new: size ].
+	classSymbol = #Float32Array ifTrue: [ ^ Float32Array new: size ].
 	classSymbol = #IntegerArray ifTrue: [ ^ IntegerArray new: size ].
 	self error: 'Invalid Array'
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ObjStream class >> fixedFormatClasses [
 	"Answer an array of records for fixed-format classes."
 
@@ -76,7 +79,7 @@ ObjStream class >> fixedFormatClasses [
 		(12	BoxedFloat64					getFloat:id:			putFloat:id:)
 		(13	Bitmap					getBitmap:id:		putBitmap:id:)
 		(14	ByteString				getBytes:id:			putBytes:id:)
-		(15	FloatArray					getArray:id:			putArray:id:)
+		(15	Float32Array					getArray:id:			putArray:id:)
 		(16	ColorArray					getArray:id:			putArray:id:)
 		(17	WideString				getBytes:id:			putBytes:id:)
 		(18	IntegerArray				getArray:id:			putArray:id:)
@@ -100,7 +103,7 @@ ObjStream class >> fixedFormatClasses [
 
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 ObjStream class >> setupVariables [
 	"self setupVariables"
 
@@ -126,7 +129,7 @@ ObjStream class >> setupVariables [
 	NameToClassEntry at: #ByteSymbol put: (NameToClassEntry at: #Symbol)
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ObjStream class >> userClasses [
 	"Answer an array of (<class id>, <class name>) records for all version numbered user classes."
 	"The following finds obsolete user classes:"
@@ -170,7 +173,7 @@ ObjStream class >> userClasses [
 
 ]
 
-{ #category : #'private-writing' }
+{ #category : 'private-writing' }
 ObjStream >> classEntryFor: anObject [
 	"Answer the entry containing the class id and read/write selectors for the given object's class. Raise an error if the class is not registered."
 
@@ -179,38 +182,38 @@ ObjStream >> classEntryFor: anObject [
 
 ]
 
-{ #category : #'private-reading' }
+{ #category : 'private-reading' }
 ObjStream >> classForID: classID [
 	"Answer the class for the given class ID."
 
 	^ Smalltalk at: (self classSymbolForID: classID)
 ]
 
-{ #category : #'private-reading' }
+{ #category : 'private-reading' }
 ObjStream >> classSymbolForID: classID [
 	"Answer the class symbol for the given class ID."
 
 	^ (IDToClassEntry at: classID) second
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ObjStream >> convertFromUTF8: aByteArray [
 	^ ZnUTF8Encoder default decodeBytes: aByteArray
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ObjStream >> firstPass [
 
 	^ firstPass
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ObjStream >> firstPass: anObject [
 
 	firstPass := anObject
 ]
 
-{ #category : #'private-reading' }
+{ #category : 'private-reading' }
 ObjStream >> fixReferencesForObjectRecord: objectRecord [
 	"After reading all the objects in the objects table, this method is called on each object record to replace all its object references with pointers to the actual object in the object table. The fields for user-defined objects are still held in an array in the object table record. Fixed-format objects are processed by calling their read selector a second time and, since firstPass is now false, this read method fixes any object references."
 
@@ -229,7 +232,7 @@ ObjStream >> fixReferencesForObjectRecord: objectRecord [
 
 ]
 
-{ #category : #'private-reading' }
+{ #category : 'private-reading' }
 ObjStream >> fixRefsInArray: anArray [
 	"Replace any ObjRefRecord objects in the given array with references to the actual objects."
 
@@ -243,7 +246,7 @@ ObjStream >> fixRefsInArray: anArray [
 
 ]
 
-{ #category : #'fixed format-reading' }
+{ #category : 'fixed format-reading' }
 ObjStream >> getArray: anObject id: classID [
 
 	| sz result |
@@ -258,7 +261,7 @@ ObjStream >> getArray: anObject id: classID [
 
 ]
 
-{ #category : #'fixed format-reading' }
+{ #category : 'fixed format-reading' }
 ObjStream >> getBigInt: anObject id: classID [
 
 	| digitCount result |
@@ -269,7 +272,7 @@ ObjStream >> getBigInt: anObject id: classID [
 
 ]
 
-{ #category : #'fixed format-reading' }
+{ #category : 'fixed format-reading' }
 ObjStream >> getBitmap: anObject id: classID [
 
 	| count result |
@@ -280,7 +283,7 @@ ObjStream >> getBitmap: anObject id: classID [
 
 ]
 
-{ #category : #'fixed format-reading' }
+{ #category : 'fixed format-reading' }
 ObjStream >> getBytes: anObject id: classID [
 	| byteCount result |
 	byteCount := stream uint32.
@@ -296,7 +299,7 @@ ObjStream >> getBytes: anObject id: classID [
 	^ result.
 ]
 
-{ #category : #'fixed format-reading' }
+{ #category : 'fixed format-reading' }
 ObjStream >> getCollection: anObject id: classID [
 
 	| sz result newContents |
@@ -313,7 +316,7 @@ ObjStream >> getCollection: anObject id: classID [
 
 ]
 
-{ #category : #'fixed format-reading' }
+{ #category : 'fixed format-reading' }
 ObjStream >> getColor: anObject id: classID [
 	| rgb |
 	firstPass
@@ -324,7 +327,7 @@ ObjStream >> getColor: anObject id: classID [
 		setAlpha: stream next / 255.0.
 ]
 
-{ #category : #'fixed format-reading' }
+{ #category : 'fixed format-reading' }
 ObjStream >> getConst: anObject id: classID [
 
 	classID = 1 ifTrue: [^ nil].
@@ -333,7 +336,7 @@ ObjStream >> getConst: anObject id: classID [
 
 ]
 
-{ #category : #'fixed format-reading' }
+{ #category : 'fixed format-reading' }
 ObjStream >> getDict: anObject id: classID [
 
 	| sz result key value newContents |
@@ -356,7 +359,7 @@ ObjStream >> getDict: anObject id: classID [
 
 ]
 
-{ #category : #'fixed format-reading' }
+{ #category : 'fixed format-reading' }
 ObjStream >> getFloat: anObject id: classID [
 
 	| result |
@@ -367,7 +370,7 @@ ObjStream >> getFloat: anObject id: classID [
 
 ]
 
-{ #category : #'fixed format-reading' }
+{ #category : 'fixed format-reading' }
 ObjStream >> getForm: anObject id: classID [
 
 	| w h d offset bits result |
@@ -391,7 +394,7 @@ ObjStream >> getForm: anObject id: classID [
 
 ]
 
-{ #category : #'fixed format-reading' }
+{ #category : 'fixed format-reading' }
 ObjStream >> getPoint: anObject id: classID [
 
 	| x y |
@@ -407,7 +410,7 @@ ObjStream >> getPoint: anObject id: classID [
 
 ]
 
-{ #category : #'fixed format-reading' }
+{ #category : 'fixed format-reading' }
 ObjStream >> getRect: anObject id: classID [
 
 	| x1 y1 x2 y2 |
@@ -428,7 +431,7 @@ ObjStream >> getRect: anObject id: classID [
 
 ]
 
-{ #category : #'fixed format-reading' }
+{ #category : 'fixed format-reading' }
 ObjStream >> getSmallInt: anObject id: classID [
 
 	classID = 4 ifTrue: [^ stream int32].
@@ -436,7 +439,7 @@ ObjStream >> getSmallInt: anObject id: classID [
 
 ]
 
-{ #category : #'private-reading' }
+{ #category : 'private-reading' }
 ObjStream >> initializeUserDefinedFields: objectRecord [
 	"If the given object record designates a user-defined object, ask that object to initialiize itself from its fields list. Otherwise, do nothing."
 
@@ -451,7 +454,7 @@ ObjStream >> initializeUserDefinedFields: objectRecord [
 
 ]
 
-{ #category : #'entry points' }
+{ #category : 'entry points' }
 ObjStream >> nextField [
 	"Answer the next field and advance to the next field. This method should only be called from initFieldsFrom:version: during deserialization."
 	"Note: If class versions are managed correctly, it should not be necessary to check that fieldIndex is in bounds. However, sometimes during development, we store a project that has objects with an extra field that is later removed. The check on fields size allows us to fail more gracefully in such cases."
@@ -462,21 +465,21 @@ ObjStream >> nextField [
 
 ]
 
-{ #category : #'entry points' }
+{ #category : 'entry points' }
 ObjStream >> objects [
 
 	^ objects
 
 ]
 
-{ #category : #'fixed format-writing' }
+{ #category : 'fixed format-writing' }
 ObjStream >> putArray: anObject id: classID [
 
 	self putCollection: anObject id: classID.
 
 ]
 
-{ #category : #'fixed format-writing' }
+{ #category : 'fixed format-writing' }
 ObjStream >> putBigInt: anObject id: classID [
 
 	| len |
@@ -487,7 +490,7 @@ ObjStream >> putBigInt: anObject id: classID [
 	1 to: len do: [ :i | stream nextPut: (anObject byteAt: i) ]
 ]
 
-{ #category : #'fixed format-writing' }
+{ #category : 'fixed format-writing' }
 ObjStream >> putBitmap: anObject id: classID [
 
 	firstPass ifTrue: [^ self].
@@ -497,7 +500,7 @@ ObjStream >> putBitmap: anObject id: classID [
 
 ]
 
-{ #category : #'fixed format-writing' }
+{ #category : 'fixed format-writing' }
 ObjStream >> putBytes: anObject id: classID [
 	| buf |
 	firstPass
@@ -508,7 +511,7 @@ ObjStream >> putBytes: anObject id: classID [
 	stream nextPutAll: buf.
 ]
 
-{ #category : #'fixed format-writing' }
+{ #category : 'fixed format-writing' }
 ObjStream >> putCollection: anObject id: classID [
 
 	firstPass ifFalse: [
@@ -518,7 +521,7 @@ ObjStream >> putCollection: anObject id: classID [
 
 ]
 
-{ #category : #'fixed format-writing' }
+{ #category : 'fixed format-writing' }
 ObjStream >> putColor: anObject id: classID [
 
 	| a |
@@ -529,7 +532,7 @@ ObjStream >> putColor: anObject id: classID [
 	stream nextPut: a.
 ]
 
-{ #category : #'fixed format-writing' }
+{ #category : 'fixed format-writing' }
 ObjStream >> putConst: anObject id: classID [
 
 	firstPass ifTrue: [^ self].
@@ -537,7 +540,7 @@ ObjStream >> putConst: anObject id: classID [
 
 ]
 
-{ #category : #'fixed format-writing' }
+{ #category : 'fixed format-writing' }
 ObjStream >> putDict: anObject id: classID [
 
 	firstPass ifFalse: [
@@ -549,7 +552,7 @@ ObjStream >> putDict: anObject id: classID [
 
 ]
 
-{ #category : #'entry points' }
+{ #category : 'entry points' }
 ObjStream >> putField: anObject [
 	"Put the given object. If the given object is nil, true, false, an integer, or a float, it is stored directly. Otherwise, it is stored as an object reference and the object will be stored exactly once no matter how many other objects refer to it."
 
@@ -571,7 +574,7 @@ ObjStream >> putField: anObject [
 
 ]
 
-{ #category : #'fixed format-writing' }
+{ #category : 'fixed format-writing' }
 ObjStream >> putFloat: anObject id: classID [
 
 	firstPass ifTrue: [^ self].
@@ -581,7 +584,7 @@ ObjStream >> putFloat: anObject id: classID [
 
 ]
 
-{ #category : #'fixed format-writing' }
+{ #category : 'fixed format-writing' }
 ObjStream >> putForm: anObject id: classID [
 
 	firstPass ifFalse: [stream nextPut: classID].
@@ -595,7 +598,7 @@ ObjStream >> putForm: anObject id: classID [
 
 ]
 
-{ #category : #'fixed format-writing' }
+{ #category : 'fixed format-writing' }
 ObjStream >> putPoint: anObject id: classID [
 
 	firstPass ifFalse: [
@@ -605,7 +608,7 @@ ObjStream >> putPoint: anObject id: classID [
 
 ]
 
-{ #category : #'fixed format-writing' }
+{ #category : 'fixed format-writing' }
 ObjStream >> putRect: anObject id: classID [
 
 	firstPass ifFalse: [
@@ -617,7 +620,7 @@ ObjStream >> putRect: anObject id: classID [
 
 ]
 
-{ #category : #'fixed format-writing' }
+{ #category : 'fixed format-writing' }
 ObjStream >> putSmallInt: anObject id: classID [
 
 	firstPass ifTrue: [^ self].
@@ -631,7 +634,7 @@ ObjStream >> putSmallInt: anObject id: classID [
 
 ]
 
-{ #category : #'private-writing' }
+{ #category : 'private-writing' }
 ObjStream >> putUserObj: anObject id: ignored [
 	"Ask the given user-defined object to write it's fields."
 
@@ -639,7 +642,7 @@ ObjStream >> putUserObj: anObject id: ignored [
 
 ]
 
-{ #category : #'private-reading' }
+{ #category : 'private-reading' }
 ObjStream >> readField [
 	"Read a single object field. The result may be an object or an object reference."
 
@@ -653,7 +656,7 @@ ObjStream >> readField [
 
 ]
 
-{ #category : #'private-reading' }
+{ #category : 'private-reading' }
 ObjStream >> readFileHeader [
 	"Read the file header on my stream."
 
@@ -665,7 +668,7 @@ ObjStream >> readFileHeader [
 
 ]
 
-{ #category : #'entry points' }
+{ #category : 'entry points' }
 ObjStream >> readObjFrom: aStream [
 	"Read the root object from the given binary stream."
 
@@ -673,7 +676,7 @@ ObjStream >> readObjFrom: aStream [
 
 ]
 
-{ #category : #'entry points' }
+{ #category : 'entry points' }
 ObjStream >> readObjFrom: aStream showProgress: showProgress [
 	"Read the root object from the given binary stream. If showProgress is true, display a progress bar."
 
@@ -710,7 +713,7 @@ ObjStream >> readObjFrom: aStream showProgress: showProgress [
 
 ]
 
-{ #category : #'private-reading' }
+{ #category : 'private-reading' }
 ObjStream >> readObjectRecord [
 	"Read the next object record. Answer an array of the form (<obj> <class ID> [<version> <fieldsArray>]). The version and fields array are supplied only for user-defined objects."
 
@@ -730,7 +733,7 @@ ObjStream >> readObjectRecord [
 
 ]
 
-{ #category : #'entry points' }
+{ #category : 'entry points' }
 ObjStream >> readObjsFrom: aStream [
 	"For testing. Answer the entire objects table from the given stream."
 
@@ -751,7 +754,7 @@ ObjStream >> readObjsFrom: aStream [
 
 ]
 
-{ #category : #'private-writing' }
+{ #category : 'private-writing' }
 ObjStream >> recordFieldsOf: anObject [
 	"Record the fields of the given object."
 	"Details: Sometimes a user-defined class creates an object dynamically in a call to putField:. To preserve object identity between passes one and two, the objects passed to all calls to putField: are recorded during the first pass (i.e., by this method) and those exact same objects are used in the second pass."
@@ -768,7 +771,7 @@ ObjStream >> recordFieldsOf: anObject [
 
 ]
 
-{ #category : #'private-writing' }
+{ #category : 'private-writing' }
 ObjStream >> recordObject: anObject id: classID [
 	"Assign an ID for the given object, add it to the list of objects to be stored in the object table, and add it to the toDo list. Do nothing if this object has already been recorded."
 
@@ -779,7 +782,7 @@ ObjStream >> recordObject: anObject id: classID [
 
 ]
 
-{ #category : #'entry points' }
+{ #category : 'entry points' }
 ObjStream >> storeObj: anObject on: aStream [
 	"Write the given object and all the objects that can be reached from it on the given binary stream. Do not display a progress bar."
 
@@ -787,7 +790,7 @@ ObjStream >> storeObj: anObject on: aStream [
 
 ]
 
-{ #category : #'entry points' }
+{ #category : 'entry points' }
 ObjStream >> storeObj: anObject on: aStream showProgress: showProgress [
 	"Write the given object and all the objects that can be reached from it on the given binary stream. If showProgress is true, display a progress bar."
 
@@ -825,19 +828,19 @@ ObjStream >> storeObj: anObject on: aStream showProgress: showProgress [
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ObjStream >> stream [
 
 	^ stream
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ObjStream >> stream: anObject [
 
 	stream := anObject
 ]
 
-{ #category : #'private-reading' }
+{ #category : 'private-reading' }
 ObjStream >> targetObjectFor: anObject [
 	"If the argument is an ObjRefRecord, answer the object that it refers to. Otherwise, just answer the argument."
 
@@ -847,7 +850,7 @@ ObjStream >> targetObjectFor: anObject [
 
 ]
 
-{ #category : #'private-writing' }
+{ #category : 'private-writing' }
 ObjStream >> writeFileHeader [
 	"Write the file header on my stream."
 
@@ -858,7 +861,7 @@ ObjStream >> writeFileHeader [
 
 ]
 
-{ #category : #'private-writing' }
+{ #category : 'private-writing' }
 ObjStream >> writeObjRef: anObject [
 	"Write a reference to the given object to my output stream. The object must have an entry in the object dictionary."
 
@@ -870,7 +873,7 @@ ObjStream >> writeObjRef: anObject [
 
 ]
 
-{ #category : #'private-writing' }
+{ #category : 'private-writing' }
 ObjStream >> writeObject: anObject objEntry: objEntry [
 	"Write the object described by the given entry."
 

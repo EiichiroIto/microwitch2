@@ -1,14 +1,16 @@
 Class {
-	#name : #SerialPort2,
-	#superclass : #Object,
+	#name : 'SerialPort2',
+	#superclass : 'Object',
 	#instVars : [
 		'portNum',
 		'plugin'
 	],
-	#category : #'MicroPythonProxy-Plugins'
+	#category : 'MicroPythonProxy-Plugins',
+	#package : 'MicroPythonProxy',
+	#tag : 'Plugins'
 }
 
-{ #category : #enumeration }
+{ #category : 'enumeration' }
 SerialPort2 class >> portNames [
 	"Answer a collection of serial port names."
 
@@ -17,7 +19,7 @@ SerialPort2 class >> portNames [
 	^ (1 to: plugin portCount) collect: [ :i | plugin portName: i ]
 ]
 
-{ #category : #'open/close' }
+{ #category : 'open/close' }
 SerialPort2 >> assertOpen [
 	"Raise an error if the port is not open."
 
@@ -25,7 +27,7 @@ SerialPort2 >> assertOpen [
 
 ]
 
-{ #category : #'open/close' }
+{ #category : 'open/close' }
 SerialPort2 >> close [
 	"Close the serial port. Do nothing if it is already closed."
 
@@ -36,7 +38,7 @@ SerialPort2 >> close [
 
 ]
 
-{ #category : #'input/output' }
+{ #category : 'input/output' }
 SerialPort2 >> flushInputBuffer [
 	"Discard bytes until the input buffer is empty. Answer the number of bytes read."
 
@@ -48,7 +50,7 @@ SerialPort2 >> flushInputBuffer [
 
 ]
 
-{ #category : #options }
+{ #category : 'options' }
 SerialPort2 >> getOption: optionNum [
 	"Answer the current setting of the given option."
 
@@ -56,12 +58,12 @@ SerialPort2 >> getOption: optionNum [
 
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SerialPort2 >> initialize [
 	plugin := MicrowitchLibCall new
 ]
 
-{ #category : #'open/close' }
+{ #category : 'open/close' }
 SerialPort2 >> isOpen [
 	"Answer true if this serial port is open."
 
@@ -72,7 +74,7 @@ SerialPort2 >> isOpen [
 
 ]
 
-{ #category : #'input/output' }
+{ #category : 'input/output' }
 SerialPort2 >> next: byteCount [
 	"Answer a ByteArray of length byteCount with the next byteCount bytes read from this port. Wait indefinitely until enough bytes arrive."
 
@@ -90,7 +92,7 @@ SerialPort2 >> next: byteCount [
 
 ]
 
-{ #category : #'input/output' }
+{ #category : 'input/output' }
 SerialPort2 >> nextPut: anInteger [
 	"Send the given byte out this serial port. The port must be open."
 
@@ -98,7 +100,7 @@ SerialPort2 >> nextPut: anInteger [
 
 ]
 
-{ #category : #'input/output' }
+{ #category : 'input/output' }
 SerialPort2 >> nextPutAll: aStringOrByteArray [
 	"Send the given bytes out this serial port. The port must be open."
 
@@ -107,7 +109,7 @@ SerialPort2 >> nextPutAll: aStringOrByteArray [
 
 ]
 
-{ #category : #'open/close' }
+{ #category : 'open/close' }
 SerialPort2 >> openPortNamed: aString baud: baudRate [
 	"Open the serial port with the given name at the given speed."
 
@@ -117,7 +119,7 @@ SerialPort2 >> openPortNamed: aString baud: baudRate [
 
 ]
 
-{ #category : #'input/output' }
+{ #category : 'input/output' }
 SerialPort2 >> readByteArray [
 	"Answer a ByteArray read from this serial port. Answer an empty ByteArray if no data is available. The port must be open."
 
@@ -130,14 +132,14 @@ SerialPort2 >> readByteArray [
 
 ]
 
-{ #category : #'input/output' }
+{ #category : 'input/output' }
 SerialPort2 >> readString [
 	"Answer a String read from this serial port. Answer an empty String if no data is available. The port must be open."
 
 	^ self readByteArray asString
 ]
 
-{ #category : #options }
+{ #category : 'options' }
 SerialPort2 >> setOption: optionNum to: anInteger [
 	"Set the given option to the given value."
 

@@ -2,17 +2,19 @@
 A MicroPythonStatusTest is a test class for testing the behavior of MicroPythonStatus
 "
 Class {
-	#name : #MicroPythonStateTest,
-	#superclass : #TestCase,
-	#category : #'MicroPythonProxy-Tests'
+	#name : 'MicroPythonStateTest',
+	#superclass : 'TestCase',
+	#category : 'MicroPythonProxy-Tests',
+	#package : 'MicroPythonProxy',
+	#tag : 'Tests'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 MicroPythonStateTest >> newObj [
 	^ MicroPythonState new
 ]
 
-{ #category : #test }
+{ #category : 'test' }
 MicroPythonStateTest >> testBeConnected [
 	| obj |
 	obj := self newObj.
@@ -21,7 +23,7 @@ MicroPythonStateTest >> testBeConnected [
 	self assert: obj isConnected
 ]
 
-{ #category : #test }
+{ #category : 'test' }
 MicroPythonStateTest >> testBeIdle [
 	| obj |
 	obj := self newObj.
@@ -31,7 +33,7 @@ MicroPythonStateTest >> testBeIdle [
 	self assert: obj isIdle
 ]
 
-{ #category : #test }
+{ #category : 'test' }
 MicroPythonStateTest >> testBeNotConnected [
 	| obj |
 	obj := self newObj.
@@ -40,7 +42,7 @@ MicroPythonStateTest >> testBeNotConnected [
 	self assert: obj isNotConnected
 ]
 
-{ #category : #test }
+{ #category : 'test' }
 MicroPythonStateTest >> testBePasteReady [
 	| obj |
 	obj := self newObj.
@@ -49,7 +51,7 @@ MicroPythonStateTest >> testBePasteReady [
 	self assert: obj isPasteReady
 ]
 
-{ #category : #test }
+{ #category : 'test' }
 MicroPythonStateTest >> testBeReady [
 	| obj |
 	obj := self newObj.
@@ -58,7 +60,7 @@ MicroPythonStateTest >> testBeReady [
 	self assert: obj isReady
 ]
 
-{ #category : #test }
+{ #category : 'test' }
 MicroPythonStateTest >> testBeRunning [
 	| obj |
 	obj := self newObj.
@@ -67,7 +69,7 @@ MicroPythonStateTest >> testBeRunning [
 	self assert: obj isRunning
 ]
 
-{ #category : #test }
+{ #category : 'test' }
 MicroPythonStateTest >> testBeWaiting [
 	| obj |
 	obj := self newObj.
@@ -76,7 +78,7 @@ MicroPythonStateTest >> testBeWaiting [
 	self assert: obj isWaiting
 ]
 
-{ #category : #test }
+{ #category : 'test' }
 MicroPythonStateTest >> testBeWaitingEnterPaste [
 	| obj |
 	obj := self newObj.
@@ -85,7 +87,7 @@ MicroPythonStateTest >> testBeWaitingEnterPaste [
 	self assert: obj isWaitingEnterPaste
 ]
 
-{ #category : #test }
+{ #category : 'test' }
 MicroPythonStateTest >> testBeWaitingPaste [
 	| obj |
 	obj := self newObj.
@@ -94,12 +96,12 @@ MicroPythonStateTest >> testBeWaitingPaste [
 	self assert: obj isWaitingPaste
 ]
 
-{ #category : #test }
+{ #category : 'test' }
 MicroPythonStateTest >> testInitialize [
 	self assert: self newObj isIdle
 ]
 
-{ #category : #test }
+{ #category : 'test' }
 MicroPythonStateTest >> testIsConnected [
 	| obj |
 	obj := self newObj.
@@ -108,7 +110,7 @@ MicroPythonStateTest >> testIsConnected [
 	self assert: obj isConnected
 ]
 
-{ #category : #test }
+{ #category : 'test' }
 MicroPythonStateTest >> testIsIdle [
 	| obj |
 	obj := self newObj.
@@ -118,7 +120,7 @@ MicroPythonStateTest >> testIsIdle [
 	self assert: obj isIdle
 ]
 
-{ #category : #test }
+{ #category : 'test' }
 MicroPythonStateTest >> testIsNotConnected [
 	| obj |
 	obj := self newObj.
@@ -127,7 +129,7 @@ MicroPythonStateTest >> testIsNotConnected [
 	self assert: obj isNotConnected
 ]
 
-{ #category : #test }
+{ #category : 'test' }
 MicroPythonStateTest >> testIsPasteReady [
 
 	| obj |
@@ -137,7 +139,7 @@ MicroPythonStateTest >> testIsPasteReady [
 	self assert: obj isPasteReady
 ]
 
-{ #category : #test }
+{ #category : 'test' }
 MicroPythonStateTest >> testIsReady [
 	| obj |
 	obj := self newObj.
@@ -146,7 +148,7 @@ MicroPythonStateTest >> testIsReady [
 	self assert: obj isReady
 ]
 
-{ #category : #test }
+{ #category : 'test' }
 MicroPythonStateTest >> testIsRunning [
 	| obj |
 	obj := self newObj.
@@ -155,7 +157,7 @@ MicroPythonStateTest >> testIsRunning [
 	self assert: obj isRunning
 ]
 
-{ #category : #test }
+{ #category : 'test' }
 MicroPythonStateTest >> testIsWaiting [
 	| obj |
 	obj := self newObj.
@@ -164,7 +166,7 @@ MicroPythonStateTest >> testIsWaiting [
 	self assert: obj isWaiting
 ]
 
-{ #category : #test }
+{ #category : 'test' }
 MicroPythonStateTest >> testIsWaitingEnterPaste [
 	| obj |
 	obj := self newObj.
@@ -173,7 +175,7 @@ MicroPythonStateTest >> testIsWaitingEnterPaste [
 	self assert: obj isWaitingEnterPaste
 ]
 
-{ #category : #test }
+{ #category : 'test' }
 MicroPythonStateTest >> testIsWaitingPaste [
 	| obj |
 	obj := self newObj.
@@ -182,7 +184,7 @@ MicroPythonStateTest >> testIsWaitingPaste [
 	self assert: obj isWaitingPaste
 ]
 
-{ #category : #test }
+{ #category : 'test' }
 MicroPythonStateTest >> testPrintOn [
 
 	| s st |
@@ -192,7 +194,7 @@ MicroPythonStateTest >> testPrintOn [
 	self assert: st contents equals: '[idle]'
 ]
 
-{ #category : #test }
+{ #category : 'test' }
 MicroPythonStateTest >> testState [
 	| obj |
 	obj := self newObj.

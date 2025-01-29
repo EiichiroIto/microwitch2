@@ -2,17 +2,19 @@
 A WebReplTest is a test class for testing the behavior of WebRepl
 "
 Class {
-	#name : #WebReplTest,
-	#superclass : #TestCase,
-	#category : #'MicroPythonProxy-Tests'
+	#name : 'WebReplTest',
+	#superclass : 'TestCase',
+	#category : 'MicroPythonProxy-Tests',
+	#package : 'MicroPythonProxy',
+	#tag : 'Tests'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 WebReplTest >> newComm [
 	^ WebRepl new
 ]
 
-{ #category : #test }
+{ #category : 'test' }
 WebReplTest >> testAddress [
 	| c |
 	c := self newComm.
@@ -21,7 +23,7 @@ WebReplTest >> testAddress [
 	self assert: c address equals: '192.168.254.123'
 ]
 
-{ #category : #test }
+{ #category : 'test' }
 WebReplTest >> testBuffer [
 	| c a |
 	c := self newComm.
@@ -32,7 +34,7 @@ WebReplTest >> testBuffer [
 	self assert: c buffer identicalTo: a
 ]
 
-{ #category : #test }
+{ #category : 'test' }
 WebReplTest >> testCheckCanRetrieveData [
 	| c a |
 	c := self newComm.
@@ -52,7 +54,7 @@ WebReplTest >> testCheckCanRetrieveData [
 	self deny: (c checkCanRetrieveData: a)
 ]
 
-{ #category : #test }
+{ #category : 'test' }
 WebReplTest >> testCheckWebSocketHeader [
 	| c |
 	c := self newComm.
@@ -61,7 +63,7 @@ WebReplTest >> testCheckWebSocketHeader [
 		assert: (c checkWebSocketHeader: #[1 2 3 13 10 4 5 13 10 13 10 6] asByteArray)
 ]
 
-{ #category : #test }
+{ #category : 'test' }
 WebReplTest >> testClear [
 	| c |
 	c := self newComm.
@@ -72,7 +74,7 @@ WebReplTest >> testClear [
 	self deny: c headerReceived
 ]
 
-{ #category : #test }
+{ #category : 'test' }
 WebReplTest >> testDataFromFrame [
 	| c r |
 	c := self newComm.
@@ -96,7 +98,7 @@ WebReplTest >> testDataFromFrame [
 	self assert: r isNil
 ]
 
-{ #category : #test }
+{ #category : 'test' }
 WebReplTest >> testHeaderOfPutFileNamedContents [
 	| c r |
 	c := self newComm.
@@ -107,7 +109,7 @@ WebReplTest >> testHeaderOfPutFileNamedContents [
 			#[87 65 1 0 0 0 0 0 0 0 0 0 5 0 0 0 3 0 97 98 99 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]
 ]
 
-{ #category : #test }
+{ #category : 'test' }
 WebReplTest >> testHeaderReceived [
 	| c |
 	c := self newComm.
@@ -116,17 +118,17 @@ WebReplTest >> testHeaderReceived [
 	self assert: c headerReceived
 ]
 
-{ #category : #test }
+{ #category : 'test' }
 WebReplTest >> testInitialize [
 	self testClear
 ]
 
-{ #category : #test }
+{ #category : 'test' }
 WebReplTest >> testIsWebRepl [
 	self assert: self newComm isWebRepl
 ]
 
-{ #category : #test }
+{ #category : 'test' }
 WebReplTest >> testMakeHeaderOfSizeAsText [
 	| c r |
 	c := self newComm.
@@ -140,7 +142,7 @@ WebReplTest >> testMakeHeaderOfSizeAsText [
 	self assertCollection: r equals: #[16r82 126 0 127]
 ]
 
-{ #category : #test }
+{ #category : 'test' }
 WebReplTest >> testPrintOn [
 	| c s |
 	c := self newComm.
@@ -150,7 +152,7 @@ WebReplTest >> testPrintOn [
 	self assert: s contents equals: 'WebRepl(192.168.254.123)'
 ]
 
-{ #category : #test }
+{ #category : 'test' }
 WebReplTest >> testRetrieveDataFrom [
 	| c a r |
 	c := self newComm.
@@ -171,7 +173,7 @@ WebReplTest >> testRetrieveDataFrom [
 	self assertCollection: r third equals: #[2 3 4]
 ]
 
-{ #category : #test }
+{ #category : 'test' }
 WebReplTest >> testSkipWebSocketHeader [
 	| c a r |
 	c := self newComm.
@@ -181,7 +183,7 @@ WebReplTest >> testSkipWebSocketHeader [
 	self assertCollection: r equals: 'jkl' asByteArray
 ]
 
-{ #category : #test }
+{ #category : 'test' }
 WebReplTest >> testSocket [
 	| c s |
 	c := self newComm.
@@ -191,7 +193,7 @@ WebReplTest >> testSocket [
 	self assert: c socket identicalTo: s
 ]
 
-{ #category : #test }
+{ #category : 'test' }
 WebReplTest >> testWebReplPortNo [
 	self assert: self newComm webReplPortNo equals: 8266
 ]

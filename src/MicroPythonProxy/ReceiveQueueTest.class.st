@@ -2,17 +2,19 @@
 A ReceiveQueueTest is a test class for testing the behavior of ReceiveQueue
 "
 Class {
-	#name : #ReceiveQueueTest,
-	#superclass : #TestCase,
-	#category : #'MicroPythonProxy-Tests'
+	#name : 'ReceiveQueueTest',
+	#superclass : 'TestCase',
+	#category : 'MicroPythonProxy-Tests',
+	#package : 'MicroPythonProxy',
+	#tag : 'Tests'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 ReceiveQueueTest >> newQueue [
 	^ ReceiveQueue new
 ]
 
-{ #category : #test }
+{ #category : 'test' }
 ReceiveQueueTest >> testAllReceived [
 	| q ret |
 	q := self newQueue.
@@ -37,7 +39,7 @@ ReceiveQueueTest >> testAllReceived [
 	self assertCollection: ret third equals: #[8 9]
 ]
 
-{ #category : #test }
+{ #category : 'test' }
 ReceiveQueueTest >> testEnqueueWithDelimiter [
 	| q |
 	q := self newQueue.
@@ -50,7 +52,7 @@ ReceiveQueueTest >> testEnqueueWithDelimiter [
 	self assert: q pending isEmpty
 ]
 
-{ #category : #test }
+{ #category : 'test' }
 ReceiveQueueTest >> testFlush [
 	| q |
 	q := self newQueue.
@@ -67,7 +69,7 @@ ReceiveQueueTest >> testFlush [
 	self assert: q pending isEmpty
 ]
 
-{ #category : #test }
+{ #category : 'test' }
 ReceiveQueueTest >> testGetAll [
 	| q ret |
 	q := self newQueue.
@@ -92,7 +94,7 @@ ReceiveQueueTest >> testGetAll [
 	self assertCollection: ret third equals: #[8 9]
 ]
 
-{ #category : #test }
+{ #category : 'test' }
 ReceiveQueueTest >> testGetPending [
 	| q |
 	q := self newQueue.
@@ -103,7 +105,7 @@ ReceiveQueueTest >> testGetPending [
 	self assert: q pending isEmpty
 ]
 
-{ #category : #test }
+{ #category : 'test' }
 ReceiveQueueTest >> testInitialize [
 	| q |
 	q := self newQueue.
@@ -113,7 +115,7 @@ ReceiveQueueTest >> testInitialize [
 	self assert: q pending isEmpty
 ]
 
-{ #category : #test }
+{ #category : 'test' }
 ReceiveQueueTest >> testIsEmpty [
 	| q |
 	q := self newQueue.
@@ -124,7 +126,7 @@ ReceiveQueueTest >> testIsEmpty [
 	self deny: q isEmpty
 ]
 
-{ #category : #test }
+{ #category : 'test' }
 ReceiveQueueTest >> testLineCount [
 	| q |
 	q := self newQueue.
@@ -141,7 +143,7 @@ ReceiveQueueTest >> testLineCount [
 	self assert: q lineCount equals: 3
 ]
 
-{ #category : #test }
+{ #category : 'test' }
 ReceiveQueueTest >> testPending [
 	| q |
 	q := self newQueue.
@@ -149,7 +151,7 @@ ReceiveQueueTest >> testPending [
 	self assert: q pending isEmpty
 ]
 
-{ #category : #test }
+{ #category : 'test' }
 ReceiveQueueTest >> testPrintOn [
 	| q s |
 	q := self newQueue.
@@ -164,7 +166,7 @@ ReceiveQueueTest >> testPrintOn [
 	self assert: s contents equals: 'ReceiveQueue(2,(''abc''))'
 ]
 
-{ #category : #test }
+{ #category : 'test' }
 ReceiveQueueTest >> testQueue [
 	| q |
 	q := self newQueue.
@@ -172,7 +174,7 @@ ReceiveQueueTest >> testQueue [
 	self assert: q queue isEmpty
 ]
 
-{ #category : #test }
+{ #category : 'test' }
 ReceiveQueueTest >> testReceived [
 	| q |
 	q := self newQueue.

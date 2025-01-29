@@ -1,1 +1,1 @@
-Package { #name : #MicroPythonProxy }
+Package { #name : 'MicroPythonProxy' }

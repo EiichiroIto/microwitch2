@@ -1,30 +1,32 @@
 Class {
-	#name : #SerialComm,
-	#superclass : #MWComm,
+	#name : 'SerialComm',
+	#superclass : 'MWComm',
 	#instVars : [
 		'port',
 		'portName',
 		'baudRate'
 	],
-	#category : #'MicroPythonProxy-Comm'
+	#category : 'MicroPythonProxy-Comm',
+	#package : 'MicroPythonProxy',
+	#tag : 'Comm'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 SerialComm class >> enumerateComPort: dst max: size [
 	^ self ffiCall: #(int EnumerateComPort(FFIExternalArray dst, int size)) module: 'MicroWiz.dll'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SerialComm >> baudRate [
 	^ baudRate ifNil: [ baudRate := self defaultBaudRate ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SerialComm >> baudRate: anInteger [
 	baudRate := anInteger
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 SerialComm >> close [
 	self isConnected
 		ifFalse: [ ^ self ].
@@ -32,12 +34,12 @@ SerialComm >> close [
 	port := nil
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SerialComm >> defaultBaudRate [
 	^ 115200
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 SerialComm >> get [
 	| ret |
 	self isConnected
@@ -48,17 +50,17 @@ SerialComm >> get [
 	^ ret
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 SerialComm >> isConnected [
 	^ port notNil and: [ port isOpen ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SerialComm >> isWebRepl [
 	^ false
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 SerialComm >> open [
 	self isConnected
 		ifTrue: [ ^ true ].
@@ -73,22 +75,22 @@ SerialComm >> open [
 	^ true
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SerialComm >> port [
 	^ port
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SerialComm >> portName [
 	^ portName
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SerialComm >> portName: aString [
 	portName := aString
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SerialComm >> portNames [
 
 	Smalltalk os isWindows ifTrue: [ 
@@ -96,7 +98,7 @@ SerialComm >> portNames [
 	^ SerialPort2 portNames
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 SerialComm >> printOn: aStream [
 	aStream
 		nextPutAll: self class name;
@@ -110,7 +112,7 @@ SerialComm >> printOn: aStream [
 		nextPut: $)
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 SerialComm >> put: aByteArray [
 	self isConnected
 		ifFalse: [ ^ 0 ].

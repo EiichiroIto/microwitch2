@@ -1,15 +1,17 @@
 Class {
-	#name : #SerialCommTest,
-	#superclass : #TestCase,
-	#category : #'MicroPythonProxy-Tests'
+	#name : 'SerialCommTest',
+	#superclass : 'TestCase',
+	#category : 'MicroPythonProxy-Tests',
+	#package : 'MicroPythonProxy',
+	#tag : 'Tests'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 SerialCommTest >> newComm [
 	^ SerialComm new
 ]
 
-{ #category : #test }
+{ #category : 'test' }
 SerialCommTest >> testBaudRate [
 	| c |
 	c := self newComm.
@@ -18,28 +20,28 @@ SerialCommTest >> testBaudRate [
 	self assert: c baudRate equals: 9600
 ]
 
-{ #category : #test }
+{ #category : 'test' }
 SerialCommTest >> testDefaultBaudRate [
 	| c |
 	c := self newComm.
 	self assert: c defaultBaudRate equals: 115200
 ]
 
-{ #category : #test }
+{ #category : 'test' }
 SerialCommTest >> testIsConnected [
 	| c |
 	c := self newComm.
 	self deny: c isConnected
 ]
 
-{ #category : #test }
+{ #category : 'test' }
 SerialCommTest >> testPort [
 	| c |
 	c := self newComm.
 	self assert: c port isNil.
 ]
 
-{ #category : #test }
+{ #category : 'test' }
 SerialCommTest >> testPortName [
 	| c |
 	c := self newComm.
@@ -50,7 +52,7 @@ SerialCommTest >> testPortName [
 	self assert: c portName equals: 'def'
 ]
 
-{ #category : #test }
+{ #category : 'test' }
 SerialCommTest >> testPrintOn [
 	| c s |
 	c := self newComm.

@@ -2,17 +2,19 @@
 A DummyComm22Test is a test class for testing the behavior of DummyComm22
 "
 Class {
-	#name : #DummyCommTest,
-	#superclass : #TestCase,
-	#category : #'MicroPythonProxy-Tests'
+	#name : 'DummyCommTest',
+	#superclass : 'TestCase',
+	#category : 'MicroPythonProxy-Tests',
+	#package : 'MicroPythonProxy',
+	#tag : 'Tests'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 DummyCommTest >> newComm [
 	^ DummyComm new
 ]
 
-{ #category : #test }
+{ #category : 'test' }
 DummyCommTest >> testBaudRate [
 	| c |
 	c := self newComm.
@@ -21,7 +23,7 @@ DummyCommTest >> testBaudRate [
 	self assert: c baudRate equals: 9600
 ]
 
-{ #category : #test }
+{ #category : 'test' }
 DummyCommTest >> testClose [
 
 	| c |
@@ -31,7 +33,7 @@ DummyCommTest >> testClose [
 	self deny: c isConnected
 ]
 
-{ #category : #test }
+{ #category : 'test' }
 DummyCommTest >> testGet [
 
 	| c |
@@ -43,7 +45,7 @@ DummyCommTest >> testGet [
 	self assert: c get isNil
 ]
 
-{ #category : #test }
+{ #category : 'test' }
 DummyCommTest >> testGetSize [
 
 	| c |
@@ -53,7 +55,7 @@ DummyCommTest >> testGetSize [
 	self assert: c getSize equals: 3
 ]
 
-{ #category : #test }
+{ #category : 'test' }
 DummyCommTest >> testGets [
 
 	| c a |
@@ -66,7 +68,7 @@ DummyCommTest >> testGets [
 	self assertCollection: c gets equals: a asOrderedCollection
 ]
 
-{ #category : #test }
+{ #category : 'test' }
 DummyCommTest >> testIsConnected [
 
 	| c |
@@ -78,7 +80,7 @@ DummyCommTest >> testIsConnected [
 	self deny: c isConnected
 ]
 
-{ #category : #test }
+{ #category : 'test' }
 DummyCommTest >> testMode [
 
 	| c |
@@ -88,7 +90,7 @@ DummyCommTest >> testMode [
 	self assert: c mode equals: #abc
 ]
 
-{ #category : #test }
+{ #category : 'test' }
 DummyCommTest >> testOpen [
 
 	| c |
@@ -102,7 +104,7 @@ DummyCommTest >> testOpen [
 	self assert: c isConnected
 ]
 
-{ #category : #test }
+{ #category : 'test' }
 DummyCommTest >> testPortName [
 
 	| c |
@@ -112,13 +114,13 @@ DummyCommTest >> testPortName [
 	self assert: c portName equals: 'abc'
 ]
 
-{ #category : #test }
+{ #category : 'test' }
 DummyCommTest >> testPortNames [
 
 	self assertCollection: self newComm portNames equals: #(abc def)
 ]
 
-{ #category : #test }
+{ #category : 'test' }
 DummyCommTest >> testPut [
 
 	| c |
@@ -129,7 +131,7 @@ DummyCommTest >> testPut [
 	self assertCollection: c puts equals: #(a b c) asOrderedCollection
 ]
 
-{ #category : #test }
+{ #category : 'test' }
 DummyCommTest >> testPutSize [
 
 	| c |
@@ -139,7 +141,7 @@ DummyCommTest >> testPutSize [
 	self assert: c putSize equals: 3
 ]
 
-{ #category : #test }
+{ #category : 'test' }
 DummyCommTest >> testPuts [
 
 	| c a |

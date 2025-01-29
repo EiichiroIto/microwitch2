@@ -1,14 +1,16 @@
 Class {
-	#name : #ReceiveQueue,
-	#superclass : #Object,
+	#name : 'ReceiveQueue',
+	#superclass : 'Object',
 	#instVars : [
 		'queue',
 		'pending'
 	],
-	#category : #'MicroPythonProxy-Comm'
+	#category : 'MicroPythonProxy-Comm',
+	#package : 'MicroPythonProxy',
+	#tag : 'Comm'
 }
 
-{ #category : #api }
+{ #category : 'api' }
 ReceiveQueue >> allReceived [
 	| ret |
 	ret := queue copy.
@@ -17,20 +19,20 @@ ReceiveQueue >> allReceived [
 	^ ret
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ReceiveQueue >> enqueueWithDelimiter [
 	pending addAll: #[13].
 	queue add: pending asByteArray.
 	pending := OrderedCollection new
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 ReceiveQueue >> flush [
 	queue := OrderedCollection new.
 	pending := OrderedCollection new
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 ReceiveQueue >> getAll [
 	| ret |
 	ret := self allReceived.
@@ -38,7 +40,7 @@ ReceiveQueue >> getAll [
 	^ ret
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 ReceiveQueue >> getPending [
 	pending isEmpty
 		ifTrue: [ ^ nil ].
@@ -48,12 +50,12 @@ ReceiveQueue >> getPending [
 			list asByteArray ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ReceiveQueue >> initialize [
 	self flush
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ReceiveQueue >> isEmpty [
 	queue notEmpty
 		ifTrue: [ ^ false ].
@@ -62,22 +64,22 @@ ReceiveQueue >> isEmpty [
 	^ true
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 ReceiveQueue >> lineCount [
 	^ queue size + (pending isEmpty ifTrue: [0] ifFalse: [1])
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReceiveQueue >> pending [
 	^ pending
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReceiveQueue >> pending: aCollection [
 	pending := aCollection asOrderedCollection
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ReceiveQueue >> printOn: aStream [
 	aStream
 		nextPutAll: self className;
@@ -88,12 +90,12 @@ ReceiveQueue >> printOn: aStream [
 	aStream nextPut: $)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReceiveQueue >> queue [
 	^ queue
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 ReceiveQueue >> received: aByteArray [
 	| r c mode |
 	aByteArray ifNil: [ ^ self ].

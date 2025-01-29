@@ -2,17 +2,19 @@
 A MicroPythonParser2Test is a test class for testing the behavior of MicroPythonParser
 "
 Class {
-	#name : #MicroPythonParserTest,
-	#superclass : #TestCase,
-	#category : #'MicroPythonProxy-Tests'
+	#name : 'MicroPythonParserTest',
+	#superclass : 'TestCase',
+	#category : 'MicroPythonProxy-Tests',
+	#package : 'MicroPythonProxy',
+	#tag : 'Tests'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 MicroPythonParserTest >> newParser [
 	^ MicroPythonParser new
 ]
 
-{ #category : #test }
+{ #category : 'test' }
 MicroPythonParserTest >> testParse [
 
 	| p r |
@@ -32,7 +34,7 @@ MicroPythonParserTest >> testParse [
 	self assertCollection: r equals: #( 1 2 3 ) asOrderedCollection
 ]
 
-{ #category : #test }
+{ #category : 'test' }
 MicroPythonParserTest >> testParseIdentifier [
 	| p s |
 	p := self newParser.
@@ -45,7 +47,7 @@ MicroPythonParserTest >> testParseIdentifier [
 	self assert: s next equals: $1
 ]
 
-{ #category : #test }
+{ #category : 'test' }
 MicroPythonParserTest >> testParseItem [
 
 	| p in list |
@@ -74,7 +76,7 @@ MicroPythonParserTest >> testParseItem [
 	self assertCollection: list equals: #( 'main.py' )
 ]
 
-{ #category : #test }
+{ #category : 'test' }
 MicroPythonParserTest >> testParseItemsDelimiter [
 
 	| p in list |
@@ -102,7 +104,7 @@ MicroPythonParserTest >> testParseItemsDelimiter [
 	self assert: list isEmpty
 ]
 
-{ #category : #test }
+{ #category : 'test' }
 MicroPythonParserTest >> testParseNumber [
 	| p s |
 	p := self newParser.
@@ -115,7 +117,7 @@ MicroPythonParserTest >> testParseNumber [
 	self assert: s next equals: $a
 ]
 
-{ #category : #test }
+{ #category : 'test' }
 MicroPythonParserTest >> testParseStringDelimiter [
 
 	| p s |

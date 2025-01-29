@@ -1,6 +1,6 @@
 Class {
-	#name : #DummyComm,
-	#superclass : #MWComm,
+	#name : 'DummyComm',
+	#superclass : 'MWComm',
 	#instVars : [
 		'mode',
 		'puts',
@@ -9,84 +9,86 @@ Class {
 		'portName',
 		'baudRate'
 	],
-	#category : #'MicroPythonProxy-Comm'
+	#category : 'MicroPythonProxy-Comm',
+	#package : 'MicroPythonProxy',
+	#tag : 'Comm'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DummyComm >> baudRate [
 	^ baudRate
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DummyComm >> baudRate: anObject [
 	baudRate := anObject
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 DummyComm >> close [
 	isConnected := false
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 DummyComm >> get [
 	gets isEmpty ifTrue: [ ^ nil ].
 	^ gets removeFirst
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 DummyComm >> getSize [
 	^ gets size
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DummyComm >> gets [
 
 	^ gets
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DummyComm >> gets: anObject [
 
 	gets := anObject asOrderedCollection
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 DummyComm >> initialize [
 	gets := OrderedCollection new.
 	puts := OrderedCollection new.
 	isConnected := false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DummyComm >> isConnected [
 
 	^ isConnected
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DummyComm >> isConnected: anObject [
 
 	isConnected := anObject
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DummyComm >> isWebRepl [
 	^ false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DummyComm >> mode [
 
 	^ mode
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DummyComm >> mode: anObject [
 
 	mode := anObject
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 DummyComm >> open [
 	mode = #cannotOpen
 		ifTrue: [ ^ false ].
@@ -94,61 +96,61 @@ DummyComm >> open [
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DummyComm >> options [
 	^ #()
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DummyComm >> optionsNamed: aString [ 
 	^ #()
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DummyComm >> portName [
 
 	^ portName
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DummyComm >> portName: anObject [
 
 	portName := anObject
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 DummyComm >> portNames [
 	^ #(abc def)
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 DummyComm >> put: aByteArray [
 	puts add: aByteArray copy
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 DummyComm >> putSize [
 	^ puts size
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DummyComm >> puts [
 
 	^ puts
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DummyComm >> puts: anObject [
 
 	puts := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DummyComm >> setOption: aString to: aString2 [ 
 	"do nothing"
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 DummyComm >> step [
 	
 ]

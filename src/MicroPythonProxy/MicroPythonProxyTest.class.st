@@ -2,22 +2,24 @@
 A MicroPythonProxy2Test is a test class for testing the behavior of MicroPythonProxy2
 "
 Class {
-	#name : #MicroPythonProxyTest,
-	#superclass : #TestCase,
-	#category : #'MicroPythonProxy-Tests'
+	#name : 'MicroPythonProxyTest',
+	#superclass : 'TestCase',
+	#category : 'MicroPythonProxy-Tests',
+	#package : 'MicroPythonProxy',
+	#tag : 'Tests'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 MicroPythonProxyTest >> newComm [
 	^ DummyComm new
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MicroPythonProxyTest >> newProxy [
 	^ MicroPythonProxy new
 ]
 
-{ #category : #test }
+{ #category : 'test' }
 MicroPythonProxyTest >> testAutoPilot [
 
 	| p |
@@ -27,7 +29,7 @@ MicroPythonProxyTest >> testAutoPilot [
 	self assert: p autoPilot isNil
 ]
 
-{ #category : #test }
+{ #category : 'test' }
 MicroPythonProxyTest >> testBreak [
 
 	| p c |
@@ -48,7 +50,7 @@ MicroPythonProxyTest >> testBreak [
 	self assert: p state isWaiting
 ]
 
-{ #category : #test }
+{ #category : 'test' }
 MicroPythonProxyTest >> testCheckEnterPastePrompted [
 
 	| p |
@@ -62,7 +64,7 @@ MicroPythonProxyTest >> testCheckEnterPastePrompted [
 	self assert: p checkEnterPastePrompted
 ]
 
-{ #category : #test }
+{ #category : 'test' }
 MicroPythonProxyTest >> testCheckPastePrompted [
 
 	| p |
@@ -79,7 +81,7 @@ MicroPythonProxyTest >> testCheckPastePrompted [
 	self deny: p checkPastePrompted
 ]
 
-{ #category : #test }
+{ #category : 'test' }
 MicroPythonProxyTest >> testCheckPrompted [
 
 	| p |
@@ -89,7 +91,7 @@ MicroPythonProxyTest >> testCheckPrompted [
 	self assert: p checkPrompted
 ]
 
-{ #category : #test }
+{ #category : 'test' }
 MicroPythonProxyTest >> testClose [
 
 	| p c |
@@ -107,7 +109,7 @@ MicroPythonProxyTest >> testClose [
 	self assert: p state isNotConnected
 ]
 
-{ #category : #test }
+{ #category : 'test' }
 MicroPythonProxyTest >> testComm [
 	| p c |
 	p := self newProxy.
@@ -117,18 +119,18 @@ MicroPythonProxyTest >> testComm [
 	self assert: p comm identicalTo: c
 ]
 
-{ #category : #test }
+{ #category : 'test' }
 MicroPythonProxyTest >> testDefaultBaudRate [
 
 	self assert: self newProxy defaultBaudRate equals: 115200
 ]
 
-{ #category : #test }
+{ #category : 'test' }
 MicroPythonProxyTest >> testDefaultTimeout [
 	self assert: self newProxy defaultTimeout equals: 1000
 ]
 
-{ #category : #test }
+{ #category : 'test' }
 MicroPythonProxyTest >> testDisconnect [
 
 	| p c |
@@ -149,7 +151,7 @@ MicroPythonProxyTest >> testDisconnect [
 	self assert: p state isIdle
 ]
 
-{ #category : #test }
+{ #category : 'test' }
 MicroPythonProxyTest >> testEnterPasteMode [
 
 	| p c |
@@ -167,7 +169,7 @@ MicroPythonProxyTest >> testEnterPasteMode [
 	self assertCollection: c puts first equals: #[5]
 ]
 
-{ #category : #test }
+{ #category : 'test' }
 MicroPythonProxyTest >> testFlush [
 
 	| p c |
@@ -186,7 +188,7 @@ MicroPythonProxyTest >> testFlush [
 	self assert: p receiveQueue queue isEmpty
 ]
 
-{ #category : #test }
+{ #category : 'test' }
 MicroPythonProxyTest >> testFormatForEvaluate [
 	| p s d |
 	p := self newProxy.
@@ -206,7 +208,7 @@ MicroPythonProxyTest >> testFormatForEvaluate [
 	self assert: d equals: 'def'
 ]
 
-{ #category : #test }
+{ #category : 'test' }
 MicroPythonProxyTest >> testInitialize [
 
 	| p |
@@ -219,7 +221,7 @@ MicroPythonProxyTest >> testInitialize [
 	self assert: p timeoutMsec isNil
 ]
 
-{ #category : #test }
+{ #category : 'test' }
 MicroPythonProxyTest >> testIsConnected [
 
 	| p |
@@ -231,7 +233,7 @@ MicroPythonProxyTest >> testIsConnected [
 	self assert: p isConnected
 ]
 
-{ #category : #test }
+{ #category : 'test' }
 MicroPythonProxyTest >> testIsIdle [
 
 	| p |
@@ -241,7 +243,7 @@ MicroPythonProxyTest >> testIsIdle [
 	self deny: p isIdle
 ]
 
-{ #category : #test }
+{ #category : 'test' }
 MicroPythonProxyTest >> testIsNotConnected [
 
 	| p |
@@ -251,7 +253,7 @@ MicroPythonProxyTest >> testIsNotConnected [
 	self assert: p isNotConnected
 ]
 
-{ #category : #test }
+{ #category : 'test' }
 MicroPythonProxyTest >> testIsPasteReady [
 
 	| p |
@@ -261,7 +263,7 @@ MicroPythonProxyTest >> testIsPasteReady [
 	self assert: p isPasteReady
 ]
 
-{ #category : #test }
+{ #category : 'test' }
 MicroPythonProxyTest >> testIsReady [
 
 	| p |
@@ -271,7 +273,7 @@ MicroPythonProxyTest >> testIsReady [
 	self assert: p isReady
 ]
 
-{ #category : #test }
+{ #category : 'test' }
 MicroPythonProxyTest >> testIsRunning [
 
 	| p |
@@ -281,7 +283,7 @@ MicroPythonProxyTest >> testIsRunning [
 	self assert: p isRunning
 ]
 
-{ #category : #test }
+{ #category : 'test' }
 MicroPythonProxyTest >> testIsTimeout [
 
 	| p t |
@@ -294,7 +296,7 @@ MicroPythonProxyTest >> testIsTimeout [
 	self assert: p isTimeout
 ]
 
-{ #category : #test }
+{ #category : 'test' }
 MicroPythonProxyTest >> testIsWaiting [
 
 	| p |
@@ -304,7 +306,7 @@ MicroPythonProxyTest >> testIsWaiting [
 	self assert: p isWaiting
 ]
 
-{ #category : #test }
+{ #category : 'test' }
 MicroPythonProxyTest >> testLinesWithDelimiterEvery [
 
 	| proxy r |
@@ -319,7 +321,7 @@ MicroPythonProxyTest >> testLinesWithDelimiterEvery [
 		equals: #( a b c '#--- 3 ---' d e f '#--- 6 ---' )
 ]
 
-{ #category : #test }
+{ #category : 'test' }
 MicroPythonProxyTest >> testLinesWithoutComments [
 
 	| p r |
@@ -348,7 +350,7 @@ ghi'.
 	self assertCollection: r equals: #( 'abc'' # ''aaa' )
 ]
 
-{ #category : #test }
+{ #category : 'test' }
 MicroPythonProxyTest >> testMakeDeleteFileNamed [
 
 	| p r |
@@ -366,7 +368,7 @@ MicroPythonProxyTest >> testMakeDeleteFileNamed [
 	self assert: r second equals: 'os.remove("test.py")'
 ]
 
-{ #category : #test }
+{ #category : 'test' }
 MicroPythonProxyTest >> testMakeDownloadFileNamed [
 
 	| p r |
@@ -380,7 +382,7 @@ MicroPythonProxyTest >> testMakeDownloadFileNamed [
 	self assert: r fourth equals: '_r'
 ]
 
-{ #category : #test }
+{ #category : 'test' }
 MicroPythonProxyTest >> testMakeUploadFileNamed [
 
 	| p r |
@@ -410,7 +412,7 @@ MicroPythonProxyTest >> testMakeUploadFileNamed [
 	self assert: r fourth equals: '_s.close()'
 ]
 
-{ #category : #test }
+{ #category : 'test' }
 MicroPythonProxyTest >> testOpen [
 
 	| p c |
@@ -428,7 +430,7 @@ MicroPythonProxyTest >> testOpen [
 	self assert: c isConnected
 ]
 
-{ #category : #test }
+{ #category : 'test' }
 MicroPythonProxyTest >> testPortName [
 
 	| p c |
@@ -444,7 +446,7 @@ MicroPythonProxyTest >> testPortName [
 	self assert: p state isNotConnected
 ]
 
-{ #category : #test }
+{ #category : 'test' }
 MicroPythonProxyTest >> testPortNames [
 
 	| p c |
@@ -454,7 +456,7 @@ MicroPythonProxyTest >> testPortNames [
 	self assert: p portNames identicalTo: c portNames
 ]
 
-{ #category : #test }
+{ #category : 'test' }
 MicroPythonProxyTest >> testReceiveQueue [
 
 	| p |
@@ -462,7 +464,7 @@ MicroPythonProxyTest >> testReceiveQueue [
 	self assert: (p receiveQueue isKindOf: ReceiveQueue)
 ]
 
-{ #category : #test }
+{ #category : 'test' }
 MicroPythonProxyTest >> testRestart [
 
 	| p c |
@@ -482,7 +484,7 @@ MicroPythonProxyTest >> testRestart [
 	self deny: c isConnected
 ]
 
-{ #category : #test }
+{ #category : 'test' }
 MicroPythonProxyTest >> testSendLine [
 
 	| p c |
@@ -495,7 +497,7 @@ MicroPythonProxyTest >> testSendLine [
 	self assert: p state isWaiting
 ]
 
-{ #category : #test }
+{ #category : 'test' }
 MicroPythonProxyTest >> testSendPasteLine [
 
 	| p c |
@@ -508,7 +510,7 @@ MicroPythonProxyTest >> testSendPasteLine [
 	self assert: p state isWaitingPaste
 ]
 
-{ #category : #test }
+{ #category : 'test' }
 MicroPythonProxyTest >> testState [
 
 	| p |
@@ -518,7 +520,7 @@ MicroPythonProxyTest >> testState [
 	self assert: p state isNil
 ]
 
-{ #category : #test }
+{ #category : 'test' }
 MicroPythonProxyTest >> testStringWithoutComment [
 
 	| p r |
@@ -539,7 +541,7 @@ MicroPythonProxyTest >> testStringWithoutComment [
 	self assert: r equals: 'abc''#''de"#f"'
 ]
 
-{ #category : #test }
+{ #category : 'test' }
 MicroPythonProxyTest >> testThenRestart [
 
 	| p |
@@ -549,7 +551,7 @@ MicroPythonProxyTest >> testThenRestart [
 	self assert: p autoPilot selector equals: #doRestart
 ]
 
-{ #category : #test }
+{ #category : 'test' }
 MicroPythonProxyTest >> testTimeout [
 
 	| p |
@@ -559,7 +561,7 @@ MicroPythonProxyTest >> testTimeout [
 	self assert: p timeout equals: 123
 ]
 
-{ #category : #test }
+{ #category : 'test' }
 MicroPythonProxyTest >> testTimeoutMsec [
 
 	| p |
@@ -569,7 +571,7 @@ MicroPythonProxyTest >> testTimeoutMsec [
 	self assert: p timeoutMsec equals: 123
 ]
 
-{ #category : #test }
+{ #category : 'test' }
 MicroPythonProxyTest >> testUpdateTimeoutMsec [
 
 	| p t |

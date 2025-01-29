@@ -1,6 +1,6 @@
 Class {
-	#name : #MicroPythonProxy,
-	#superclass : #Object,
+	#name : 'MicroPythonProxy',
+	#superclass : 'Object',
 	#instVars : [
 		'comm',
 		'receiveQueue',
@@ -9,20 +9,22 @@ Class {
 		'autoPilot',
 		'state'
 	],
-	#category : #'MicroPythonProxy-Core'
+	#category : 'MicroPythonProxy-Core',
+	#package : 'MicroPythonProxy',
+	#tag : 'Core'
 }
 
-{ #category : #constants }
+{ #category : 'constants' }
 MicroPythonProxy class >> breakRequest [
 	^ #[3]
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 MicroPythonProxy class >> cr [
 	^ #[13]
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 MicroPythonProxy class >> enterPastePrompts [
 
 	^ { 
@@ -31,46 +33,46 @@ MicroPythonProxy class >> enterPastePrompts [
 		  '=== ' asByteArray }
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 MicroPythonProxy class >> enterPasteRequest [
 	^ #[5]
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 MicroPythonProxy class >> exitPasteRequest [
 	^ #[4]
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 MicroPythonProxy class >> normalPrompt [
 
 	^ '>>> ' asByteArray
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 MicroPythonProxy class >> pastePrompt [
 
 	^ '=== ' asByteArray
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 MicroPythonProxy class >> rebootRequest [
 	^ #[4]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MicroPythonProxy >> autoPilot [
 
 	^ autoPilot
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MicroPythonProxy >> autoPilot: anObject [
 
 	autoPilot := anObject
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 MicroPythonProxy >> break [
 
 	state isIdle ifTrue: [ ^ self ].
@@ -81,7 +83,7 @@ MicroPythonProxy >> break [
 	self updateTimeoutMsec
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MicroPythonProxy >> checkEnterPastePrompted [
 
 	| l |
@@ -92,18 +94,18 @@ MicroPythonProxy >> checkEnterPastePrompted [
 	^ true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MicroPythonProxy >> checkPastePrompted [
 
 	^ receiveQueue pending asByteArray = self class pastePrompt
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MicroPythonProxy >> checkPrompted [
 	^ receiveQueue pending asByteArray = self class normalPrompt
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 MicroPythonProxy >> close [
 	state isIdle ifTrue: [ ^ self ].
 	autoPilot clear.
@@ -111,29 +113,29 @@ MicroPythonProxy >> close [
 	state beNotConnected
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MicroPythonProxy >> comm [
 
 	^ comm
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MicroPythonProxy >> comm: anObject [
 
 	comm := anObject
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MicroPythonProxy >> defaultBaudRate [
 	^ 115200
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MicroPythonProxy >> defaultTimeout [
 	^ 1000
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 MicroPythonProxy >> deleteFileNamed: aString [
 
 	| lines |
@@ -143,13 +145,13 @@ MicroPythonProxy >> deleteFileNamed: aString [
 		sendPaste
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 MicroPythonProxy >> disconnect [
 	comm close.
 	state beIdle
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 MicroPythonProxy >> downloadFileNamed: aString ifError: aBlock [
 
 	| lines |
@@ -157,7 +159,7 @@ MicroPythonProxy >> downloadFileNamed: aString ifError: aBlock [
 	^ self evaluateLines: lines ifError: aBlock
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 MicroPythonProxy >> enterPasteMode [
 	state isReady ifFalse: [ ^ self ].
 	comm put: self class enterPasteRequest.
@@ -165,7 +167,7 @@ MicroPythonProxy >> enterPasteMode [
 	self updateTimeoutMsec
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 MicroPythonProxy >> evaluate: aString ifError: aBlock [
 
 	| lines |
@@ -173,22 +175,28 @@ MicroPythonProxy >> evaluate: aString ifError: aBlock [
 	^ self evaluateLines: lines ifError: aBlock
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MicroPythonProxy >> evaluateLines: aCollection ifError: aBlock [
 
 	| stream |
 	aCollection isEmpty ifTrue: [ ^ '' ].
 	stream := WriteStream on: Array new.
-	aCollection do: [ :each | 
-		state isReady ifFalse: [ 
-			aBlock cull: 'device is not ready' localized ].
-		self sendLine: each.
-		self waitPromptIfError: aBlock.
-		stream nextPutAll: receiveQueue getAll ].
+	UIManager default
+		displayProgress: 'Evaluating ...' localized
+		from: 0
+		to: aCollection size
+		during: [ :bar | 
+			aCollection withIndexDo: [ :each :index | 
+				state isReady ifFalse: [ 
+					aBlock cull: 'device is not ready' localized ].
+				bar value: index.
+				self sendLine: each.
+				self waitPromptIfError: aBlock.
+				stream nextPutAll: receiveQueue getAll ] ].
 	^ self formatForEvaluate: stream contents
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 MicroPythonProxy >> execute: aString [
 
 	| lines |
@@ -198,7 +206,7 @@ MicroPythonProxy >> execute: aString [
 		sendPaste
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 MicroPythonProxy >> exitPasteMode [
 	state isPasteReady ifFalse: [ ^ self ].
 	comm put: self class exitPasteRequest.
@@ -206,13 +214,13 @@ MicroPythonProxy >> exitPasteMode [
 	timeoutMsec := nil
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 MicroPythonProxy >> flush [
 	receiveQueue flush.
 	[ comm get notNil ] whileTrue
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MicroPythonProxy >> formatForEvaluate: aCollection [
 
 	| result line i |
@@ -234,7 +242,7 @@ MicroPythonProxy >> formatForEvaluate: aCollection [
 		  withoutTrailingNewlines
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 MicroPythonProxy >> ifTimeoutDo: aBlock [
 
 	(state isWaiting or: [ 
@@ -245,7 +253,7 @@ MicroPythonProxy >> ifTimeoutDo: aBlock [
 	state beNotConnected
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 MicroPythonProxy >> initialize [
 
 	state := MicroPythonState new.
@@ -256,52 +264,52 @@ MicroPythonProxy >> initialize [
 		             yourself
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MicroPythonProxy >> isConnected [
 
 	state isIdle ifTrue: [ ^ false ].
 	^ state isNotConnected not
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MicroPythonProxy >> isIdle [
 	^ state isIdle
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MicroPythonProxy >> isNotConnected [
 	^ state isNotConnected
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MicroPythonProxy >> isPasteReady [
 	^ state isPasteReady
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MicroPythonProxy >> isReady [
 	^ state isReady
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MicroPythonProxy >> isRunning [
 	^ state isRunning
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MicroPythonProxy >> isTimeout [
 
 	timeoutMsec ifNil: [ ^ false ].
 	^ Time millisecondClockValue >= timeoutMsec
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MicroPythonProxy >> isWaiting [
 
 	^ state isWaiting
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 MicroPythonProxy >> lines: aCollection withDelimiterEvery: anInteger [
 
 	| out |
@@ -313,7 +321,7 @@ MicroPythonProxy >> lines: aCollection withDelimiterEvery: anInteger [
 	^ out contents
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 MicroPythonProxy >> linesWithoutComments: aString [
 
 	| out str |
@@ -325,7 +333,7 @@ MicroPythonProxy >> linesWithoutComments: aString [
 	^ out contents
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MicroPythonProxy >> logReceiveQueue [
 
 	self traceCr: 'queues: '.
@@ -334,7 +342,7 @@ MicroPythonProxy >> logReceiveQueue [
 	self traceCr: receiveQueue pending asString
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 MicroPythonProxy >> makeDeleteFileNamed: aString [
 
 	| result |
@@ -344,7 +352,7 @@ MicroPythonProxy >> makeDeleteFileNamed: aString [
 	^ result
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 MicroPythonProxy >> makeDownloadFileNamed: aString [
 
 	| result |
@@ -356,7 +364,7 @@ MicroPythonProxy >> makeDownloadFileNamed: aString [
 	^ result
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 MicroPythonProxy >> makeUpload: aCollection fileNamed: aString [
 
 	| s result |
@@ -380,7 +388,7 @@ MicroPythonProxy >> makeUpload: aCollection fileNamed: aString [
 	^ result
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 MicroPythonProxy >> open [
 	state isIdle ifTrue: [ ^ false ].
 	comm open ifFalse: [ ^ false ].
@@ -390,12 +398,12 @@ MicroPythonProxy >> open [
 	^ true
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 MicroPythonProxy >> portName [
 	^ comm portName
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 MicroPythonProxy >> portName: aString [
 
 	aString ifNil: [ ^ state beIdle ].
@@ -403,12 +411,12 @@ MicroPythonProxy >> portName: aString [
 	state beNotConnected
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 MicroPythonProxy >> portNames [
 	^ comm portNames
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 MicroPythonProxy >> printOn: aStream [
 
 	aStream
@@ -418,19 +426,19 @@ MicroPythonProxy >> printOn: aStream [
 		nextPut: $)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MicroPythonProxy >> receiveQueue [
 
 	^ receiveQueue
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MicroPythonProxy >> receiveQueue: anObject [
 
 	receiveQueue := anObject
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 MicroPythonProxy >> responseString [
 
 	| s |
@@ -439,7 +447,7 @@ MicroPythonProxy >> responseString [
 	^ s contents asString
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 MicroPythonProxy >> restart [
 
 	state isReady ifFalse: [ ^ self ].
@@ -450,31 +458,31 @@ MicroPythonProxy >> restart [
 	state beNotConnected
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MicroPythonProxy >> sendLine: aString [
 	comm put: aString asByteArray , self class cr.
 	state beWaiting
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MicroPythonProxy >> sendPasteLine: aString [
 	comm put: aString asByteArray , self class cr.
 	state beWaitingPaste
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MicroPythonProxy >> state [
 
 	^ state
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MicroPythonProxy >> state: anObject [
 
 	state := anObject
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 MicroPythonProxy >> step [
 
 	| msg |
@@ -487,7 +495,7 @@ MicroPythonProxy >> step [
 	autoPilot step
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 MicroPythonProxy >> stringWithoutComment: aString [
 
 	| in out c |
@@ -513,36 +521,36 @@ MicroPythonProxy >> stringWithoutComment: aString [
 	^ out contents
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 MicroPythonProxy >> thenRestart [
 	autoPilot thenRestart
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MicroPythonProxy >> timeout [
 
 	^ timeout
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MicroPythonProxy >> timeout: anObject [
 
 	timeout := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MicroPythonProxy >> timeoutMsec [
 
 	^ timeoutMsec
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MicroPythonProxy >> timeoutMsec: anObject [
 
 	timeoutMsec := anObject
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MicroPythonProxy >> updateState [
 	comm isConnected ifFalse: [ ^ state beNotConnected ].
 	self checkPrompted ifTrue: [ ^ state beReady ].
@@ -552,12 +560,12 @@ MicroPythonProxy >> updateState [
 		self checkPastePrompted ifTrue: [ ^ state bePasteReady ] ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MicroPythonProxy >> updateTimeoutMsec [
 	timeoutMsec := Time millisecondClockValue + timeout
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 MicroPythonProxy >> upload: aString fileNamed: aString2 [
 
 	| lines |
@@ -568,7 +576,7 @@ MicroPythonProxy >> upload: aString fileNamed: aString2 [
 		sendNormal
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 MicroPythonProxy >> waitCompleteSendIfError: aBlock [
 
 	self updateTimeoutMsec.
@@ -580,7 +588,7 @@ MicroPythonProxy >> waitCompleteSendIfError: aBlock [
 	50 milliSeconds wait ] repeat
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 MicroPythonProxy >> waitPromptIfError: aBlock [
 
 	state isWaiting ifFalse: [ ^ aBlock cull: 'state is not waiting' ].

@@ -1,17 +1,19 @@
 Class {
-	#name : #MicroPythonParser,
-	#superclass : #Object,
-	#category : #'MicroPythonProxy-Core'
+	#name : 'MicroPythonParser',
+	#superclass : 'Object',
+	#category : 'MicroPythonProxy-Core',
+	#package : 'MicroPythonProxy',
+	#tag : 'Core'
 }
 
-{ #category : #parsing }
+{ #category : 'parsing' }
 MicroPythonParser >> parse: aString [
 	| stream |
 	stream := ReadStream on: aString.
 	^ self parseItem: stream
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MicroPythonParser >> parseIdentifier: aStream [
 	| out c |
 	out := WriteStream on: String new.
@@ -24,7 +26,7 @@ MicroPythonParser >> parseIdentifier: aStream [
 	^ out contents ifEmpty: [ nil ] ifNotEmpty: [ :o | o asSymbol ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MicroPythonParser >> parseItem: aStream [
 
 	| token |
@@ -45,7 +47,7 @@ MicroPythonParser >> parseItem: aStream [
 	self error
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MicroPythonParser >> parseItems: aStream delimiter: aCharacter [
 
 	| list item c |
@@ -63,7 +65,7 @@ MicroPythonParser >> parseItems: aStream delimiter: aCharacter [
 	self error
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MicroPythonParser >> parseNumber: aStream [
 	| out c |
 	out := WriteStream on: String new.
@@ -76,7 +78,7 @@ MicroPythonParser >> parseNumber: aStream [
 	^ out contents asNumber
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MicroPythonParser >> parseString: aStream delimiter: aCharacter [
 	| out c |
 	out := WriteStream on: String new.

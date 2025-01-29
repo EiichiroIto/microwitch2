@@ -1,108 +1,110 @@
 Class {
-	#name : #MicroPythonState,
-	#superclass : #Object,
+	#name : 'MicroPythonState',
+	#superclass : 'Object',
 	#instVars : [
 		'state'
 	],
-	#category : #'MicroPythonProxy-Core'
+	#category : 'MicroPythonProxy-Core',
+	#package : 'MicroPythonProxy',
+	#tag : 'Core'
 }
 
-{ #category : #api }
+{ #category : 'api' }
 MicroPythonState >> beConnected [
 	state := #connected
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 MicroPythonState >> beIdle [
 	state := #idle
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 MicroPythonState >> beNotConnected [
 	state := #notConnected
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 MicroPythonState >> bePasteReady [
 	state := #pasteReady
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 MicroPythonState >> beReady [
 	state := #ready
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 MicroPythonState >> beRunning [
 	state := #running
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 MicroPythonState >> beWaiting [
 	state := #waiting
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 MicroPythonState >> beWaitingEnterPaste [
 	state := #waitingEnterPaste
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 MicroPythonState >> beWaitingPaste [
 	state := #waitingPaste
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 MicroPythonState >> initialize [
 	self beIdle
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MicroPythonState >> isConnected [
 	^ state = #connected
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MicroPythonState >> isIdle [
 	^ state = #idle
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MicroPythonState >> isNotConnected [
 	^ state = #notConnected
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MicroPythonState >> isPasteReady [
 	^ state = #pasteReady
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MicroPythonState >> isReady [
 	^ state = #ready
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MicroPythonState >> isRunning [
 	^ state = #running
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MicroPythonState >> isWaiting [
 	^ state = #waiting
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MicroPythonState >> isWaitingEnterPaste [
 	^ state = #waitingEnterPaste
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MicroPythonState >> isWaitingPaste [
 	^ state = #waitingPaste
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 MicroPythonState >> printOn: aStream [
 
 	aStream
@@ -111,13 +113,13 @@ MicroPythonState >> printOn: aStream [
 		nextPut: $]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MicroPythonState >> state [
 
 	^ state
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MicroPythonState >> state: anObject [
 
 	state := anObject

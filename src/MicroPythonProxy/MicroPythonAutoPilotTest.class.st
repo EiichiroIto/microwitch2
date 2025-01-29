@@ -2,27 +2,29 @@
 A MicroPythonAutoPilotTest is a test class for testing the behavior of MicroPythonAutoPilot
 "
 Class {
-	#name : #MicroPythonAutoPilotTest,
-	#superclass : #TestCase,
-	#category : #'MicroPythonProxy-Tests'
+	#name : 'MicroPythonAutoPilotTest',
+	#superclass : 'TestCase',
+	#category : 'MicroPythonProxy-Tests',
+	#package : 'MicroPythonProxy',
+	#tag : 'Tests'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 MicroPythonAutoPilotTest >> newComm [
 	^ DummyComm new
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MicroPythonAutoPilotTest >> newObj [
 	^ MicroPythonAutoPilot new
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MicroPythonAutoPilotTest >> newProxy [
 	^ MicroPythonProxy new
 ]
 
-{ #category : #test }
+{ #category : 'test' }
 MicroPythonAutoPilotTest >> testClear [
 
 	| o |
@@ -38,7 +40,7 @@ MicroPythonAutoPilotTest >> testClear [
 	self assert: o selector isNil
 ]
 
-{ #category : #test }
+{ #category : 'test' }
 MicroPythonAutoPilotTest >> testDoRestart [
 
 	| o p c |
@@ -56,7 +58,7 @@ MicroPythonAutoPilotTest >> testDoRestart [
 	self deny: c isConnected
 ]
 
-{ #category : #test }
+{ #category : 'test' }
 MicroPythonAutoPilotTest >> testIsEmpty [
 
 	| o |
@@ -70,7 +72,7 @@ MicroPythonAutoPilotTest >> testIsEmpty [
 	self assert: o isEmpty
 ]
 
-{ #category : #test }
+{ #category : 'test' }
 MicroPythonAutoPilotTest >> testMode [
 
 	| o |
@@ -82,7 +84,7 @@ MicroPythonAutoPilotTest >> testMode [
 	self assert: o mode equals: #stepNormal
 ]
 
-{ #category : #test }
+{ #category : 'test' }
 MicroPythonAutoPilotTest >> testProxy [
 
 	| o p |
@@ -93,7 +95,7 @@ MicroPythonAutoPilotTest >> testProxy [
 	self assert: o proxy identicalTo: p
 ]
 
-{ #category : #test }
+{ #category : 'test' }
 MicroPythonAutoPilotTest >> testSelector [
 
 	| o |
@@ -103,7 +105,7 @@ MicroPythonAutoPilotTest >> testSelector [
 	self assert: o selector equals: #abc
 ]
 
-{ #category : #test }
+{ #category : 'test' }
 MicroPythonAutoPilotTest >> testSendLines [
 
 	| o a |
@@ -114,7 +116,7 @@ MicroPythonAutoPilotTest >> testSendLines [
 	self assert: o sendLines equals: a asOrderedCollection
 ]
 
-{ #category : #test }
+{ #category : 'test' }
 MicroPythonAutoPilotTest >> testSendNormal [
 
 	| o |
@@ -124,7 +126,7 @@ MicroPythonAutoPilotTest >> testSendNormal [
 	self assert: o mode equals: #stepNormal
 ]
 
-{ #category : #test }
+{ #category : 'test' }
 MicroPythonAutoPilotTest >> testSendPaste [
 
 	| o |
@@ -134,7 +136,7 @@ MicroPythonAutoPilotTest >> testSendPaste [
 	self assert: o mode equals: #stepPaste
 ]
 
-{ #category : #test }
+{ #category : 'test' }
 MicroPythonAutoPilotTest >> testThenRestart [
 
 	| o |
