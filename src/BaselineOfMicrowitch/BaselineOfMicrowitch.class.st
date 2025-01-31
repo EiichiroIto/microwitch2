@@ -1,14 +1,15 @@
 Class {
-	#name : #BaselineOfMicrowitch,
-	#superclass : #BaselineOf,
-	#category : #BaselineOfMicrowitch
+	#name : 'BaselineOfMicrowitch',
+	#superclass : 'BaselineOf',
+	#category : 'BaselineOfMicrowitch',
+	#package : 'BaselineOfMicrowitch'
 }
 
-{ #category : #baselines }
+{ #category : 'baselines' }
 BaselineOfMicrowitch >> baseline: spec [
 
 	<baseline>
-	spec for: #common do: [ 
+	spec for: #common do: [
 		spec
 			package: 'FromScratch';
 			package: 'FromScratch-Tests'
@@ -17,8 +18,8 @@ BaselineOfMicrowitch >> baseline: spec [
 			package: 'MicroPythonBlocks'
 			with: [ spec requires: #( 'FromScratch' 'MicroPythonProxy' ) ];
 			package: 'Microwitch'
-			with: [ spec requires: #( 'FromScratch' 'MicroPythonProxy' 'MicroPythonBlocks' ) ];
+			with: [ spec requires: #( 'MicroPythonBlocks' ) ];
 			package: 'Microwitch-Tests'
-			with: [ 
-				spec requires: #( 'FromScratch' 'Microwitch' 'MicroPythonProxy' 'MicroPythonBlocks' ) ] ]
+			with: [ spec requires: #( 'Microwitch' ) ] ].
+	spec group: 'Deploy' with: #( 'Microwitch' )
 ]

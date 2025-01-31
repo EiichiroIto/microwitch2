@@ -111,7 +111,7 @@ ScratchConsoleMorphTest >> testCursor [
 { #category : 'test' }
 ScratchConsoleMorphTest >> testDefaultFont [
 
-	self newMorph defaultFont isFontSet
+	self assert: (self newMorph defaultFont isKindOf: AbstractFont)
 ]
 
 { #category : 'test' }
